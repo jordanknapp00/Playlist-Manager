@@ -19,8 +19,30 @@ object fMain: TfMain
     Top = 8
     Width = 584
     Height = 401
-    Columns = <>
+    Columns = <
+      item
+        Caption = 'Band'
+      end
+      item
+        Caption = 'Album'
+      end
+      item
+        Caption = 'Song'
+      end
+      item
+        Caption = 'Track No.'
+      end
+      item
+        Caption = 'Year'
+      end
+      item
+        Caption = 'Genre(s)'
+      end
+      item
+        Caption = 'Favorite?'
+      end>
     TabOrder = 0
+    ViewStyle = vsReport
   end
   object btnQuery: TButton
     Left = 8
