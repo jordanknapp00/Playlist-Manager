@@ -2,56 +2,120 @@ object fMain: TfMain
   Left = 0
   Top = 0
   Caption = 'Playlist Manager'
-  ClientHeight = 594
-  ClientWidth = 599
+  ClientHeight = 508
+  ClientWidth = 600
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  Menu = menuBar
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object pageControl: TPageControl
-    Left = 0
-    Top = 0
-    Width = 601
-    Height = 505
-    ActivePage = tsQuery
+  object ListView1: TListView
+    Left = 8
+    Top = 8
+    Width = 584
+    Height = 401
+    Columns = <
+      item
+        Caption = 'Band'
+      end
+      item
+        Caption = 'Album'
+      end
+      item
+        Caption = 'Song'
+      end
+      item
+        Caption = 'Track No.'
+      end
+      item
+        Caption = 'Year'
+      end
+      item
+        Caption = 'Genre(s)'
+      end
+      item
+        Caption = 'Favorite?'
+      end>
     TabOrder = 0
-    object tsQuery: TTabSheet
-      Caption = 'Query'
-      object ListView1: TListView
-        Left = 16
-        Top = 16
-        Width = 561
-        Height = 441
-        Columns = <
-          item
-            Caption = 'Num'
-          end
-          item
-            Caption = 'Band'
-          end
-          item
-            Caption = 'Album'
-          end
-          item
-            Caption = 'Song'
-          end
-          item
-            Caption = 'Favorite?'
-          end
-          item
-            Caption = 'Year'
-          end>
-        TabOrder = 0
+    ViewStyle = vsReport
+  end
+  object btnQuery: TButton
+    Left = 8
+    Top = 415
+    Width = 217
+    Height = 87
+    Caption = 'Query'
+    TabOrder = 1
+  end
+  object btnAddBand: TButton
+    Left = 376
+    Top = 415
+    Width = 216
+    Height = 25
+    Caption = 'Add Band'
+    TabOrder = 2
+  end
+  object btnAddAlbum: TButton
+    Left = 376
+    Top = 446
+    Width = 216
+    Height = 25
+    Caption = 'Add Album'
+    TabOrder = 3
+  end
+  object btnAddSongs: TButton
+    Left = 376
+    Top = 477
+    Width = 216
+    Height = 25
+    Caption = 'Add Song(s)'
+    TabOrder = 4
+  end
+  object menuBar: TMainMenu
+    Left = 560
+    object menuFile: TMenuItem
+      Caption = 'File'
+      object menuItemNew: TMenuItem
+        Caption = 'New'
+      end
+      object menuItemLoad: TMenuItem
+        Caption = 'Load'
+      end
+      object menuItemSave: TMenuItem
+        Caption = 'Save'
+      end
+      object menuItemSaveAs: TMenuItem
+        Caption = 'Save As'
+      end
+      object menuItemExit: TMenuItem
+        Caption = 'Exit'
       end
     end
-    object tsModify: TTabSheet
-      Caption = 'Modify'
-      ImageIndex = 1
+    object menuExport: TMenuItem
+      Caption = 'Export'
+      object menuItemExportTXT: TMenuItem
+        Caption = 'Export as .txt'
+      end
+      object menuItemExportCSV: TMenuItem
+        Caption = 'Export as .csv'
+      end
+      object menuItemExportXLSX: TMenuItem
+        Caption = 'Export as .xlsx'
+      end
+    end
+    object menuHelp: TMenuItem
+      Caption = 'Help'
+      object menuItemHowToUse: TMenuItem
+        Caption = 'How to Use This Program'
+      end
+      object menuItemAbout: TMenuItem
+        Caption = 'About'
+      end
     end
   end
 end
