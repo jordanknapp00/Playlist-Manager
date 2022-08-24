@@ -80,6 +80,15 @@ type
     constructor Create(bandName: String);
   end;
 
+//this is basically a static variable that we use to give everything a unique id.
+//the {$J} compiler directive turns on writable constants. why should constants
+//be writable? i dunno, then they're not really constants. but it lets us create
+//an analog to static variables, so whatever
+const
+  {$J+}
+  idCount: Integer = 0;
+  {$J-}
+
 implementation
 
 //==============================================================================
@@ -93,6 +102,9 @@ begin
   self.track := trackNo;
 
   isFavorite := false;
+
+  itemID := idCount;
+  Inc(idCount);
 end;
 
 //==============================================================================
@@ -107,6 +119,9 @@ begin
   isFavorite := false;
 
   songs := TList<TSong>.Create();
+
+  itemID := idCount;
+  Inc(idCount);
 end;
 
 //==============================================================================
@@ -120,6 +135,9 @@ begin
   isFavorite := false;
 
   albums := TList<TAlbum>.Create;
+
+  itemID := idCount;
+  Inc(idCount);
 end;
 
 end.
