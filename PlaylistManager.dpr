@@ -2,7 +2,8 @@ program PlaylistManager;
 
 uses
   Vcl.Forms,
-  fMain_ in 'fMain_.pas' {fMain};
+  fMain_ in 'fMain_.pas' {fMain},
+  DataStructs in 'DataStructs.pas';
 
 {$R *.res}
 
