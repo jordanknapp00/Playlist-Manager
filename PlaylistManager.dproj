@@ -112,6 +112,10 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="DataStructs.pas"/>
+        <DCCReference Include="fAddBand_.pas">
+            <Form>fAddBand</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

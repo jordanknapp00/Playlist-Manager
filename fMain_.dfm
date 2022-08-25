@@ -59,6 +59,7 @@ object fMain: TfMain
     Height = 25
     Caption = 'Add Band(s)'
     TabOrder = 2
+    OnClick = btnAddBandClick
   end
   object btnAddAlbum: TButton
     Left = 240

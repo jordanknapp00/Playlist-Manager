@@ -3,7 +3,8 @@ program PlaylistManager;
 uses
   Vcl.Forms,
   fMain_ in 'fMain_.pas' {fMain},
-  DataStructs in 'DataStructs.pas';
+  DataStructs in 'DataStructs.pas',
+  fAddBand_ in 'fAddBand_.pas' {fAddBand};
 
 {$R *.res}
 
