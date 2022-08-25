@@ -32,6 +32,7 @@ type
     btnDeleteAlbum: TButton;
     btnDeleteSong: TButton;
     procedure btnAddBandClick(Sender: TObject);
+    procedure btnAddAlbumClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -44,7 +45,7 @@ var
 implementation
 
 uses
-  fAddBand_;
+  fAddBand_, fAddAlbum_;
 
 {$R *.dfm}
 
@@ -52,6 +53,12 @@ procedure TfMain.btnAddBandClick(Sender: TObject);
 begin
   Application.CreateForm(TfAddBand, fAddBand);
   fAddBand.ShowModal;
+end;
+
+procedure TfMain.btnAddAlbumClick(Sender: TObject);
+begin
+  Application.CreateForm(TfAddAlbum, fAddAlbum);
+  fAddAlbum.ShowModal;
 end;
 
 end.

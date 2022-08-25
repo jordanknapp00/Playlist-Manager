@@ -4,7 +4,8 @@ uses
   Vcl.Forms,
   fMain_ in 'fMain_.pas' {fMain},
   DataStructs in 'DataStructs.pas',
-  fAddBand_ in 'fAddBand_.pas' {fAddBand};
+  fAddBand_ in 'fAddBand_.pas' {fAddBand},
+  fAddAlbum_ in 'fAddAlbum_.pas' {fAddAlbum};
 
 {$R *.res}
 

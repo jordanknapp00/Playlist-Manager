@@ -68,6 +68,7 @@ object fMain: TfMain
     Height = 25
     Caption = 'Add Album(s) from a Band'
     TabOrder = 3
+    OnClick = btnAddAlbumClick
   end
   object btnAddSongs: TButton
     Left = 240
