@@ -28,6 +28,9 @@ type
     btnAddBand: TButton;
     btnAddAlbum: TButton;
     btnAddSongs: TButton;
+    btnDeleteBand: TButton;
+    btnDeleteAlbum: TButton;
+    btnDeleteSong: TButton;
   private
     { Private declarations }
   public

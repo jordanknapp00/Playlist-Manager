@@ -53,28 +53,52 @@ object fMain: TfMain
     TabOrder = 1
   end
   object btnAddBand: TButton
-    Left = 376
+    Left = 240
     Top = 415
     Width = 216
     Height = 25
-    Caption = 'Add Band'
+    Caption = 'Add Band(s)'
     TabOrder = 2
   end
   object btnAddAlbum: TButton
-    Left = 376
+    Left = 240
     Top = 446
     Width = 216
     Height = 25
-    Caption = 'Add Album'
+    Caption = 'Add Album(s) from a Band'
     TabOrder = 3
   end
   object btnAddSongs: TButton
-    Left = 376
+    Left = 240
     Top = 477
     Width = 216
     Height = 25
-    Caption = 'Add Song(s)'
+    Caption = 'Add Song(s) from an Album'
     TabOrder = 4
+  end
+  object btnDeleteBand: TButton
+    Left = 472
+    Top = 415
+    Width = 120
+    Height = 25
+    Caption = 'Delete Band(s)'
+    TabOrder = 5
+  end
+  object btnDeleteAlbum: TButton
+    Left = 472
+    Top = 446
+    Width = 120
+    Height = 25
+    Caption = 'Delete Album(s)'
+    TabOrder = 6
+  end
+  object btnDeleteSong: TButton
+    Left = 472
+    Top = 477
+    Width = 120
+    Height = 25
+    Caption = 'Delete Song(s)'
+    TabOrder = 7
   end
   object menuBar: TMainMenu
     Left = 560
