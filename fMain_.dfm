@@ -12,6 +12,7 @@ object fMain: TfMain
   Font.Style = []
   Menu = menuBar
   OldCreateOrder = False
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object ListView1: TListView

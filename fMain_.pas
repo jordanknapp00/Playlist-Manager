@@ -34,6 +34,7 @@ type
     procedure btnAddBandClick(Sender: TObject);
     procedure btnAddAlbumClick(Sender: TObject);
     procedure btnAddSongsClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -46,9 +47,14 @@ var
 implementation
 
 uses
-  fAddBand_, fAddAlbum_, fAddSong_;
+  fAddBand_, fAddAlbum_, fAddSong_, DataModule;
 
 {$R *.dfm}
+
+procedure TfMain.FormShow(Sender: TObject);
+begin
+  dm.Init;
+end;
 
 //==============================================================================
 //                            BUTTON CLICK METHODS
