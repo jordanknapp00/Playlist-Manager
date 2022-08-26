@@ -37,7 +37,6 @@ begin
   Top := fMain.Top + Trunc(fMain.Height / 2) - Trunc(Height / 2);
   Left := fMain.Left + Trunc(fMain.Width / 2) - Trunc(Width / 2);
 
-  //is there a better way to remove default text from a text box?
   textBoxAlbums.Text := '';
   textBoxYears.Text := '';
 end;

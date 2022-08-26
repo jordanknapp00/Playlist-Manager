@@ -50,6 +50,10 @@ uses
 
 {$R *.dfm}
 
+//==============================================================================
+//                            BUTTON CLICK METHODS
+//==============================================================================
+
 procedure TfMain.btnAddBandClick(Sender: TObject);
 begin
   Application.CreateForm(TfAddBand, fAddBand);
