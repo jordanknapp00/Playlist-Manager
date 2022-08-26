@@ -28,6 +28,12 @@ type
     btnAddBand: TButton;
     btnAddAlbum: TButton;
     btnAddSongs: TButton;
+    btnDeleteBand: TButton;
+    btnDeleteAlbum: TButton;
+    btnDeleteSong: TButton;
+    procedure btnAddBandClick(Sender: TObject);
+    procedure btnAddAlbumClick(Sender: TObject);
+    procedure btnAddSongsClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -39,6 +45,31 @@ var
 
 implementation
 
+uses
+  fAddBand_, fAddAlbum_, fAddSong_;
+
 {$R *.dfm}
+
+//==============================================================================
+//                            BUTTON CLICK METHODS
+//==============================================================================
+
+procedure TfMain.btnAddBandClick(Sender: TObject);
+begin
+  Application.CreateForm(TfAddBand, fAddBand);
+  fAddBand.ShowModal;
+end;
+
+procedure TfMain.btnAddAlbumClick(Sender: TObject);
+begin
+  Application.CreateForm(TfAddAlbum, fAddAlbum);
+  fAddAlbum.ShowModal;
+end;
+
+procedure TfMain.btnAddSongsClick(Sender: TObject);
+begin
+  Application.CreateForm(TfAddSong, fAddSong);
+  fAddSong.ShowModal;
+end;
 
 end.
