@@ -77,6 +77,7 @@ object fMain: TfMain
     Height = 25
     Caption = 'Add Song(s) from an Album'
     TabOrder = 4
+    OnClick = btnAddSongsClick
   end
   object btnDeleteBand: TButton
     Left = 472

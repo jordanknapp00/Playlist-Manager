@@ -1,4 +1,4 @@
-unit fAddAlbum_;
+unit fAddSong_;
 
 interface
 
@@ -9,14 +9,16 @@ uses
   fMain_;
 
 type
-  TfAddAlbum = class(TForm)
-    cbBands: TComboBox;
+  TfAddSong = class(TForm)
+    cbAlbums: TComboBox;
     Label1: TLabel;
     Label2: TLabel;
-    textBoxAlbums: TMemo;
-    btnAddAlbum: TButton;
+    textBoxSongs: TMemo;
+    btnAddSongs: TButton;
     Label3: TLabel;
-    textBoxYears: TMemo;
+    textBoxTrackNums: TMemo;
+    Label4: TLabel;
+    cbBands: TComboBox;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -25,21 +27,20 @@ type
   end;
 
 var
-  fAddAlbum: TfAddAlbum;
+  fAddSong: TfAddSong;
 
 implementation
 
 {$R *.dfm}
 
-procedure TfAddAlbum.FormCreate(Sender: TObject);
+procedure TfAddSong.FormCreate(Sender: TObject);
 begin
   //put this dialog in the exact middle of the main window
   Top := fMain.Top + Trunc(fMain.Height / 2) - Trunc(Height / 2);
   Left := fMain.Left + Trunc(fMain.Width / 2) - Trunc(Width / 2);
 
-  //is there a better way to remove default text from a text box?
-  textBoxAlbums.Text := '';
-  textBoxYears.Text := '';
+  textBoxSongs.Text := '';
+  textBoxTrackNums.Text := '';
 end;
 
 end.

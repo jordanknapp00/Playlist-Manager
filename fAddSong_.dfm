@@ -1,7 +1,7 @@
-object fAddAlbum: TfAddAlbum
+object fAddSong: TfAddSong
   Left = 0
   Top = 0
-  Caption = 'Add Album(s)'
+  Caption = 'Add Song(s)'
   ClientHeight = 295
   ClientWidth = 372
   Color = clBtnFace
@@ -15,35 +15,43 @@ object fAddAlbum: TfAddAlbum
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
-    Left = 103
+    Left = 194
     Top = 8
-    Width = 178
+    Width = 170
     Height = 13
     Alignment = taCenter
-    Caption = 'Select a Band to Add Album(s) To:'
+    Caption = 'Select an Album to Add Song(s) To:'
   end
   object Label2: TLabel
     Left = 8
     Top = 72
-    Width = 110
+    Width = 105
     Height = 13
-    Caption = 'Enter Album(s) to Add:'
+    Caption = 'Enter Song(s) to Add:'
   end
   object Label3: TLabel
     Left = 248
     Top = 72
-    Width = 116
+    Width = 104
     Height = 13
-    Caption = 'Enter Years For Albums:'
+    Caption = 'Enter Track Numbers:'
   end
-  object cbBands: TComboBox
-    Left = 103
+  object Label4: TLabel
+    Left = 8
+    Top = 8
+    Width = 118
+    Height = 13
+    Alignment = taCenter
+    Caption = 'Select a Band (optional):'
+  end
+  object cbAlbums: TComboBox
+    Left = 194
     Top = 27
-    Width = 178
+    Width = 170
     Height = 21
     TabOrder = 0
   end
-  object textBoxAlbums: TMemo
+  object textBoxSongs: TMemo
     Left = 8
     Top = 91
     Width = 217
@@ -53,15 +61,15 @@ object fAddAlbum: TfAddAlbum
     ScrollBars = ssVertical
     TabOrder = 1
   end
-  object btnAddAlbum: TButton
+  object btnAddSongs: TButton
     Left = 8
-    Top = 262
+    Top = 256
     Width = 356
     Height = 25
-    Caption = 'Add Album(s)'
+    Caption = 'Add Song(s)'
     TabOrder = 2
   end
-  object textBoxYears: TMemo
+  object textBoxTrackNums: TMemo
     Left = 248
     Top = 91
     Width = 116
@@ -70,5 +78,12 @@ object fAddAlbum: TfAddAlbum
       'textBoxYears')
     ScrollBars = ssVertical
     TabOrder = 3
+  end
+  object cbBands: TComboBox
+    Left = 8
+    Top = 27
+    Width = 169
+    Height = 21
+    TabOrder = 4
   end
 end
