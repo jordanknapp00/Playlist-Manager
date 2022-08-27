@@ -3,7 +3,9 @@ unit DataStructs;
 interface
 
 uses
-  System.Generics.Collections;
+  System.Generics.Collections, System.Generics.Defaults,
+
+  Vcl.Dialogs;
 
 type
   {
@@ -23,6 +25,9 @@ type
     songName, songGenres, bandName, albumName: String;
     track, itemID: Integer;
 
+    songComparer: IComparer<TSong>;
+    function CompareFunc(const Left, Right: TSong): Integer;
+
   public
     isFavorite: Boolean;
 
@@ -34,6 +39,8 @@ type
     //relational properties
     property band: String read bandName;
     property album: String read albumName;
+
+    property comparer: IComparer<TSong> read songComparer;
 
     constructor Create(songName, songGenres, bandName, albumName: String; trackNo: Integer);
   end;
@@ -55,12 +62,17 @@ type
 
     songs: TList<TSong>;
 
+    albumComparer: IComparer<TAlbum>;
+    function CompareFunc(const Left, Right: TAlbum): Integer;
+
   public
     isFavorite: Boolean;
 
     property name: String read albumName;
     property year: Integer read albumYear;
     property id: Integer read itemID;
+
+    property comparer: IComparer<TAlbum> read albumComparer;
 
     //relational property
     property band: String read bandName;
@@ -82,11 +94,16 @@ type
 
     albums: TList<TAlbum>;
 
+    bandComparer: IComparer<TBand>;
+    function CompareFunc(const Left, Right: TBand): Integer;
+
   public
     isFavorite: Boolean;
 
     property name: String read bandName;
     property id: Integer read itemID;
+
+    property comparer: IComparer<TBand> read bandComparer;
 
     constructor Create(bandName: String);
   end;
@@ -119,6 +136,35 @@ begin
 
   itemID := idCount;
   Inc(idCount);
+
+  //define the comparer function for TSong
+  songComparer := TComparer<TSong>.Construct(CompareFunc);
+end;
+
+//comparer function
+function TSong.CompareFunc(const Left: TSong; const Right: TSong): Integer;
+begin
+  if Left.name < Right.name then
+    Result := -1
+  else if Left.name > Right.name then
+    Result := 1
+  //if left and right have the same name, check the album to decide
+  else
+  begin
+    if Left.album < Right.album then
+      Result := -1
+    else if Left.album > Right.album then
+      Result := 1
+    else
+    //if the album is the same too, now we check the band, which we know
+    //cannot be a duplicate
+    begin
+      if Left.band < Right.band then
+        Result := -1
+      else
+        Result := 1;
+    end;
+  end;
 end;
 
 //==============================================================================
@@ -138,6 +184,26 @@ begin
 
   itemID := idCount;
   Inc(idCount);
+
+  //define comparer for album
+  albumComparer := TComparer<TAlbum>.Construct(CompareFunc);
+end;
+
+function TAlbum.CompareFunc(const Left: TAlbum; const Right: TAlbum): Integer;
+begin
+  if Left.name < Right.name then
+    Result := -1
+  else if Left.name > Right.name then
+    Result := 1
+  //if left and right have the same name, check the band to decide, which we
+  //know can't be a duplicate
+  else
+  begin
+    if Left.band < Right.band then
+      Result := -1
+    else
+      Result := 1;
+  end;
 end;
 
 //==============================================================================
@@ -154,6 +220,16 @@ begin
 
   itemID := idCount;
   Inc(idCount);
+
+  bandComparer := TComparer<TBand>.Construct(CompareFunc);
+end;
+
+function TBand.CompareFunc(const Left: TBand; const Right: TBand): Integer;
+begin
+  if Left.name < Right.name then
+    Result := -1
+  else
+    Result := 1;
 end;
 
 end.
