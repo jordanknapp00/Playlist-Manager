@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
 
-  fMain_;
+  fMain_, DataStructs;
 
 type
   TfAddBand = class(TForm)
@@ -14,6 +14,7 @@ type
     textBox: TMemo;
     btnAddBands: TButton;
     procedure FormCreate(Sender: TObject);
+    procedure btnAddBandsClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -25,6 +26,9 @@ var
 
 implementation
 
+uses
+  DataModule;
+
 {$R *.dfm}
 
 procedure TfAddBand.FormCreate(Sender: TObject);
@@ -35,6 +39,32 @@ begin
 
   //is there a better way to remove default text from a text box?
   textBox.Text := '';
+end;
+
+procedure TfAddBand.btnAddBandsClick(Sender: TObject);
+var
+  bandAt: String;
+  count: Integer;
+begin
+  count := 0;
+
+  for bandAt in textBox.Lines do
+  begin
+    //ignore duplicate bands
+    if not dm.BandExists(bandAt) then
+    begin
+      dm.bands.Add(TBand.Create(bandAt));
+      Inc(count);
+    end
+    else
+      showMessage('Band ' + bandAt + ' rejected, because it is a duplicate. ' +
+        'Sorry, but at this time, we do not allow duplicate band names.');
+  end;
+
+  showMessage('Successfully added ' + IntToStr(count) + ' of ' +
+    IntToStr(textBox.Lines.Count) + ' entered bands.');
+
+  fAddBand.Close;
 end;
 
 end.

@@ -17,7 +17,7 @@ object fAddAlbum: TfAddAlbum
   object Label1: TLabel
     Left = 103
     Top = 8
-    Width = 178
+    Width = 164
     Height = 13
     Alignment = taCenter
     Caption = 'Select a Band to Add Album(s) To:'

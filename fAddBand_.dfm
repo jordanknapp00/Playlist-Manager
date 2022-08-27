@@ -38,5 +38,6 @@ object fAddBand: TfAddBand
     Height = 25
     Caption = 'Add Band(s)'
     TabOrder = 1
+    OnClick = btnAddBandsClick
   end
 end

@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
 
-  fMain_;
+  fMain_, DataStructs, DataModule;
 
 type
   TfAddAlbum = class(TForm)
@@ -32,6 +32,8 @@ implementation
 {$R *.dfm}
 
 procedure TfAddAlbum.FormCreate(Sender: TObject);
+var
+  bandAt: TBand;
 begin
   //put this dialog in the exact middle of the main window
   Top := fMain.Top + Trunc(fMain.Height / 2) - Trunc(Height / 2);
@@ -39,6 +41,17 @@ begin
 
   textBoxAlbums.Text := '';
   textBoxYears.Text := '';
+
+  //add list of bands to the dropdown after sorting, if there are any bands
+  if dm.bands.Count > 0 then
+  begin
+    dm.bands.Sort(dm.bands[0].comparer);
+    for bandAt in dm.bands do
+    begin
+      cbBands.Items.Add(bandAt.name);
+    end;
+  end;
+
 end;
 
 end.
