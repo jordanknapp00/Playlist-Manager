@@ -12,14 +12,15 @@ type
   songs more easily classifiable.
 
   A song has a name, a list of genres (all of which are stored in a string), and
-  a track number (used for sorting in the table).
+  a track number (used for sorting in the table). There are also the associated
+  band and album names, which allow songs to be narrowed down easily.
 
   As with all classes for this program, there is also a boolean to designate it
   as a favorite.
   }
   TSong = class
   private
-    songName, songGenres: String;
+    songName, songGenres, bandName, albumName: String;
     track, itemID: Integer;
 
   public
@@ -30,7 +31,11 @@ type
     property trackNo: Integer read track;
     property id: Integer read itemID;
 
-    constructor Create(songName, songGenres: String; trackNo: Integer);
+    //relational properties
+    property band: String read bandName;
+    property album: String read albumName;
+
+    constructor Create(songName, songGenres, bandName, albumName: String; trackNo: Integer);
   end;
 
   {
@@ -39,10 +44,13 @@ type
 
   An album has a name and a year that it came out, along with the aforementioned
   list of songs. And of course, albums can be designated as favorites as well.
+
+  Albums have an associated band as well, allowing an easy way to narrow down
+  albums when querying.
   }
   TAlbum = class
   private
-    albumName: String;
+    albumName, bandName: String;
     albumYear, itemID: Integer;
 
     songs: TList<TSong>;
@@ -54,7 +62,10 @@ type
     property year: Integer read albumYear;
     property id: Integer read itemID;
 
-    constructor Create(albumName: String; albumYear: Integer);
+    //relational property
+    property band: String read bandName;
+
+    constructor Create(albumName, bandName: String; albumYear: Integer);
   end;
 
   {
@@ -95,11 +106,14 @@ implementation
 //                                TSong Methods
 //==============================================================================
 
-constructor TSong.Create(songName, songGenres: String; trackNo: Integer);
+constructor TSong.Create(songName, songGenres, bandName, albumName: String; trackNo: Integer);
 begin
   self.songName := songName;
   self.songGenres := songGenres;
   self.track := trackNo;
+
+  self.bandName := bandName;
+  self.albumName := albumName;
 
   isFavorite := false;
 
@@ -111,10 +125,12 @@ end;
 //                                TAlbum Methods
 //==============================================================================
 
-constructor TAlbum.Create(albumName: String; albumYear: Integer);
+constructor TAlbum.Create(albumName, bandName: String; albumYear: Integer);
 begin
   self.albumName := albumName;
   self.albumYear := albumYear;
+
+  self.bandName := bandName;
 
   isFavorite := false;
 
