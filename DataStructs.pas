@@ -37,7 +37,7 @@ type
     property band: String read bandName;
     property album: String read albumName;
 
-    constructor Create(songName, songGenres, bandName, albumName: String; trackNo: Integer);
+    constructor Create(const songName, songGenres, bandName, albumName: String; const trackNo: Integer);
   end;
 
   {
@@ -67,7 +67,7 @@ type
     //relational property
     property band: String read bandName;
 
-    constructor Create(albumName, bandName: String; albumYear: Integer);
+    constructor Create(const albumName, bandName: String; const albumYear: Integer);
   end;
 
   {
@@ -90,7 +90,7 @@ type
     property name: String read bandName;
     property id: Integer read itemID;
 
-    constructor Create(bandName: String);
+    constructor Create(const bandName: String);
   end;
 
 //this is basically a static variable that we use to give everything a unique id.
@@ -108,7 +108,7 @@ implementation
 //                                TSong Methods
 //==============================================================================
 
-constructor TSong.Create(songName, songGenres, bandName, albumName: String; trackNo: Integer);
+constructor TSong.Create(const songName, songGenres, bandName, albumName: String; const trackNo: Integer);
 begin
   self.songName := songName;
   self.songGenres := songGenres;
@@ -127,7 +127,7 @@ end;
 //                                TAlbum Methods
 //==============================================================================
 
-constructor TAlbum.Create(albumName, bandName: String; albumYear: Integer);
+constructor TAlbum.Create(const albumName, bandName: String; const albumYear: Integer);
 begin
   self.albumName := albumName;
   self.albumYear := albumYear;
@@ -146,7 +146,7 @@ end;
 //                                TBand Methods
 //==============================================================================
 
-constructor TBand.Create(bandName: String);
+constructor TBand.Create(const bandName: String);
 begin
   self.bandName := bandName;
 
