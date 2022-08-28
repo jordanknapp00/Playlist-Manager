@@ -33,7 +33,7 @@ implementation
 
 procedure TfAddAlbum.FormCreate(Sender: TObject);
 var
-  bandAt: TBand;
+  bandAt: String;
 begin
   //put this dialog in the exact middle of the main window
   Top := fMain.Top + Trunc(fMain.Height / 2) - Trunc(Height / 2);
@@ -43,12 +43,12 @@ begin
   textBoxYears.Text := '';
 
   //add list of bands to the dropdown after sorting, if there are any bands
-  if dm.bands.Count > 0 then
+  if dm.bandNames.Count > 0 then
   begin
-    dm.bands.Sort(dm.bands[0].comparer);
-    for bandAt in dm.bands do
+    dm.bandNames.Sort;
+    for bandAt in dm.bandNames do
     begin
-      cbBands.Items.Add(bandAt.name);
+      cbBands.Items.Add(bandAt);
     end;
   end;
 

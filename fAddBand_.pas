@@ -51,14 +51,14 @@ begin
   for bandAt in textBox.Lines do
   begin
     //ignore duplicate bands
-    if not dm.BandExists(bandAt) then
+    if not dm.AddBand(bandAt) then
     begin
-      dm.bands.Add(TBand.Create(bandAt));
-      Inc(count);
-    end
-    else
       showMessage('Band ' + bandAt + ' rejected, because it is a duplicate. ' +
         'Sorry, but at this time, we do not allow duplicate band names.');
+    end
+    else
+      Inc(count);
+
   end;
 
   showMessage('Successfully added ' + IntToStr(count) + ' of ' +
