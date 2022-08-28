@@ -141,6 +141,10 @@ object fMain: TfMain
       object menuItemHowToUse: TMenuItem
         Caption = 'How to Use This Program'
       end
+      object menuItemStats: TMenuItem
+        Caption = 'Statistics'
+        OnClick = menuItemStatsClick
+      end
       object menuItemAbout: TMenuItem
         Caption = 'About'
       end
