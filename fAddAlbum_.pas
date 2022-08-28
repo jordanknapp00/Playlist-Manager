@@ -36,6 +36,13 @@ implementation
 
 procedure TfAddAlbum.cbBandsChange(Sender: TObject);
 begin
+  //we want to prompt the user as to whether they want to clear out what they've
+  //entered upon selection of a new band, but only under a few conditions:
+  // - if user has gone from selecting no band to a band, don't show the message.
+  // - if the user has selected the same band they had already selected, don't
+  //   show the message.
+  // - if the user hasn't entered anything in both text boxes, don't show the
+  //   message.
   if (oldSelection <> '') and (oldSelection <> cbBands.Items[cbBands.ItemIndex])
     and ((textBoxAlbums.Lines.Count > 0) or (textBoxYears.Lines.Count > 0)) then
   begin
@@ -112,10 +119,13 @@ begin
 
   showMessage('Successfully added ' + IntToStr(count) + ' of ' +
     IntToStr(textBoxAlbums.Lines.Count) + ' entered albums for band ' +
-      cbBands.Items[cbBands.ItemIndex] + '.');
+    cbBands.Items[cbBands.ItemIndex] + '.');
 
+  //rather than closing the dialog, simply clear the text boxes and open the
+  //band lookup box so the user can easily select another band.
   textBoxYears.Clear;
   textBoxAlbums.Clear;
+  cbBands.DroppedDown := true;
 end;
 
 end.
