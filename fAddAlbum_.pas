@@ -43,7 +43,7 @@ begin
   textBoxYears.Text := '';
 
   //add list of bands to the dropdown after sorting, if there are any bands
-  if dm.bands.Count > 0 then
+  if dm.bandNames.Count > 0 then
   begin
     dm.bandNames.Sort;
     for bandAt in dm.bandNames do
