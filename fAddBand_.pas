@@ -51,9 +51,9 @@ begin
   for bandAt in textBox.Lines do
   begin
     //ignore duplicate bands
-    if not dm.BandExists(bandAt) then
+    if not dm.bandNames.Contains(bandAt) then
     begin
-      dm.bands.Add(TBand.Create(bandAt));
+      dm.AddBand(bandAt);
       Inc(count);
     end
     else
