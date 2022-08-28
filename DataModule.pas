@@ -13,15 +13,21 @@ type
     { Private declarations }
   public
     { Public declarations }
-    bands: TList<TBand>;
-    albums: TList<TAlbum>;
-    songs: TList<TSong>;
+    //keep lists of names for easy sorting and inserting into lookup boxes
+    bandNames: TList<String>;
+    albumNames: TList<String>;
+    songNames: TList<String>;
+
+    //also have dictionaries for easy access to data
+    bands: TDictionary<String, TBand>;
+    albums: TDictionary<String, TAlbum>;
+    songs: TDictionary<String, TSong>;
 
     procedure Init;
 
-    function BandExists(bandName: String): Boolean;
-    function AlbumExists(albumName: String): Boolean;
-    function SongExists(songName: String): Boolean;
+    procedure AddBand(const bandName: String);
+    procedure AddAlbum(const albumName, bandName: String; const albumYear: Integer);
+    procedure AddSong(const songName, genres, bandName, albumName: String; const trackNo: Integer);
   end;
 
 var
@@ -35,57 +41,34 @@ implementation
 
 procedure Tdm.Init;
 begin
-  bands := TList<TBand>.Create;
-  albums := TList<TAlbum>.Create;
-  songs := TList<TSong>.Create;
+  bandNames := TList<String>.Create;
+  albumNames := TList<String>.Create;
+  songNames := TList<String>.Create;
+
+  bands := TDictionary<String, TBand>.Create;
+  albums := TDictionary<String, TAlbum>.Create;
+  songs := TDictionary<String, TSong>.Create;
 end;
 
-function Tdm.BandExists(bandName: String): Boolean;
-var
-  bandAt: TBand;
+procedure Tdm.AddBand(const bandName: string);
 begin
-  Result := false;
+  bandNames.Add(bandName);
 
-  for bandAt in bands do
-  begin
-    if bandAt.name = bandName then
-    begin
-      Result := true;
-      Exit;
-    end;
-  end;
+  bands.Add(bandName, TBand.Create(bandName));
 end;
 
-function Tdm.AlbumExists(albumName: String): Boolean;
-var
-  albumAt: TAlbum;
+procedure Tdm.AddAlbum(const albumName: string; const bandName: string; const albumYear: Integer);
 begin
-  Result := false;
+  albumNames.Add(albumName);
 
-  for albumAt in albums do
-  begin
-    if albumAt.name = albumName then
-    begin
-      Result := true;
-      Exit;
-    end;
-  end;
+  albums.Add(albumName, TAlbum.Create(albumName, bandName, albumYear));
 end;
 
-function Tdm.SongExists(songName: String): Boolean;
-var
-  songAt: TSong;
+procedure Tdm.AddSong(const songName: string; const genres: string; const bandName: string; const albumName: string; const trackNo: Integer);
 begin
-  Result := false;
+  songNames.Add(songName);
 
-  for songAt in songs do
-  begin
-    if songAt.name = songName then
-    begin
-      Result := true;
-      Exit;
-    end;
-  end;
+  songs.Add(songName, TSong.Create(songName, genres, bandName, albumName, trackNo));
 end;
 
 end.
