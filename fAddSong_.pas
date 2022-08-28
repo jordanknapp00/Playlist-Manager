@@ -70,8 +70,9 @@ begin
   cbAlbums.Text := '';
   cbAlbums.Items.Add('N/A');
 
-  //put that band's albums in the album lookup box
-  for albumAt in dm.albums.Values do
+  //put that band's albums in the album lookup box after sorting
+  dm.SortAlbumsOfBand(oldSelection);
+  for albumAt in dm.bands[oldSelection].albums do
   begin
     if albumAt.band = oldSelection then
       cbAlbums.Items.Add(albumAt.name);

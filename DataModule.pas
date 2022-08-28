@@ -4,6 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Generics.Collections,
+  System.Generics.Defaults,
 
   DataStructs;
 
@@ -28,6 +29,9 @@ type
     function AddBand(const bandName: String): Boolean;
     function AddAlbum(const albumName, bandName: String; const albumYear: Integer): Boolean;
     function AddSong(const songName, genres, bandName, albumName: String; const trackNo: Integer): Boolean;
+
+    procedure SortAlbumsOfBand(bandName: String);
+    procedure SortSongsOfAlbum(albumName: String);
   end;
 
 var
@@ -99,6 +103,35 @@ begin
 
   songNames.Add(songName);
   songs.Add(songName, TSong.Create(songName, genres, bandName, albumName, trackNo));
+end;
+
+procedure Tdm.SortAlbumsOfBand(bandName: String);
+begin
+  bands[bandName].albums.Sort(
+    TComparer<TAlbum>.Construct(
+      function(const left, right: TAlbum): Integer
+      begin
+        Result := CompareStr(left.name, right.name);
+      end
+    )
+  );
+end;
+
+procedure Tdm.SortSongsOfAlbum(albumName: String);
+begin
+  albums[albumName].songs.Sort(
+    TComparer<TSong>.Construct(
+      function(const left, right: TSong): Integer
+      begin
+        if left.trackNo < right.trackNo then
+          Result := -1
+        else if left.trackNo > right.trackNo then
+          Result := 1
+        else
+          Result := 0;
+      end
+    )
+  );
 end;
 
 end.
