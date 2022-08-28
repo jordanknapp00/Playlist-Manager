@@ -55,10 +55,10 @@ type
     albumName, bandName: String;
     albumYear, itemID: Integer;
 
-    songs: TList<TSong>;
-
   public
     isFavorite: Boolean;
+
+    songs: TList<TSong>;
 
     property name: String read albumName;
     property year: Integer read albumYear;
@@ -82,10 +82,10 @@ type
     bandName: String;
     itemID: Integer;
 
-    albums: TList<TAlbum>;
-
   public
     isFavorite: Boolean;
+
+    albums: TList<TAlbum>;
 
     property name: String read bandName;
     property id: Integer read itemID;

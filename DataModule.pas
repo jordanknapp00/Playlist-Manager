@@ -64,7 +64,9 @@ begin
   bands.Add(bandName, TBand.Create(bandName));
 end;
 
-function Tdm.AddAlbum(const albumName: string; const bandName: string; const albumYear: Integer): Boolean;
+function Tdm.AddAlbum(const albumName, bandName: string; const albumYear: Integer): Boolean;
+var
+  newAlbum: TAlbum;
 begin
   Result := true;
 
@@ -75,10 +77,17 @@ begin
   end;
 
   albumNames.Add(albumName);
-  albums.Add(albumName, TAlbum.Create(albumName, bandName, albumYear));
+
+  newAlbum := TAlbum.Create(albumName, bandName, albumYear);
+  albums.Add(albumName, newAlbum);
+
+  //also add this album to the band's list of albums
+  bands[bandName].albums.Add(newAlbum);
 end;
 
-function Tdm.AddSong(const songName: string; const genres: string; const bandName: string; const albumName: string; const trackNo: Integer): Boolean;
+function Tdm.AddSong(const songName, genres, bandName, albumName: string; const trackNo: Integer): Boolean;
+var
+  newSong: TSong;
 begin
   Result := true;
 
