@@ -31,10 +31,12 @@ type
     btnDeleteBand: TButton;
     btnDeleteAlbum: TButton;
     btnDeleteSong: TButton;
+    menuItemStats: TMenuItem;
     procedure btnAddBandClick(Sender: TObject);
     procedure btnAddAlbumClick(Sender: TObject);
     procedure btnAddSongsClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure menuItemStatsClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -76,6 +78,17 @@ procedure TfMain.btnAddSongsClick(Sender: TObject);
 begin
   Application.CreateForm(TfAddSong, fAddSong);
   fAddSong.ShowModal;
+end;
+
+//==============================================================================
+//                          MENU ITEM CLICK METHODS
+//==============================================================================
+
+procedure TfMain.menuItemStatsClick(Sender: TObject);
+begin
+  showMessage(IntToStr(dm.bands.Count) + ' bands,' + #13#10 +
+    IntToStr(dm.albums.Count) + ' albums, and' + #13#10 +
+    IntToStr(dm.songs.Count) + ' songs.');
 end;
 
 end.

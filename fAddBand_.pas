@@ -52,13 +52,10 @@ begin
   begin
     //ignore duplicate bands
     if not dm.AddBand(bandAt) then
-    begin
       showMessage('Band ' + bandAt + ' rejected, because it is a duplicate. ' +
-        'Sorry, but at this time, we do not allow duplicate band names.');
-    end
+        'Sorry, but at this time, we do not allow duplicate band names.')
     else
       Inc(count);
-
   end;
 
   showMessage('Successfully added ' + IntToStr(count) + ' of ' +

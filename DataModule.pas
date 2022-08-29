@@ -4,6 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Generics.Collections,
+  System.Generics.Defaults,
 
   DataStructs;
 
@@ -27,7 +28,10 @@ type
 
     function AddBand(const bandName: String): Boolean;
     function AddAlbum(const albumName, bandName: String; const albumYear: Integer): Boolean;
-    function AddSong(const songName, genres, bandName, albumName: String; const trackNo: Integer): Boolean;
+    function AddSong(const songName, bandName, albumName: String; const trackNo: Integer): Boolean;
+
+    procedure SortAlbumsOfBand(bandName: String);
+    procedure SortSongsOfAlbum(albumName: String);
   end;
 
 var
@@ -64,7 +68,9 @@ begin
   bands.Add(bandName, TBand.Create(bandName));
 end;
 
-function Tdm.AddAlbum(const albumName: string; const bandName: string; const albumYear: Integer): Boolean;
+function Tdm.AddAlbum(const albumName, bandName: string; const albumYear: Integer): Boolean;
+var
+  newAlbum: TAlbum;
 begin
   Result := true;
 
@@ -75,10 +81,15 @@ begin
   end;
 
   albumNames.Add(albumName);
-  albums.Add(albumName, TAlbum.Create(albumName, bandName, albumYear));
+
+  newAlbum := TAlbum.Create(albumName, bandName, albumYear);
+  albums.Add(albumName, newAlbum);
+
+  //also add this album to the band's list of albums
+  bands[bandName].albums.Add(newAlbum);
 end;
 
-function Tdm.AddSong(const songName: string; const genres: string; const bandName: string; const albumName: string; const trackNo: Integer): Boolean;
+function Tdm.AddSong(const songName, bandName, albumName: string; const trackNo: Integer): Boolean;
 begin
   Result := true;
 
@@ -89,7 +100,41 @@ begin
   end;
 
   songNames.Add(songName);
-  songs.Add(songName, TSong.Create(songName, genres, bandName, albumName, trackNo));
+  songs.Add(songName, TSong.Create(songName, bandName, albumName, trackNo));
+end;
+
+procedure Tdm.SortAlbumsOfBand(bandName: String);
+begin
+  bands[bandName].albums.Sort(
+    TComparer<TAlbum>.Construct(
+      function(const left, right: TAlbum): Integer
+      begin
+        if left.year < right.year then
+          Result := -1
+        else if left.year > right.year then
+          Result := 1
+        else
+          Result := CompareStr(left.name, right.name);
+      end
+    )
+  );
+end;
+
+procedure Tdm.SortSongsOfAlbum(albumName: String);
+begin
+  albums[albumName].songs.Sort(
+    TComparer<TSong>.Construct(
+      function(const left, right: TSong): Integer
+      begin
+        if left.trackNo < right.trackNo then
+          Result := -1
+        else if left.trackNo > right.trackNo then
+          Result := 1
+        else
+          Result := 0;
+      end
+    )
+  );
 end;
 
 end.

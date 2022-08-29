@@ -3,7 +3,7 @@ object fAddSong: TfAddSong
   Top = 0
   Caption = 'Add Song(s)'
   ClientHeight = 295
-  ClientWidth = 372
+  ClientWidth = 374
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,12 +15,12 @@ object fAddSong: TfAddSong
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
-    Left = 194
+    Left = 192
     Top = 8
-    Width = 170
+    Width = 129
     Height = 13
     Alignment = taCenter
-    Caption = 'Select an Album to Add Song(s) To:'
+    Caption = 'Select an Album (optional):'
   end
   object Label2: TLabel
     Left = 8
@@ -39,17 +39,26 @@ object fAddSong: TfAddSong
   object Label4: TLabel
     Left = 8
     Top = 8
-    Width = 118
+    Width = 69
     Height = 13
     Alignment = taCenter
-    Caption = 'Select a Band (optional):'
+    Caption = 'Select a Band:'
+  end
+  object lblUseNA: TLabel
+    Left = 192
+    Top = 48
+    Width = 3
+    Height = 13
   end
   object cbAlbums: TComboBox
-    Left = 194
+    Left = 192
     Top = 27
-    Width = 170
+    Width = 172
     Height = 21
     TabOrder = 0
+    OnChange = cbAlbumsChange
+    Items.Strings = (
+      'N/A')
   end
   object textBoxSongs: TMemo
     Left = 8
@@ -63,11 +72,12 @@ object fAddSong: TfAddSong
   end
   object btnAddSongs: TButton
     Left = 8
-    Top = 256
+    Top = 262
     Width = 356
     Height = 25
     Caption = 'Add Song(s)'
     TabOrder = 2
+    OnClick = btnAddSongsClick
   end
   object textBoxTrackNums: TMemo
     Left = 248
@@ -85,5 +95,6 @@ object fAddSong: TfAddSong
     Width = 169
     Height = 21
     TabOrder = 4
+    OnChange = cbBandsChange
   end
 end

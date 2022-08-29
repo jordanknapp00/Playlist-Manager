@@ -42,6 +42,7 @@ object fAddAlbum: TfAddAlbum
     Width = 178
     Height = 21
     TabOrder = 0
+    OnChange = cbBandsChange
   end
   object textBoxAlbums: TMemo
     Left = 8
@@ -60,6 +61,7 @@ object fAddAlbum: TfAddAlbum
     Height = 25
     Caption = 'Add Album(s)'
     TabOrder = 2
+    OnClick = btnAddAlbumClick
   end
   object textBoxYears: TMemo
     Left = 248
