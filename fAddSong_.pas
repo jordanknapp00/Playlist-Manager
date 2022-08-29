@@ -22,6 +22,7 @@ type
     lblUseNA: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure cbBandsChange(Sender: TObject);
+    procedure btnAddSongsClick(Sender: TObject);
   private
     { Private declarations }
     oldSelection: String;
@@ -36,9 +37,37 @@ implementation
 
 {$R *.dfm}
 
+procedure TfAddSong.FormCreate(Sender: TObject);
+var
+  bandAt: String;
+begin
+  //put this dialog in the exact middle of the main window
+  Top := fMain.Top + Trunc(fMain.Height / 2) - Trunc(Height / 2);
+  Left := fMain.Left + Trunc(fMain.Width / 2) - Trunc(Width / 2);
+
+  textBoxSongs.Text := '';
+  textBoxTrackNums.Text := '';
+
+  oldSelection := '';
+
+  lblUseNA.Caption := 'Use N/A if you aren''t categorizing' + #13#10 +
+    'by album.';
+
+  //add list of bands to the dropdown after sorting, if there are any bands
+  if dm.bandNames.Count > 0 then
+  begin
+    dm.bandNames.Sort;
+    for bandAt in dm.bandNames do
+    begin
+      cbBands.Items.Add(bandAt);
+    end;
+  end;
+end;
+
 procedure TfAddSong.cbBandsChange(Sender: TObject);
 var
   albumAt: TAlbum;
+  newSelection: String;
 begin
   //we want to prompt the user as to whether they want to clear out what they've
   //entered upon selection of a new band, but only under a few conditions:
@@ -77,32 +106,30 @@ begin
     if albumAt.band = oldSelection then
       cbAlbums.Items.Add(albumAt.name);
   end;
+
+
 end;
 
-procedure TfAddSong.FormCreate(Sender: TObject);
-var
-  bandAt: String;
+procedure TfAddSong.btnAddSongsClick(Sender: TObject);
 begin
-  //put this dialog in the exact middle of the main window
-  Top := fMain.Top + Trunc(fMain.Height / 2) - Trunc(Height / 2);
-  Left := fMain.Left + Trunc(fMain.Width / 2) - Trunc(Width / 2);
-
-  textBoxSongs.Text := '';
-  textBoxTrackNums.Text := '';
-
-  oldSelection := '';
-
-  lblUseNA.Caption := 'Use N/A if you aren''t categorizing' + #13#10 +
-    'by album.';
-
-  //add list of bands to the dropdown after sorting, if there are any bands
-  if dm.bandNames.Count > 0 then
+  if textBoxSongs.Lines.Count <> textBoxTrackNums.Lines.Count then
   begin
-    dm.bandNames.Sort;
-    for bandAt in dm.bandNames do
-    begin
-      cbBands.Items.Add(bandAt);
-    end;
+    showMessage('The number of songs entered does not match the number of ' +
+      'numbers entered.');
+    Exit;
+  end;
+
+  if cbBands.ItemIndex < 0 then
+  begin
+    showMessage('Please select a band. A song must have an associated band.');
+    Exit;
+  end;
+
+  if cbAlbums.ItemIndex < 0 then
+  begin
+    showMessage('Please select an album, or ''N/A'' if you don''t want to ' +
+      'enter albums.');
+    Exit;
   end;
 end;
 

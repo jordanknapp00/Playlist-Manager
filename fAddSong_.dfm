@@ -71,11 +71,12 @@ object fAddSong: TfAddSong
   end
   object btnAddSongs: TButton
     Left = 8
-    Top = 256
+    Top = 262
     Width = 356
     Height = 25
     Caption = 'Add Song(s)'
     TabOrder = 2
+    OnClick = btnAddSongsClick
   end
   object textBoxTrackNums: TMemo
     Left = 248
