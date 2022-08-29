@@ -111,7 +111,12 @@ begin
     TComparer<TAlbum>.Construct(
       function(const left, right: TAlbum): Integer
       begin
-        Result := CompareStr(left.name, right.name);
+        if left.year < right.year then
+          Result := -1
+        else if left.year > right.year then
+          Result := 1
+        else
+          Result := CompareStr(left.name, right.name);
       end
     )
   );
