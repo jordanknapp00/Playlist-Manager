@@ -56,6 +56,7 @@ object fAddSong: TfAddSong
     Width = 172
     Height = 21
     TabOrder = 0
+    OnChange = cbAlbumsChange
     Items.Strings = (
       'N/A')
   end

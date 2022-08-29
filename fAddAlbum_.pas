@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.UITypes,
 
   fMain_, DataStructs, DataModule;
 
@@ -35,6 +35,8 @@ implementation
 {$R *.dfm}
 
 procedure TfAddAlbum.cbBandsChange(Sender: TObject);
+var
+  choice: Integer;
 begin
   //we want to prompt the user as to whether they want to clear out what they've
   //entered upon selection of a new band, but only under a few conditions:
@@ -46,14 +48,20 @@ begin
   if (oldSelection <> '') and (oldSelection <> cbBands.Items[cbBands.ItemIndex])
     and ((textBoxAlbums.Lines.Count > 0) or (textBoxYears.Lines.Count > 0)) then
   begin
-    if messageDlg('Clear out what you''ve entered and select a new band?',
-      mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then
+    choice := messageDlg('Clear out what you''ve entered? Select ''Cancel'' if' +
+      ' you want to keep the same band selected and clear nothing.',
+      mtConfirmation, [mbYes, mbNo, mbCancel], 0, mbYes);
+
+    if choice = mrYes then
     begin
       textBoxAlbums.Clear;
       textBoxYears.Clear
     end
-    else
+    else if choice = mrCancel then
+    begin
       cbBands.ItemIndex := cbBands.Items.IndexOf(oldSelection);
+      Exit;
+    end;
   end;
 
   oldSelection := cbBands.Items[cbBands.ItemIndex];

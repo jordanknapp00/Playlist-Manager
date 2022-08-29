@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.UITypes,
 
   fMain_, DataModule, DataStructs;
 
@@ -23,9 +23,10 @@ type
     procedure FormCreate(Sender: TObject);
     procedure cbBandsChange(Sender: TObject);
     procedure btnAddSongsClick(Sender: TObject);
+    procedure cbAlbumsChange(Sender: TObject);
   private
     { Private declarations }
-    oldSelection: String;
+    oldBandSelection, oldAlbumSelection: String;
   public
     { Public declarations }
   end;
@@ -48,7 +49,8 @@ begin
   textBoxSongs.Text := '';
   textBoxTrackNums.Text := '';
 
-  oldSelection := '';
+  oldBandSelection := '';
+  oldAlbumSelection := '';
 
   lblUseNA.Caption := 'Use N/A if you aren''t categorizing' + #13#10 +
     'by album.';
@@ -67,7 +69,7 @@ end;
 procedure TfAddSong.cbBandsChange(Sender: TObject);
 var
   albumAt: TAlbum;
-  newSelection: String;
+  choice: Integer;
 begin
   //we want to prompt the user as to whether they want to clear out what they've
   //entered upon selection of a new band, but only under a few conditions:
@@ -76,20 +78,26 @@ begin
   //   show the message.
   // - if the user hasn't entered anything in both text boxes, don't show the
   //   message.
-  if (oldSelection <> '') and (oldSelection <> cbBands.Items[cbBands.ItemIndex])
+  if (oldBandSelection <> '') and (oldBandSelection <> cbBands.Items[cbBands.ItemIndex])
     and ((textBoxSongs.Lines.Count > 0) or (textBoxTrackNums.Lines.Count > 0)) then
   begin
-    if messageDlg('Clear out what you''ve entered and select a new band?',
-      mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrYes then
+    choice := messageDlg('Clear out what you''ve entered? Select ''Cancel'' if' +
+      ' you want to keep the same band selected and clear nothing.',
+      mtConfirmation, [mbYes, mbNo, mbCancel], 0, mbYes);
+
+    if choice = mrYes then
     begin
       textBoxSongs.Clear;
       textBoxTrackNums.Clear
     end
-    else
-      cbBands.ItemIndex := cbBands.Items.IndexOf(oldSelection);
+    else if choice = mrCancel then
+    begin
+      cbBands.ItemIndex := cbBands.Items.IndexOf(oldBandSelection);
+      Exit;
+    end;
   end;
 
-  oldSelection := cbBands.Items[cbBands.ItemIndex];
+  oldBandSelection := cbBands.Items[cbBands.ItemIndex];
 
   //how handle the album lookup box.
   //first, clear it out entirely and add back in the N/A
@@ -100,14 +108,38 @@ begin
   cbAlbums.Items.Add('N/A');
 
   //put that band's albums in the album lookup box after sorting
-  dm.SortAlbumsOfBand(oldSelection);
-  for albumAt in dm.bands[oldSelection].albums do
+  dm.SortAlbumsOfBand(oldBandSelection);
+  for albumAt in dm.bands[oldBandSelection].albums do
   begin
-    if albumAt.band = oldSelection then
+    if albumAt.band = oldBandSelection then
       cbAlbums.Items.Add(albumAt.name);
   end;
+end;
 
+procedure TfAddSong.cbAlbumsChange(Sender: TObject);
+var
+  choice: Integer;
+begin
+  if (oldAlbumSelection <> '') and (oldAlbumSelection <> cbAlbums.Items[cbAlbums.ItemIndex])
+    and ((textBoxSongs.Lines.Count > 0) or (textBoxTrackNums.Lines.Count > 0)) then
+  begin
+    choice := messageDlg('Clear out what you''ve entered? Select ''Cancel'' if' +
+      ' you want to keep the same album selected and clear nothing.',
+      mtConfirmation, [mbYes, mbNo, mbCancel], 0, mbYes);
 
+    if choice = mrYes then
+    begin
+      textBoxSongs.Clear;
+      textBoxTrackNums.Clear
+    end
+    else if choice = mrCancel then
+    begin
+      cbAlbums.ItemIndex := cbAlbums.Items.IndexOf(oldAlbumSelection);
+      Exit;
+    end;
+  end;
+
+  oldAlbumSelection := cbAlbums.Items[cbAlbums.ItemIndex];
 end;
 
 procedure TfAddSong.btnAddSongsClick(Sender: TObject);
