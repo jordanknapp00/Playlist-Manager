@@ -28,7 +28,7 @@ type
 
     function AddBand(const bandName: String): Boolean;
     function AddAlbum(const albumName, bandName: String; const albumYear: Integer): Boolean;
-    function AddSong(const songName, genres, bandName, albumName: String; const trackNo: Integer): Boolean;
+    function AddSong(const songName, bandName, albumName: String; const trackNo: Integer): Boolean;
 
     procedure SortAlbumsOfBand(bandName: String);
     procedure SortSongsOfAlbum(albumName: String);
@@ -89,9 +89,7 @@ begin
   bands[bandName].albums.Add(newAlbum);
 end;
 
-function Tdm.AddSong(const songName, genres, bandName, albumName: string; const trackNo: Integer): Boolean;
-var
-  newSong: TSong;
+function Tdm.AddSong(const songName, bandName, albumName: string; const trackNo: Integer): Boolean;
 begin
   Result := true;
 
@@ -102,7 +100,7 @@ begin
   end;
 
   songNames.Add(songName);
-  songs.Add(songName, TSong.Create(songName, genres, bandName, albumName, trackNo));
+  songs.Add(songName, TSong.Create(songName, bandName, albumName, trackNo));
 end;
 
 procedure Tdm.SortAlbumsOfBand(bandName: String);

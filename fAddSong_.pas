@@ -71,13 +71,6 @@ var
   albumAt: TAlbum;
   choice: Integer;
 begin
-  //we want to prompt the user as to whether they want to clear out what they've
-  //entered upon selection of a new band, but only under a few conditions:
-  // - if user has gone from selecting no band to a band, don't show the message.
-  // - if the user has selected the same band they had already selected, don't
-  //   show the message.
-  // - if the user hasn't entered anything in both text boxes, don't show the
-  //   message.
   if (oldBandSelection <> '') and (oldBandSelection <> cbBands.Items[cbBands.ItemIndex])
     and ((textBoxSongs.Lines.Count > 0) or (textBoxTrackNums.Lines.Count > 0)) then
   begin
@@ -143,6 +136,9 @@ begin
 end;
 
 procedure TfAddSong.btnAddSongsClick(Sender: TObject);
+var
+  indexAt, count: Integer;
+  songAt, trackNumAt: String;
 begin
   if textBoxSongs.Lines.Count <> textBoxTrackNums.Lines.Count then
   begin
@@ -163,6 +159,30 @@ begin
       'enter albums.');
     Exit;
   end;
+
+  indexAt := 0;
+  count := 0;
+
+  for songAt in textBoxSongs.Lines do
+  begin
+    trackNumAt := textBoxTrackNums.Lines[indexAt];
+
+    if not dm.AddSong(songAt, cbBands.Items[cbBands.ItemIndex],
+      cbAlbums.Items[cbAlbums.ItemIndex], StrToInt(trackNumAt)) then
+      showMessage('Song ' + songAt + ' rejected. We don''t allow duplicates?')
+    else
+      Inc(count);
+
+    Inc(indexAt);
+  end;
+
+  showMessage('Successfully added ' + IntToStr(count) + ' of ' +
+    IntToStr(textBoxSongs.Lines.Count) + ' entered songs for band ' +
+    cbBands.Items[cbBands.ItemIndex] + ', album ' + cbAlbums.Items[cbAlbums.ItemIndex] + '.');
+
+  textBoxSongs.Clear;
+  textBoxTrackNums.Clear;
+  cbAlbums.DroppedDown := true;
 end;
 
 end.

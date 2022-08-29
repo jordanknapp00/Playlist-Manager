@@ -3,7 +3,7 @@ object fAddSong: TfAddSong
   Top = 0
   Caption = 'Add Song(s)'
   ClientHeight = 295
-  ClientWidth = 372
+  ClientWidth = 374
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
