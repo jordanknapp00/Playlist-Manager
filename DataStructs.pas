@@ -22,14 +22,13 @@ type
   }
   TSong = class
   private
-    songName, songGenres, bandName, albumName: String;
+    songName, bandName, albumName: String;
     track, itemID: Integer;
 
   public
     isFavorite: Boolean;
 
     property name: String read songName;
-    property genres: String read songGenres;
     property trackNo: Integer read track;
     property id: Integer read itemID;
 
@@ -37,7 +36,7 @@ type
     property band: String read bandName;
     property album: String read albumName;
 
-    constructor Create(const songName, songGenres, bandName, albumName: String; const trackNo: Integer);
+    constructor Create(const songName, bandName, albumName: String; const trackNo: Integer);
   end;
 
   {
@@ -108,10 +107,9 @@ implementation
 //                                TSong Methods
 //==============================================================================
 
-constructor TSong.Create(const songName, songGenres, bandName, albumName: String; const trackNo: Integer);
+constructor TSong.Create(const songName, bandName, albumName: String; const trackNo: Integer);
 begin
   self.songName := songName;
-  self.songGenres := songGenres;
   self.track := trackNo;
 
   self.bandName := bandName;
