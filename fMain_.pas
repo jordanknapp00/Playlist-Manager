@@ -43,6 +43,8 @@ type
   private
     { Private declarations }
     fileName: String;
+
+    procedure HandleSave;
   public
     { Public declarations }
   end;
@@ -98,13 +100,40 @@ begin
 end;
 
 procedure TfMain.menuItemSaveClick(Sender: TObject);
+var
+  dialog: TSaveDialog;
 begin
-  showMessage(dm.WriteJSON);
+  //basic save system for now, no worries about overwriting or whatever
+  dialog := TSaveDialog.Create(self);
+  dialog.InitialDir := GetCurrentDir;
+  dialog.Filter := 'JSON Files (*.json)|*.json';
+  dialog.DefaultExt := 'txt';
+  dialog.FilterIndex := 1;
+
+  if dialog.Execute then
+  begin
+    fileName := dialog.Files[0];
+    HandleSave;
+  end;
+
+  dialog.Free;
 end;
 
 procedure TfMain.menuItemSaveAsClick(Sender: TObject);
 begin
   //text
+end;
+
+procedure TfMain.HandleSave;
+var
+  saveText: String;
+  saveList: TStringList;
+begin
+  saveText := dm.WriteJSON;
+  saveList := TStringList.Create;
+  saveList.Add(saveText);
+
+  saveList.SaveToFile(fileName);
 end;
 
 //=====  EXPORT MENU  =====

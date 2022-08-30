@@ -6,6 +6,8 @@ uses
   System.SysUtils, System.Classes, System.Generics.Collections,
   System.Generics.Defaults, System.JSON, System.JSON.Writers,
 
+  Vcl.Dialogs,
+
   DataStructs;
 
 type
@@ -57,6 +59,8 @@ begin
 end;
 
 function Tdm.AddBand(const bandName: string): Boolean;
+var
+  newBand: TBand;
 begin
   Result := true;
 
@@ -66,8 +70,10 @@ begin
     Exit;
   end;
 
+  newBand := TBand.Create(bandName);
+
   bandNames.Add(bandName);
-  bands.Add(bandName, TBand.Create(bandName));
+  bands.Add(bandName, newBand);
 end;
 
 function Tdm.AddAlbum(const albumName, bandName: string; const albumYear: Integer): Boolean;
