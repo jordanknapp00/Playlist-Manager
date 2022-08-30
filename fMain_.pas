@@ -37,8 +37,12 @@ type
     procedure btnAddSongsClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure menuItemStatsClick(Sender: TObject);
+    procedure menuItemSaveAsClick(Sender: TObject);
+    procedure menuItemLoadClick(Sender: TObject);
+    procedure menuItemSaveClick(Sender: TObject);
   private
     { Private declarations }
+    fileName: String;
   public
     { Public declarations }
   end;
@@ -56,6 +60,8 @@ uses
 procedure TfMain.FormShow(Sender: TObject);
 begin
   dm.Init;
+
+  fileName := '';
 end;
 
 //==============================================================================
@@ -84,11 +90,34 @@ end;
 //                          MENU ITEM CLICK METHODS
 //==============================================================================
 
+//=====  FILE MENU  =====
+
+procedure TfMain.menuItemLoadClick(Sender: TObject);
+begin
+  //text
+end;
+
+procedure TfMain.menuItemSaveClick(Sender: TObject);
+begin
+  showMessage(dm.WriteJSON);
+end;
+
+procedure TfMain.menuItemSaveAsClick(Sender: TObject);
+begin
+  //text
+end;
+
+//=====  EXPORT MENU  =====
+
+//=====  HELP MENU  =====
+
 procedure TfMain.menuItemStatsClick(Sender: TObject);
 begin
   showMessage(IntToStr(dm.bands.Count) + ' bands,' + #13#10 +
     IntToStr(dm.albums.Count) + ' albums, and' + #13#10 +
     IntToStr(dm.songs.Count) + ' songs.');
 end;
+
+
 
 end.

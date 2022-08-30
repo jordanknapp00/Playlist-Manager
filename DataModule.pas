@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Generics.Collections,
-  System.Generics.Defaults,
+  System.Generics.Defaults, System.JSON, System.JSON.Writers,
 
   DataStructs;
 
@@ -32,6 +32,8 @@ type
 
     procedure SortAlbumsOfBand(bandName: String);
     procedure SortSongsOfAlbum(albumName: String);
+
+    function WriteJSON: String;
   end;
 
 var
@@ -135,6 +137,83 @@ begin
       end
     )
   );
+end;
+
+function Tdm.WriteJSON: String;
+var
+  writer: TJSONObjectWriter;
+
+  bandAt: TBand;
+  albumAt: TAlbum;
+  songAt: TSong;
+begin
+  writer := TJSONObjectWriter.Create;
+
+  //list of bands first
+  writer.WriteStartObject;
+  writer.WritePropertyName('bands');
+  writer.WriteStartArray;
+
+  for bandAt in bands.Values do
+  begin
+    writer.WriteStartObject;
+
+    writer.WritePropertyName('id');
+    writer.WriteValue(bandAt.id);
+    writer.WritePropertyName('name');
+    writer.WriteValue(bandAt.name);
+    writer.WritePropertyName('isFavorite');
+    writer.WriteValue(bandAt.isFavorite);
+
+    writer.WritePropertyName('albums');
+    writer.WriteStartArray;
+
+    //each band will have its list of albums
+    for albumAt in bandAt.albums do
+    begin
+      writer.WriteStartObject;
+
+      writer.WritePropertyName('id');
+      writer.WriteValue(albumAt.id);
+      writer.WritePropertyName('name');
+      writer.WriteValue(albumAt.name);
+      writer.WritePropertyName('year');
+      writer.WriteValue(albumAt.year);
+      writer.WritePropertyName('isFavorite');
+      writer.WriteValue(albumAt.isFavorite);
+
+      writer.WritePropertyName('songs');
+      writer.WriteStartArray;
+
+      //each album has its list of songs
+      for songAt in albumAt.songs do
+      begin
+        writer.WriteStartObject;
+
+        writer.WritePropertyName('id');
+        writer.WriteValue(songAt.id);
+        writer.WritePropertyName('name');
+        writer.WriteValue(songAt.name);
+        writer.WritePropertyName('trackNo');
+        writer.WriteValue(songAt.trackNo);
+        writer.WritePropertyName('isFavorite');
+        writer.WriteValue(songAt.isFavorite);
+
+        writer.WriteEndObject;
+      end;
+
+      writer.WriteEndArray;
+      writer.WriteEndObject;
+    end;
+
+    writer.WriteEndArray;
+    writer.WriteEndObject;
+  end;
+
+  writer.WriteEndArray;
+  writer.WriteEndObject;
+
+  Result := Writer.JSON.ToString;
 end;
 
 end.

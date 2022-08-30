@@ -37,9 +37,6 @@ object fMain: TfMain
         Caption = 'Year'
       end
       item
-        Caption = 'Genre(s)'
-      end
-      item
         Caption = 'Favorite?'
       end>
     TabOrder = 0
@@ -113,12 +110,15 @@ object fMain: TfMain
       end
       object menuItemLoad: TMenuItem
         Caption = 'Load'
+        OnClick = menuItemLoadClick
       end
       object menuItemSave: TMenuItem
         Caption = 'Save'
+        OnClick = menuItemSaveClick
       end
       object menuItemSaveAs: TMenuItem
         Caption = 'Save As'
+        OnClick = menuItemSaveAsClick
       end
       object menuItemExit: TMenuItem
         Caption = 'Exit'
