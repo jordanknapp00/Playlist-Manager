@@ -98,6 +98,8 @@ begin
 end;
 
 function Tdm.AddSong(const songName, bandName, albumName: string; const trackNo: Integer): Boolean;
+var
+  newSong: TSong;
 begin
   Result := true;
 
@@ -108,7 +110,12 @@ begin
   end;
 
   songNames.Add(songName);
-  songs.Add(songName, TSong.Create(songName, bandName, albumName, trackNo));
+
+  newSong := TSong.Create(songName, bandName, albumName, trackNo);
+  songs.Add(songName, newSong);
+
+  //also add this song to the album's list of songs
+  albums[albumName].songs.Add(newSong);
 end;
 
 procedure Tdm.SortAlbumsOfBand(bandName: String);
@@ -171,6 +178,8 @@ begin
     writer.WritePropertyName('isFavorite');
     writer.WriteValue(bandAt.isFavorite);
 
+    //showMessage(bandAt.name);
+
     writer.WritePropertyName('albums');
     writer.WriteStartArray;
 
@@ -219,7 +228,7 @@ begin
   writer.WriteEndArray;
   writer.WriteEndObject;
 
-  Result := Writer.JSON.ToString;
+  Result := writer.JSON.ToString;
 end;
 
 end.
