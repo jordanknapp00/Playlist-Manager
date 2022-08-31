@@ -95,8 +95,30 @@ end;
 //=====  FILE MENU  =====
 
 procedure TfMain.menuItemLoadClick(Sender: TObject);
+var
+  dialog: TOpenDialog;
+  loadList: TStringList;
+  loadText: String;
 begin
-  //text
+  dialog := TOpenDialog.Create(self);
+  dialog.InitialDir := GetCurrentDir;
+  dialog.Filter := 'JSON Files (*.json)|*.json';
+  dialog.DefaultExt := 'json';
+  dialog.FilterIndex := 1;
+
+  if dialog.Execute then
+  begin
+    fileName := dialog.Files[0];
+  end;
+
+  dialog.Free;
+
+  loadList := TStringList.Create;
+  loadList.LoadFromFile(fileName);
+  loadText := loadList[0];
+  dm.ReadJSON(loadText);
+
+  loadList.Free;
 end;
 
 procedure TfMain.menuItemSaveClick(Sender: TObject);
@@ -107,7 +129,7 @@ begin
   dialog := TSaveDialog.Create(self);
   dialog.InitialDir := GetCurrentDir;
   dialog.Filter := 'JSON Files (*.json)|*.json';
-  dialog.DefaultExt := 'txt';
+  dialog.DefaultExt := 'json';
   dialog.FilterIndex := 1;
 
   if dialog.Execute then
@@ -134,6 +156,7 @@ begin
   saveList.Add(saveText);
 
   saveList.SaveToFile(fileName);
+  saveList.Free;
 end;
 
 //=====  EXPORT MENU  =====

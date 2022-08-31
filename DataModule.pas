@@ -36,6 +36,7 @@ type
     procedure SortSongsOfAlbum(albumName: String);
 
     function WriteJSON: String;
+    procedure ReadJSON(toRead: String);
   end;
 
 var
@@ -229,6 +230,27 @@ begin
   writer.WriteEndObject;
 
   Result := writer.JSON.ToString;
+end;
+
+procedure Tdm.ReadJSON(toRead: string);
+var
+  obj: TJSONObject;
+  val: TJSONValue;
+begin
+  try
+    obj := TJSONObject.Create;
+    val := TJSONObject.ParseJSONValue(toRead);
+
+    val := (val as TJSONObject).Get('bands').JSONValue;
+  except
+    on Exception do
+    begin
+      showMessage('Something went wrong when loading a file. Oops.');
+    end;
+  end;
+
+  val.Free;
+  obj.Free;
 end;
 
 end.
