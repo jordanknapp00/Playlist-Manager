@@ -279,28 +279,37 @@ begin
 
       for albumAt in albumList do
       begin
+        //same process as above, get the data from json
         albumName := albumAt.GetValue<String>('name');
         albumYear := albumAt.GetValue<Integer>('year');
         albumFav := albumAt.GetValue<Boolean>('isFavorite');
         albumID := albumAt.GetValue<Integer>('id');
 
+        //create the object
         newAlbum := TAlbum.Create(albumName, bandName, albumYear, albumID, albumFav);
 
+        //then handle the inner list before adding object to the system
         songList := (albumAt as TJSonObject).Get('songs').JSONValue as TJSONArray;
 
         for songAt in songList do
         begin
+          //get data from json
           songName := songAt.GetValue<String>('name');
           songTrack := songAt.GetValue<Integer>('trackNo');
           songFav := songAt.GetValue<Boolean>('isFavorite');
           songID := songAt.GetValue<Integer>('id');
 
+          //create object
           newSong := TSong.Create(songName, bandName, albumName, songTrack, songID, songFav);
 
+          //no further data beyond the song, so go ahead and add this song to
+          //the system
           newAlbum.songs.Add(newSong);
           songs.Add(songName, newSong);
         end;
 
+        //add the album to the current band's list of albums, then add the song
+        //to the dictionary of songs
         newBand.albums.Add(newAlbum);
         albums.Add(albumName, newAlbum);
       end;
