@@ -234,23 +234,89 @@ end;
 
 procedure Tdm.ReadJSON(toRead: string);
 var
-  obj: TJSONObject;
   val: TJSONValue;
+  bandList, albumList, songList: TJSONArray;
+  bandAt, albumAt, songAt: TJSONValue;
+
+  newBand: TBand;
+  newAlbum: TAlbum;
+  newSong: TSong;
+
+  //vals for current band
+  bandName: String;
+  bandFav: Boolean;
+  bandID: Integer;
+
+  //vals for current album
+  albumName: String;
+  albumYear: Integer;
+  albumFav: Boolean;
+  albumID: Integer;
+
+  //vals for current song
+  songName: String;
+  songTrack: Integer;
+  songFav: Boolean;
+  songID: Integer;
 begin
   try
-    obj := TJSONObject.Create;
     val := TJSONObject.ParseJSONValue(toRead);
 
-    val := (val as TJSONObject).Get('bands').JSONValue;
-  except
-    on Exception do
+    bandList := (val as TJSONObject).Get('bands').JSONValue as TJSONArray;
+
+    for bandAt in bandList do
     begin
-      showMessage('Something went wrong when loading a file. Oops.');
+      bandName := bandAt.GetValue<String>('name');
+      bandFav := bandAt.GetValue<Boolean>('isFavorite');
+      bandID := bandAt.GetValue<Integer>('id');
+
+      //create a new band using the values retrieved from json
+      newBand := TBand.Create(bandName, bandID, bandFav);
+
+      //get the list of albums and iterate through it, creating objects for each
+      //of them, and their songs
+      albumList := (bandAt as TJSONObject).Get('albums').JSONValue as TJSONArray;
+
+      for albumAt in albumList do
+      begin
+        albumName := albumAt.GetValue<String>('name');
+        albumYear := albumAt.GetValue<Integer>('year');
+        albumFav := albumAt.GetValue<Boolean>('isFavorite');
+        albumID := albumAt.GetValue<Integer>('id');
+
+        newAlbum := TAlbum.Create(albumName, bandName, albumYear, albumID, albumFav);
+
+        songList := (albumAt as TJSonObject).Get('songs').JSONValue as TJSONArray;
+
+        for songAt in songList do
+        begin
+          songName := songAt.GetValue<String>('name');
+          songTrack := songAt.GetValue<Integer>('trackNo');
+          songFav := songAt.GetValue<Boolean>('isFavorite');
+          songID := songAt.GetValue<Integer>('id');
+
+          newSong := TSong.Create(songName, bandName, albumName, songTrack, songID, songFav);
+
+          newAlbum.songs.Add(newSong);
+          songs.Add(songName, newSong);
+        end;
+
+        newBand.albums.Add(newAlbum);
+        albums.Add(albumName, newAlbum);
+      end;
+
+      //once albums have all been added, the band can be added to the system
+      bandNames.Add(bandName);
+      bands.Add(bandName, newBand);
+    end;
+  except
+    on E: Exception do
+    begin
+      showMessage('Error when processing file:' + #13#10 + E.ToString);
     end;
   end;
 
   val.Free;
-  obj.Free;
 end;
 
 end.

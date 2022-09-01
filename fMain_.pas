@@ -115,7 +115,7 @@ begin
 
   loadList := TStringList.Create;
   loadList.LoadFromFile(fileName);
-  loadText := loadList[0];
+  loadText := loadList.Text;
   dm.ReadJSON(loadText);
 
   loadList.Free;
