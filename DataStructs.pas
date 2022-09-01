@@ -36,7 +36,8 @@ type
     property band: String read bandName;
     property album: String read albumName;
 
-    constructor Create(const songName, bandName, albumName: String; const trackNo: Integer);
+    constructor Create(const songName, bandName, albumName: String; const trackNo: Integer); overload;
+    constructor Create(const songName, bandName, albumName: String; const trackNo, id: Integer; const fav: Boolean); overload;
   end;
 
   {
@@ -66,7 +67,8 @@ type
     //relational property
     property band: String read bandName;
 
-    constructor Create(const albumName, bandName: String; const albumYear: Integer);
+    constructor Create(const albumName, bandName: String; const albumYear: Integer); overload;
+    constructor Create(const albumName, bandName: String; const albumYear, id: Integer; const fav: Boolean); overload;
   end;
 
   {
@@ -89,7 +91,8 @@ type
     property name: String read bandName;
     property id: Integer read itemID;
 
-    constructor Create(const bandName: String);
+    constructor Create(const bandName: String); overload;
+    constructor Create(const bandName: String; const id: Integer; const fav: Boolean); overload;
   end;
 
 //this is basically a static variable that we use to give everything a unique id.
@@ -107,6 +110,7 @@ implementation
 //                                TSong Methods
 //==============================================================================
 
+//constructor without id
 constructor TSong.Create(const songName, bandName, albumName: String; const trackNo: Integer);
 begin
   self.songName := songName;
@@ -119,6 +123,19 @@ begin
 
   itemID := idCount;
   Inc(idCount);
+end;
+
+//constructor with id and fav
+constructor Tsong.Create(const songName, bandName, albumName: string; const trackNo, id: Integer; const fav: Boolean);
+begin
+  self.songName := songName;
+  self.track := trackNo;
+
+  self.bandName := bandName;
+  self.albumName := albumName;
+
+  isFavorite := fav;
+  itemId := id;
 end;
 
 //==============================================================================
@@ -140,6 +157,20 @@ begin
   Inc(idCount);
 end;
 
+//constructor with id and fav
+constructor TAlbum.Create(const albumName, bandName: String; const albumYear, id: Integer; const fav: Boolean);
+begin
+  self.albumName := albumName;
+  self.albumYear := albumYear;
+
+  self.bandName := bandName;
+
+  isFavorite := fav;
+  itemID := id;
+
+  songs := TList<TSong>.Create();
+end;
+
 //==============================================================================
 //                                TBand Methods
 //==============================================================================
@@ -154,6 +185,16 @@ begin
 
   itemID := idCount;
   Inc(idCount);
+end;
+
+constructor TBand.Create(const bandName: String; const id: Integer; const fav: Boolean);
+begin
+  self.bandName := bandName;
+
+  isFavorite := fav;
+  itemID := id;
+
+  albums := TList<TAlbum>.Create;
 end;
 
 end.

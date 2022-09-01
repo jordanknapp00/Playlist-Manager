@@ -1,0 +1,242 @@
+{
+    "bands": [
+        {
+            "id": 0,
+            "name": "Metallica",
+            "isFavorite": false,
+            "albums": [
+                {
+                    "id": 5,
+                    "name": "Master of Puppets",
+                    "year": 1986,
+                    "isFavorite": false,
+                    "songs": [
+                        {
+                            "id": 21,
+                            "name": "Battery",
+                            "trackNo": 1,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 22,
+                            "name": "Master of Puppets",
+                            "trackNo": 2,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 23,
+                            "name": "The Thing That Should Not Be",
+                            "trackNo": 3,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 24,
+                            "name": "Welcome Home (Sanitarium)",
+                            "trackNo": 4,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 25,
+                            "name": "Disposable heroes",
+                            "trackNo": 5,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 26,
+                            "name": "Leper Messiah",
+                            "trackNo": 6,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 27,
+                            "name": "Orion",
+                            "trackNo": 7,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 28,
+                            "name": "Damage, Inc.",
+                            "trackNo": 8,
+                            "isFavorite": false
+                        }
+                    ]
+                },
+                {
+                    "id": 4,
+                    "name": "...And Justice for All",
+                    "year": 1988,
+                    "isFavorite": false,
+                    "songs": [
+                        {
+                            "id": 29,
+                            "name": "Blackened",
+                            "trackNo": 1,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 30,
+                            "name": "...And Justice for All",
+                            "trackNo": 2,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 31,
+                            "name": "Eye of the Beholder",
+                            "trackNo": 3,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 32,
+                            "name": "One",
+                            "trackNo": 4,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 33,
+                            "name": "The Shortest Straw",
+                            "trackNo": 5,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 34,
+                            "name": "Harvester of Sorrow",
+                            "trackNo": 6,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 35,
+                            "name": "The Frayed Ends of Sanity",
+                            "trackNo": 7,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 36,
+                            "name": "To Live is To Die",
+                            "trackNo": 8,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 37,
+                            "name": "Dyers Eve",
+                            "trackNo": 9,
+                            "isFavorite": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "name": "Iron Maiden",
+            "isFavorite": false,
+            "albums": [
+                {
+                    "id": 3,
+                    "name": "Somewhere in Time",
+                    "year": 1986,
+                    "isFavorite": false,
+                    "songs": [
+                        {
+                            "id": 6,
+                            "name": "Caught Somewhere in Time",
+                            "trackNo": 1,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 7,
+                            "name": "Wasted Years",
+                            "trackNo": 2,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 8,
+                            "name": "Sea of Madness",
+                            "trackNo": 3,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 9,
+                            "name": "Heaven Can Wait",
+                            "trackNo": 4,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 10,
+                            "name": "LonelinessOfTheLongDistanceRunner",
+                            "trackNo": 5,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 11,
+                            "name": "Stranger in a Strange Land",
+                            "trackNo": 6,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 12,
+                            "name": "Deja Vu",
+                            "trackNo": 7,
+                            "isFavorite": false
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "name": "Seventh Son of a Seventh Son",
+                    "year": 1988,
+                    "isFavorite": false,
+                    "songs": [
+                        {
+                            "id": 13,
+                            "name": "Moonchild",
+                            "trackNo": 1,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 14,
+                            "name": "Infinite Dreams",
+                            "trackNo": 2,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 15,
+                            "name": "Can I Play With Madness",
+                            "trackNo": 3,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 16,
+                            "name": "The Evil That Men Do",
+                            "trackNo": 4,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 17,
+                            "name": "Seventh Son of a Seventh Son",
+                            "trackNo": 5,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 18,
+                            "name": "The Prophecy",
+                            "trackNo": 6,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 19,
+                            "name": "The Clairvoyant",
+                            "trackNo": 7,
+                            "isFavorite": false
+                        },
+                        {
+                            "id": 20,
+                            "name": "Only the Good Die Young",
+                            "trackNo": 8,
+                            "isFavorite": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
