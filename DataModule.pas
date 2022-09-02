@@ -8,7 +8,7 @@ uses
 
   Vcl.Dialogs,
 
-  DataStructs;
+  DataStructs, fMain_;
 
 type
   Tdm = class(TDataModule)
@@ -57,6 +57,8 @@ begin
   bands := TDictionary<String, TBand>.Create;
   albums := TDictionary<String, TAlbum>.Create;
   songs := TDictionary<String, TSong>.Create;
+
+  fMain.RefreshGrid;
 end;
 
 function Tdm.AddBand(const bandName: string): Boolean;
@@ -75,6 +77,8 @@ begin
 
   bandNames.Add(bandName);
   bands.Add(bandName, newBand);
+
+  fMain.RefreshGrid;
 end;
 
 function Tdm.AddAlbum(const albumName, bandName: string; const albumYear: Integer): Boolean;
@@ -96,6 +100,8 @@ begin
 
   //also add this album to the band's list of albums
   bands[bandName].albums.Add(newAlbum);
+
+  fMain.RefreshGrid;
 end;
 
 function Tdm.AddSong(const songName, bandName, albumName: string; const trackNo: Integer): Boolean;
@@ -117,6 +123,8 @@ begin
 
   //also add this song to the album's list of songs
   albums[albumName].songs.Add(newSong);
+
+  fMain.RefreshGrid;
 end;
 
 procedure Tdm.SortAlbumsOfBand(bandName: String);
@@ -326,6 +334,8 @@ begin
   end;
 
   val.Free;
+
+  fMain.RefreshGrid;
 end;
 
 end.

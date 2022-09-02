@@ -5,11 +5,10 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.Menus, Vcl.ExtCtrls,
-  Vcl.StdCtrls;
+  Vcl.StdCtrls, Vcl.Grids;
 
 type
   TfMain = class(TForm)
-    ListView1: TListView;
     menuBar: TMainMenu;
     menuFile: TMenuItem;
     menuItemNew: TMenuItem;
@@ -32,6 +31,7 @@ type
     btnDeleteAlbum: TButton;
     btnDeleteSong: TButton;
     menuItemStats: TMenuItem;
+    grid: TStringGrid;
     procedure btnAddBandClick(Sender: TObject);
     procedure btnAddAlbumClick(Sender: TObject);
     procedure btnAddSongsClick(Sender: TObject);
@@ -40,6 +40,9 @@ type
     procedure menuItemSaveAsClick(Sender: TObject);
     procedure menuItemLoadClick(Sender: TObject);
     procedure menuItemSaveClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure gridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
+      State: TGridDrawState);
   private
     { Private declarations }
     fileName: String;
@@ -47,6 +50,7 @@ type
     procedure HandleSave;
   public
     { Public declarations }
+    procedure RefreshGrid;
   end;
 
 var
@@ -55,15 +59,96 @@ var
 implementation
 
 uses
-  fAddBand_, fAddAlbum_, fAddSong_, DataModule;
+  fAddBand_, fAddAlbum_, fAddSong_, DataModule, DataStructs;
 
 {$R *.dfm}
 
+procedure TfMain.FormCreate(Sender: TObject);
+begin
+  fileName := '';
+
+  //set up the grid
+  grid.Cells[0, 0] := 'Band';
+  grid.Cells[1, 0] := 'Fav?';
+  grid.Cells[2, 0] := 'Album';
+  grid.Cells[3, 0] := 'Year';
+  grid.Cells[4, 0] := 'Fav?';
+  grid.Cells[5, 0] := 'Song';
+  grid.Cells[6, 0] := 'Track No.';
+  grid.Cells[7, 0] := 'Fav?';
+end;
+
 procedure TfMain.FormShow(Sender: TObject);
 begin
+  //for whatever reason, DataModule initialization must be done in FormShow,
+  //rather than FormCreate. I guess because the DM may not have been created at
+  //this form's create time.
   dm.Init;
+end;
 
-  fileName := '';
+//==============================================================================
+//                                GRID METHODS
+//==============================================================================
+
+procedure TfMain.gridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
+  State: TGridDrawState);
+begin
+//  if ARow = 0 then
+//  begin
+//    grid.Font.Style := grid.Font.Style + [fsBold];
+//  end
+//  else
+//  begin
+//    grid.Font.Style := grid.Font.Style - [fsBold];
+//  end;
+end;
+
+procedure TfMain.RefreshGrid;
+var
+  row: Integer;
+
+  bandNameAt: String;
+  bandAt: TBand;
+  albumAt: TAlbum;
+  songAt: TSong;
+begin
+  for row := 1 to grid.RowCount - 1 do
+    grid.Rows[row].Clear;
+
+  //dont bother if there are no bands
+  if dm.bandNames.Count = 0 then
+    Exit;
+
+  for bandNameAt in dm.bandNames do
+  begin
+    grid.RowCount := grid.RowCount + 1;
+    Inc(row);
+
+    bandAt := dm.bands[bandNameAt];
+
+    grid.Cells[0, row] := bandNameAt;
+    grid.Cells[1, row] := bandAt.isFavorite.ToString;
+
+    for albumAt in bandAt.albums do
+    begin
+      grid.RowCount := grid.RowCount + 1;
+      Inc(row);
+
+      grid.Cells[2, row] := albumAt.name;
+      grid.Cells[3, row] := albumAt.year.ToString;
+      grid.Cells[4, row] := albumAt.isFavorite.ToString;
+
+      for songAt in albumAt.songs do
+      begin
+        grid.RowCount := grid.RowCount + 1;
+        Inc(row);
+
+        grid.Cells[5, row] := songAt.name;
+        grid.Cells[6, row] := songAt.trackNo.ToString;
+        grid.Cells[7, row] := songAt.isFavorite.ToString;
+      end;
+    end;
+  end;
 end;
 
 //==============================================================================
@@ -169,7 +254,5 @@ begin
     IntToStr(dm.albums.Count) + ' albums, and' + #13#10 +
     IntToStr(dm.songs.Count) + ' songs.');
 end;
-
-
 
 end.

@@ -12,43 +12,17 @@ object fMain: TfMain
   Font.Style = []
   Menu = menuBar
   OldCreateOrder = False
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object ListView1: TListView
-    Left = 8
-    Top = 8
-    Width = 584
-    Height = 401
-    Columns = <
-      item
-        Caption = 'Band'
-      end
-      item
-        Caption = 'Album'
-      end
-      item
-        Caption = 'Song'
-      end
-      item
-        Caption = 'Track No.'
-      end
-      item
-        Caption = 'Year'
-      end
-      item
-        Caption = 'Favorite?'
-      end>
-    TabOrder = 0
-    ViewStyle = vsReport
-  end
   object btnQuery: TButton
     Left = 8
     Top = 415
     Width = 217
     Height = 87
     Caption = 'Query'
-    TabOrder = 1
+    TabOrder = 0
   end
   object btnAddBand: TButton
     Left = 240
@@ -56,7 +30,7 @@ object fMain: TfMain
     Width = 216
     Height = 25
     Caption = 'Add Band(s)'
-    TabOrder = 2
+    TabOrder = 1
     OnClick = btnAddBandClick
   end
   object btnAddAlbum: TButton
@@ -65,7 +39,7 @@ object fMain: TfMain
     Width = 216
     Height = 25
     Caption = 'Add Album(s) from a Band'
-    TabOrder = 3
+    TabOrder = 2
     OnClick = btnAddAlbumClick
   end
   object btnAddSongs: TButton
@@ -74,7 +48,7 @@ object fMain: TfMain
     Width = 216
     Height = 25
     Caption = 'Add Song(s) from an Album'
-    TabOrder = 4
+    TabOrder = 3
     OnClick = btnAddSongsClick
   end
   object btnDeleteBand: TButton
@@ -83,7 +57,7 @@ object fMain: TfMain
     Width = 120
     Height = 25
     Caption = 'Delete Band(s)'
-    TabOrder = 5
+    TabOrder = 4
   end
   object btnDeleteAlbum: TButton
     Left = 472
@@ -91,7 +65,7 @@ object fMain: TfMain
     Width = 120
     Height = 25
     Caption = 'Delete Album(s)'
-    TabOrder = 6
+    TabOrder = 5
   end
   object btnDeleteSong: TButton
     Left = 472
@@ -99,10 +73,29 @@ object fMain: TfMain
     Width = 120
     Height = 25
     Caption = 'Delete Song(s)'
+    TabOrder = 6
+  end
+  object grid: TStringGrid
+    Left = 8
+    Top = 8
+    Width = 584
+    Height = 393
+    ColCount = 8
+    FixedCols = 0
+    RowCount = 1
+    FixedRows = 0
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 7
+    OnDrawCell = gridDrawCell
   end
   object menuBar: TMainMenu
-    Left = 560
+    Left = 552
+    Top = 80
     object menuFile: TMenuItem
       Caption = 'File'
       object menuItemNew: TMenuItem
