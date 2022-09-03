@@ -130,7 +130,11 @@ begin
     if bandAt.albums.Count = 0 then
     begin
       grid.Cells[0, row] := bandNameAt;
-      grid.Cells[1, row] := bandAt.isFavorite.ToString;
+
+      if bandAt.isFavorite then
+        grid.Cells[1, row] := 'Y'
+      else
+        grid.Cells[1, row] := 'N';
 
       grid.RowCount := grid.RowCount + 1;
       Inc(row);
@@ -143,11 +147,19 @@ begin
       if albumAt.songs.Count = 0 then
       begin
         grid.Cells[0, row] := bandNameAt;
-        grid.Cells[1, row] := bandAt.isFavorite.ToString;
+
+        if bandAt.isFavorite then
+          grid.Cells[1, row] := 'Y'
+        else
+          grid.Cells[1, row] := 'N';
 
         grid.Cells[2, row] := albumAt.name;
         grid.Cells[3, row] := albumAt.year.ToString;
-        grid.Cells[4, row] := albumAt.isFavorite.ToString;
+
+        if albumAt.isFavorite then
+          grid.Cells[4, row] := 'Y'
+        else
+          grid.Cells[4, row] := 'N';
 
         grid.RowCount := grid.RowCount + 1;
         Inc(row);
@@ -157,15 +169,27 @@ begin
       begin
         //print everything if we make it to the songs loop
         grid.Cells[0, row] := bandNameAt;
-        grid.Cells[1, row] := bandAt.isFavorite.ToString;
+
+        if bandAt.isFavorite then
+          grid.Cells[1, row] := 'Y'
+        else
+          grid.Cells[1, row] := 'N';
 
         grid.Cells[2, row] := albumAt.name;
         grid.Cells[3, row] := albumAt.year.ToString;
-        grid.Cells[4, row] := albumAt.isFavorite.ToString;
+
+        if albumAt.isFavorite then
+          grid.Cells[4, row] := 'Y'
+        else
+          grid.Cells[4, row] := 'N';
 
         grid.Cells[5, row] := songAt.name;
         grid.Cells[6, row] := songAt.trackNo.ToString;
-        grid.Cells[7, row] := songAt.isFavorite.ToString;
+
+        if songAt.isFavorite then
+          grid.Cells[7, row] := 'Y'
+        else
+          grid.Cells[7, row] := 'N';
 
         grid.RowCount := grid.RowCount + 1;
         Inc(row);
