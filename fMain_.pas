@@ -124,8 +124,6 @@ begin
 
   for bandNameAt in dm.bandNames do
   begin
-    grid.RowCount := grid.RowCount + 1;
-
     bandAt := dm.bands[bandNameAt];
 
     //if there are no albums (and thus no songs, print out the band now)
@@ -134,13 +132,12 @@ begin
       grid.Cells[0, row] := bandNameAt;
       grid.Cells[1, row] := bandAt.isFavorite.ToString;
 
+      grid.RowCount := grid.RowCount + 1;
       Inc(row);
     end;
 
     for albumAt in bandAt.albums do
     begin
-      grid.RowCount := grid.RowCount + 1;
-
       //if there are no songs, print the album. if we reached this point, the
       //band also has not been printed
       if albumAt.songs.Count = 0 then
@@ -152,13 +149,12 @@ begin
         grid.Cells[3, row] := albumAt.year.ToString;
         grid.Cells[4, row] := albumAt.isFavorite.ToString;
 
+        grid.RowCount := grid.RowCount + 1;
         Inc(row);
       end;
 
       for songAt in albumAt.songs do
       begin
-        grid.RowCount := grid.RowCount + 1;
-
         //print everything if we make it to the songs loop
         grid.Cells[0, row] := bandNameAt;
         grid.Cells[1, row] := bandAt.isFavorite.ToString;
@@ -171,6 +167,7 @@ begin
         grid.Cells[6, row] := songAt.trackNo.ToString;
         grid.Cells[7, row] := songAt.isFavorite.ToString;
 
+        grid.RowCount := grid.RowCount + 1;
         Inc(row);
       end;
     end;
