@@ -48,6 +48,7 @@ type
     fileName: String;
 
     procedure HandleSave;
+    procedure ResizeGrid;
   public
     { Public declarations }
     procedure RefreshGrid;
@@ -105,7 +106,7 @@ end;
 
 procedure TfMain.RefreshGrid;
 var
-  row: Integer;
+  row, col: Integer;
 
   bandNameAt: String;
   bandAt: TBand;
@@ -196,6 +197,38 @@ begin
       end;
     end;
   end;
+
+  ResizeGrid;
+end;
+
+procedure TfMain.ResizeGrid;
+const
+  MIN_CELL_WIDTH_REG: Integer = 10;
+  MIN_CELL_WIDTH_SPECIAL: Integer = 20;
+var
+  col, row, colWidth, cellWidth, toAdd, maxFound: Integer;
+begin
+  for col := 0 to grid.ColCount - 1 do
+  begin
+    maxFound := grid.Canvas.TextWidth(grid.Cells[col, 0]);
+
+    //find the row with the largest width
+    for row := 0 to grid.RowCount - 1 do
+    begin
+      cellWidth := grid.Canvas.TextWidth(grid.Cells[col, row]);
+
+      if cellWidth > maxFound then
+        maxFound := cellWidth;
+    end;
+
+    if (col = 0) or (col = 2) or (col = 5) then
+      toAdd := MIN_CELL_WIDTH_SPECIAL
+    else
+      toAdd := MIN_CELL_WIDTH_REG;
+
+    grid.ColWidths[col] := maxFound + toAdd;
+  end;
+
 end;
 
 //==============================================================================
