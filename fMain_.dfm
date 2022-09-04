@@ -29,8 +29,6 @@ object fMain: TfMain
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Query'
     TabOrder = 0
-    ExplicitTop = 417
-    ExplicitWidth = 217
   end
   object btnAddBand: TButton
     Left = 340
@@ -41,8 +39,6 @@ object fMain: TfMain
     Caption = 'Add Band(s)'
     TabOrder = 1
     OnClick = btnAddBandClick
-    ExplicitLeft = 240
-    ExplicitTop = 415
   end
   object btnAddAlbum: TButton
     Left = 340
@@ -53,8 +49,6 @@ object fMain: TfMain
     Caption = 'Add Album(s) from a Band'
     TabOrder = 2
     OnClick = btnAddAlbumClick
-    ExplicitLeft = 240
-    ExplicitTop = 453
   end
   object btnAddSongs: TButton
     Left = 340
@@ -65,8 +59,6 @@ object fMain: TfMain
     Caption = 'Add Song(s) from an Album'
     TabOrder = 3
     OnClick = btnAddSongsClick
-    ExplicitLeft = 240
-    ExplicitTop = 477
   end
   object btnDeleteBand: TButton
     Left = 572
@@ -76,8 +68,6 @@ object fMain: TfMain
     Anchors = [akRight, akBottom]
     Caption = 'Delete Band(s)'
     TabOrder = 4
-    ExplicitLeft = 472
-    ExplicitTop = 415
   end
   object btnDeleteAlbum: TButton
     Left = 572
@@ -87,8 +77,6 @@ object fMain: TfMain
     Anchors = [akRight, akBottom]
     Caption = 'Delete Album(s)'
     TabOrder = 5
-    ExplicitLeft = 472
-    ExplicitTop = 446
   end
   object btnDeleteSong: TButton
     Left = 572
@@ -98,8 +86,6 @@ object fMain: TfMain
     Anchors = [akRight, akBottom]
     Caption = 'Delete Song(s)'
     TabOrder = 6
-    ExplicitLeft = 472
-    ExplicitTop = 486
   end
   object grid: TStringGrid
     Left = 8
@@ -119,8 +105,6 @@ object fMain: TfMain
     ParentFont = False
     TabOrder = 7
     OnDrawCell = gridDrawCell
-    ExplicitWidth = 584
-    ExplicitHeight = 393
   end
   object menuBar: TMainMenu
     Left = 552

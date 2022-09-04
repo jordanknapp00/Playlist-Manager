@@ -198,6 +198,9 @@ begin
     end;
   end;
 
+  //can only have fixed rows if there is more than one row. whatever
+  grid.FixedRows := 1;
+
   ResizeGrid;
 end;
 
