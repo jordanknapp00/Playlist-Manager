@@ -5,11 +5,10 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.Menus, Vcl.ExtCtrls,
-  Vcl.StdCtrls;
+  Vcl.StdCtrls, Vcl.Grids;
 
 type
   TfMain = class(TForm)
-    ListView1: TListView;
     menuBar: TMainMenu;
     menuFile: TMenuItem;
     menuItemNew: TMenuItem;
@@ -32,6 +31,7 @@ type
     btnDeleteAlbum: TButton;
     btnDeleteSong: TButton;
     menuItemStats: TMenuItem;
+    grid: TStringGrid;
     procedure btnAddBandClick(Sender: TObject);
     procedure btnAddAlbumClick(Sender: TObject);
     procedure btnAddSongsClick(Sender: TObject);
@@ -40,13 +40,18 @@ type
     procedure menuItemSaveAsClick(Sender: TObject);
     procedure menuItemLoadClick(Sender: TObject);
     procedure menuItemSaveClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure gridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
+      State: TGridDrawState);
   private
     { Private declarations }
     fileName: String;
 
     procedure HandleSave;
+    procedure ResizeGrid;
   public
     { Public declarations }
+    procedure RefreshGrid;
   end;
 
 var
@@ -55,15 +60,178 @@ var
 implementation
 
 uses
-  fAddBand_, fAddAlbum_, fAddSong_, DataModule;
+  fAddBand_, fAddAlbum_, fAddSong_, DataModule, DataStructs;
 
 {$R *.dfm}
 
+procedure TfMain.FormCreate(Sender: TObject);
+begin
+  fileName := '';
+
+  //set up the grid
+  grid.Cells[0, 0] := 'Band';
+  grid.Cells[1, 0] := 'Fav?';
+  grid.Cells[2, 0] := 'Album';
+  grid.Cells[3, 0] := 'Year';
+  grid.Cells[4, 0] := 'Fav?';
+  grid.Cells[5, 0] := 'Song';
+  grid.Cells[6, 0] := 'Track No.';
+  grid.Cells[7, 0] := 'Fav?';
+end;
+
 procedure TfMain.FormShow(Sender: TObject);
 begin
+  //for whatever reason, DataModule initialization must be done in FormShow,
+  //rather than FormCreate. I guess because the DM may not have been created at
+  //this form's create time.
   dm.Init;
+end;
 
-  fileName := '';
+//==============================================================================
+//                                GRID METHODS
+//==============================================================================
+
+procedure TfMain.gridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
+  State: TGridDrawState);
+begin
+//  if ARow = 0 then
+//  begin
+//    grid.Font.Style := grid.Font.Style + [fsBold];
+//  end
+//  else
+//  begin
+//    grid.Font.Style := grid.Font.Style - [fsBold];
+//  end;
+end;
+
+procedure TfMain.RefreshGrid;
+var
+  row, col: Integer;
+
+  bandNameAt: String;
+  bandAt: TBand;
+  albumAt: TAlbum;
+  songAt: TSong;
+begin
+  for row := 1 to grid.RowCount - 1 do
+    grid.Rows[row].Clear;
+
+  grid.RowCount := 1;
+  row := 1;
+
+  //dont bother if there are no bands
+  if dm.bandNames.Count = 0 then
+    Exit;
+
+  for bandNameAt in dm.bandNames do
+  begin
+    bandAt := dm.bands[bandNameAt];
+
+    //if there are no albums (and thus no songs, print out the band now)
+    if bandAt.albums.Count = 0 then
+    begin
+      grid.Cells[0, row] := bandNameAt;
+
+      if bandAt.isFavorite then
+        grid.Cells[1, row] := 'Y'
+      else
+        grid.Cells[1, row] := 'N';
+
+      grid.RowCount := grid.RowCount + 1;
+      Inc(row);
+    end;
+
+    for albumAt in bandAt.albums do
+    begin
+      //if there are no songs, print the album. if we reached this point, the
+      //band also has not been printed
+      if albumAt.songs.Count = 0 then
+      begin
+        grid.Cells[0, row] := bandNameAt;
+
+        if bandAt.isFavorite then
+          grid.Cells[1, row] := 'Y'
+        else
+          grid.Cells[1, row] := 'N';
+
+        grid.Cells[2, row] := albumAt.name;
+        grid.Cells[3, row] := albumAt.year.ToString;
+
+        if albumAt.isFavorite then
+          grid.Cells[4, row] := 'Y'
+        else
+          grid.Cells[4, row] := 'N';
+
+        grid.RowCount := grid.RowCount + 1;
+        Inc(row);
+      end;
+
+      for songAt in albumAt.songs do
+      begin
+        //print everything if we make it to the songs loop
+        grid.Cells[0, row] := bandNameAt;
+
+        if bandAt.isFavorite then
+          grid.Cells[1, row] := 'Y'
+        else
+          grid.Cells[1, row] := 'N';
+
+        grid.Cells[2, row] := albumAt.name;
+        grid.Cells[3, row] := albumAt.year.ToString;
+
+        if albumAt.isFavorite then
+          grid.Cells[4, row] := 'Y'
+        else
+          grid.Cells[4, row] := 'N';
+
+        grid.Cells[5, row] := songAt.name;
+        grid.Cells[6, row] := songAt.trackNo.ToString;
+
+        if songAt.isFavorite then
+          grid.Cells[7, row] := 'Y'
+        else
+          grid.Cells[7, row] := 'N';
+
+        grid.RowCount := grid.RowCount + 1;
+        Inc(row);
+      end;
+    end;
+  end;
+
+  //can only have fixed rows if there is more than one row. whatever
+  grid.FixedRows := 1;
+
+  ResizeGrid;
+end;
+
+procedure TfMain.ResizeGrid;
+const
+  MIN_CELL_WIDTH_REG: Integer = 10;
+  MIN_CELL_WIDTH_SPECIAL: Integer = 20;
+var
+  col, row, colWidth, cellWidth, toAdd, maxFound: Integer;
+begin
+  for col := 0 to grid.ColCount - 1 do
+  begin
+    maxFound := grid.Canvas.TextWidth(grid.Cells[col, 0]);
+
+    //find the row with the largest width
+    for row := 0 to grid.RowCount - 1 do
+    begin
+      cellWidth := grid.Canvas.TextWidth(grid.Cells[col, row]);
+
+      if cellWidth > maxFound then
+        maxFound := cellWidth;
+    end;
+
+    if (col = 0) or (col = 2) or (col = 5) then
+      toAdd := MIN_CELL_WIDTH_SPECIAL
+    else
+      toAdd := MIN_CELL_WIDTH_REG;
+
+    grid.ColWidths[col] := maxFound + toAdd;
+  end;
+
 end;
 
 //==============================================================================
@@ -169,7 +337,5 @@ begin
     IntToStr(dm.albums.Count) + ' albums, and' + #13#10 +
     IntToStr(dm.songs.Count) + ' songs.');
 end;
-
-
 
 end.

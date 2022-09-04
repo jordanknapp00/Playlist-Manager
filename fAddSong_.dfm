@@ -3,8 +3,10 @@ object fAddSong: TfAddSong
   Top = 0
   Caption = 'Add Song(s)'
   ClientHeight = 295
-  ClientWidth = 374
+  ClientWidth = 372
   Color = clBtnFace
+  Constraints.MinHeight = 334
+  Constraints.MinWidth = 388
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -12,6 +14,9 @@ object fAddSong: TfAddSong
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
+  DesignSize = (
+    372
+    295)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -20,6 +25,7 @@ object fAddSong: TfAddSong
     Width = 129
     Height = 13
     Alignment = taCenter
+    Anchors = [akTop, akRight]
     Caption = 'Select an Album (optional):'
   end
   object Label2: TLabel
@@ -34,6 +40,7 @@ object fAddSong: TfAddSong
     Top = 72
     Width = 104
     Height = 13
+    Anchors = [akTop, akRight]
     Caption = 'Enter Track Numbers:'
   end
   object Label4: TLabel
@@ -49,12 +56,14 @@ object fAddSong: TfAddSong
     Top = 48
     Width = 3
     Height = 13
+    Anchors = [akTop, akRight]
   end
   object cbAlbums: TComboBox
     Left = 192
     Top = 27
     Width = 172
     Height = 21
+    Anchors = [akTop, akRight]
     TabOrder = 0
     OnChange = cbAlbumsChange
     Items.Strings = (
@@ -65,6 +74,7 @@ object fAddSong: TfAddSong
     Top = 91
     Width = 217
     Height = 150
+    Anchors = [akLeft, akTop, akRight, akBottom]
     Lines.Strings = (
       'textBoxAlbums')
     ScrollBars = ssVertical
@@ -75,6 +85,7 @@ object fAddSong: TfAddSong
     Top = 262
     Width = 356
     Height = 25
+    Anchors = [akLeft, akRight, akBottom]
     Caption = 'Add Song(s)'
     TabOrder = 2
     OnClick = btnAddSongsClick
@@ -84,6 +95,7 @@ object fAddSong: TfAddSong
     Top = 91
     Width = 116
     Height = 150
+    Anchors = [akTop, akRight, akBottom]
     Lines.Strings = (
       'textBoxYears')
     ScrollBars = ssVertical

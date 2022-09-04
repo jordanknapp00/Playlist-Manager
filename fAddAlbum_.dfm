@@ -5,6 +5,8 @@ object fAddAlbum: TfAddAlbum
   ClientHeight = 295
   ClientWidth = 372
   Color = clBtnFace
+  Constraints.MinHeight = 334
+  Constraints.MinWidth = 388
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -12,6 +14,9 @@ object fAddAlbum: TfAddAlbum
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
+  DesignSize = (
+    372
+    295)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -20,6 +25,7 @@ object fAddAlbum: TfAddAlbum
     Width = 164
     Height = 13
     Alignment = taCenter
+    Anchors = [akTop]
     Caption = 'Select a Band to Add Album(s) To:'
   end
   object Label2: TLabel
@@ -34,6 +40,7 @@ object fAddAlbum: TfAddAlbum
     Top = 72
     Width = 116
     Height = 13
+    Anchors = [akTop, akRight]
     Caption = 'Enter Years For Albums:'
   end
   object cbBands: TComboBox
@@ -41,6 +48,7 @@ object fAddAlbum: TfAddAlbum
     Top = 27
     Width = 178
     Height = 21
+    Anchors = [akTop]
     TabOrder = 0
     OnChange = cbBandsChange
   end
@@ -49,6 +57,7 @@ object fAddAlbum: TfAddAlbum
     Top = 91
     Width = 217
     Height = 150
+    Anchors = [akLeft, akTop, akRight, akBottom]
     Lines.Strings = (
       'textBoxAlbums')
     ScrollBars = ssVertical
@@ -59,6 +68,7 @@ object fAddAlbum: TfAddAlbum
     Top = 262
     Width = 356
     Height = 25
+    Anchors = [akLeft, akRight]
     Caption = 'Add Album(s)'
     TabOrder = 2
     OnClick = btnAddAlbumClick
@@ -68,6 +78,7 @@ object fAddAlbum: TfAddAlbum
     Top = 91
     Width = 116
     Height = 150
+    Anchors = [akTop, akRight, akBottom]
     Lines.Strings = (
       'textBoxYears')
     ScrollBars = ssVertical
