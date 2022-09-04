@@ -153,6 +153,7 @@ object fMain: TfMain
       end
       object menuItemAbout: TMenuItem
         Caption = 'About'
+        OnClick = menuItemAboutClick
       end
     end
   end

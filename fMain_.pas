@@ -43,6 +43,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure gridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
       State: TGridDrawState);
+    procedure menuItemAboutClick(Sender: TObject);
   private
     { Private declarations }
     fileName: String;
@@ -336,6 +337,12 @@ begin
   showMessage(IntToStr(dm.bands.Count) + ' bands,' + #13#10 +
     IntToStr(dm.albums.Count) + ' albums, and' + #13#10 +
     IntToStr(dm.songs.Count) + ' songs.');
+end;
+
+procedure TfMain.menuItemAboutClick(Sender: TObject);
+begin
+  MessageDlg('Playlist Manager v0.1 Alpha' + #13#10 + 'by Jordan Knapp',
+    mtInformation, [mbOk], 0, mbOk);
 end;
 
 end.
