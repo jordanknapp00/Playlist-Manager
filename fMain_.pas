@@ -47,6 +47,7 @@ type
   private
     { Private declarations }
     fileName: String;
+    needSave: Boolean;
 
     procedure HandleSave;
     procedure ResizeGrid;
@@ -68,6 +69,7 @@ uses
 procedure TfMain.FormCreate(Sender: TObject);
 begin
   fileName := '';
+  needSave := false;
 
   //set up the grid
   grid.Cells[0, 0] := 'Band';
@@ -240,21 +242,43 @@ end;
 //==============================================================================
 
 procedure TfMain.btnAddBandClick(Sender: TObject);
+var
+  oldSize: Integer;
 begin
+  //if the number of bands increases, saving will be necessary
+  oldSize := dm.bands.Count;
+
   Application.CreateForm(TfAddBand, fAddBand);
   fAddBand.ShowModal;
+
+  if dm.bands.Count > oldSize then
+    needSave := true;
 end;
 
 procedure TfMain.btnAddAlbumClick(Sender: TObject);
+var
+  oldSize: Integer;
 begin
+  oldSize := dm.albums.Count;
+
   Application.CreateForm(TfAddAlbum, fAddAlbum);
   fAddAlbum.ShowModal;
+
+  if dm.albums.Count > oldSize then
+    needSave := true;
 end;
 
 procedure TfMain.btnAddSongsClick(Sender: TObject);
+var
+  oldSize: Integer;
 begin
+  oldSize := dm.songs.Count;
+
   Application.CreateForm(TfAddSong, fAddSong);
   fAddSong.ShowModal;
+
+  if dm.songs.Count > oldSize then
+    needSave := true;
 end;
 
 //==============================================================================
@@ -294,7 +318,16 @@ procedure TfMain.menuItemSaveClick(Sender: TObject);
 var
   dialog: TSaveDialog;
 begin
-  //basic save system for now, no worries about overwriting or whatever
+  if fileName = '' then
+    menuItemSaveAsClick(nil)
+  else
+    HandleSave;
+end;
+
+procedure TfMain.menuItemSaveAsClick(Sender: TObject);
+var
+  dialog: TSaveDialog;
+begin
   dialog := TSaveDialog.Create(self);
   dialog.InitialDir := GetCurrentDir;
   dialog.Filter := 'JSON Files (*.json)|*.json';
@@ -310,11 +343,6 @@ begin
   dialog.Free;
 end;
 
-procedure TfMain.menuItemSaveAsClick(Sender: TObject);
-begin
-  //text
-end;
-
 procedure TfMain.HandleSave;
 var
   saveText: String;
@@ -326,6 +354,8 @@ begin
 
   saveList.SaveToFile(fileName);
   saveList.Free;
+
+  needSave := false;
 end;
 
 //=====  EXPORT MENU  =====
