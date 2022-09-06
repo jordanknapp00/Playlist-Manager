@@ -44,12 +44,14 @@ type
     procedure gridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
       State: TGridDrawState);
     procedure menuItemAboutClick(Sender: TObject);
+    procedure menuItemNewClick(Sender: TObject);
   private
     { Private declarations }
     fileName: String;
     needSave: Boolean;
 
     procedure HandleSave;
+    function AskToSave: Integer;
     procedure ResizeGrid;
   public
     { Public declarations }
@@ -287,12 +289,55 @@ end;
 
 //=====  FILE MENU  =====
 
+procedure TfMain.menuItemNewClick(Sender: TObject);
+var
+  askToSaveResult: Integer;
+begin
+  if needSave then
+  begin
+    askToSaveResult := AskToSave;
+
+    if askToSaveResult = mrCancel then
+      Exit
+    else if askToSaveResult = mrYes then
+      menuItemSaveClick(nil) //this will check whether picking file is needed
+    else if askToSaveResult = mrNo then
+      needSave := false;
+  end;
+
+  dm.bands.Clear;
+  dm.bandNames.Clear;
+  dm.albums.Clear;
+  dm.albumNames.Clear;
+  dm.songs.Clear;
+  dm.songNames.Clear;
+
+  fileName := '';
+  needSave := false;
+
+  RefreshGrid;
+end;
+
 procedure TfMain.menuItemLoadClick(Sender: TObject);
 var
   dialog: TOpenDialog;
   loadList: TStringList;
   loadText: String;
+
+  askToSaveResult: Integer;
 begin
+  if needSave then
+  begin
+    askToSaveResult := AskToSave;
+
+    if askToSaveResult = mrCancel then
+      Exit
+    else if askToSaveResult = mrYes then
+      menuItemSaveClick(nil) //this will check whether picking file is needed
+    else if askToSaveResult = mrNo then
+      needSave := false;
+  end;
+
   dialog := TOpenDialog.Create(self);
   dialog.InitialDir := GetCurrentDir;
   dialog.Filter := 'JSON Files (*.json)|*.json';
@@ -302,21 +347,19 @@ begin
   if dialog.Execute then
   begin
     fileName := dialog.Files[0];
+
+    loadList := TStringList.Create;
+    loadList.LoadFromFile(fileName);
+    loadText := loadList.Text;
+    dm.ReadJSON(loadText);
+
+    loadList.Free;
   end;
 
   dialog.Free;
-
-  loadList := TStringList.Create;
-  loadList.LoadFromFile(fileName);
-  loadText := loadList.Text;
-  dm.ReadJSON(loadText);
-
-  loadList.Free;
 end;
 
 procedure TfMain.menuItemSaveClick(Sender: TObject);
-var
-  dialog: TSaveDialog;
 begin
   if fileName = '' then
     menuItemSaveAsClick(nil)
@@ -356,6 +399,12 @@ begin
   saveList.Free;
 
   needSave := false;
+end;
+
+function TfMain.AskToSave: Integer;
+begin
+  Result := messageDlg('Do you want to save changes to ' + #13#10 + fileName + '?',
+    mtConfirmation, [mbYes, mbNo, mbCancel], 0, mbCancel);
 end;
 
 //=====  EXPORT MENU  =====

@@ -113,6 +113,7 @@ object fMain: TfMain
       Caption = 'File'
       object menuItemNew: TMenuItem
         Caption = 'New'
+        OnClick = menuItemNewClick
       end
       object menuItemLoad: TMenuItem
         Caption = 'Load'
