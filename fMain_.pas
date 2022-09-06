@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.Menus, Vcl.ExtCtrls,
-  Vcl.StdCtrls, Vcl.Grids;
+  Vcl.StdCtrls, Vcl.Grids, System.UITypes;
 
 type
   TfMain = class(TForm)
@@ -135,7 +135,7 @@ end;
 
 procedure TfMain.RefreshGrid;
 var
-  row, col: Integer;
+  row: Integer;
 
   bandNameAt: String;
   bandAt: TBand;
@@ -238,7 +238,7 @@ const
   MIN_CELL_WIDTH_REG: Integer = 10;
   MIN_CELL_WIDTH_SPECIAL: Integer = 20;
 var
-  col, row, colWidth, cellWidth, toAdd, maxFound: Integer;
+  col, row, cellWidth, toAdd, maxFound: Integer;
 begin
   for col := 0 to grid.ColCount - 1 do
   begin
