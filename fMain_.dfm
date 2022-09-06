@@ -14,6 +14,7 @@ object fMain: TfMain
   Font.Style = []
   Menu = menuBar
   OldCreateOrder = False
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
   DesignSize = (
@@ -113,6 +114,7 @@ object fMain: TfMain
       Caption = 'File'
       object menuItemNew: TMenuItem
         Caption = 'New'
+        OnClick = menuItemNewClick
       end
       object menuItemLoad: TMenuItem
         Caption = 'Load'
@@ -128,6 +130,7 @@ object fMain: TfMain
       end
       object menuItemExit: TMenuItem
         Caption = 'Exit'
+        OnClick = menuItemExitClick
       end
     end
     object menuExport: TMenuItem
@@ -153,6 +156,7 @@ object fMain: TfMain
       end
       object menuItemAbout: TMenuItem
         Caption = 'About'
+        OnClick = menuItemAboutClick
       end
     end
   end

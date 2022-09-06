@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.Menus, Vcl.ExtCtrls,
-  Vcl.StdCtrls, Vcl.Grids;
+  Vcl.StdCtrls, Vcl.Grids, System.UITypes;
 
 type
   TfMain = class(TForm)
@@ -43,11 +43,17 @@ type
     procedure FormCreate(Sender: TObject);
     procedure gridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
       State: TGridDrawState);
+    procedure menuItemAboutClick(Sender: TObject);
+    procedure menuItemNewClick(Sender: TObject);
+    procedure menuItemExitClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     { Private declarations }
     fileName: String;
+    needSave: Boolean;
 
     procedure HandleSave;
+    function AskToSave: Integer;
     procedure ResizeGrid;
   public
     { Public declarations }
@@ -64,9 +70,32 @@ uses
 
 {$R *.dfm}
 
+procedure TfMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+var
+  askToSaveResult: Integer;
+begin
+  CanClose := true;
+
+  if needSave then
+  begin
+    askToSaveResult := AskToSave;
+
+    if askToSaveResult = mrCancel then
+    begin
+      CanClose := false;
+      Exit;
+    end
+    else if askToSaveResult = mrYes then
+      menuItemSaveClick(nil) //this will check whether picking file is needed
+    else if askToSaveResult = mrNo then
+      needSave := false;
+  end;
+end;
+
 procedure TfMain.FormCreate(Sender: TObject);
 begin
   fileName := '';
+  needSave := false;
 
   //set up the grid
   grid.Cells[0, 0] := 'Band';
@@ -106,7 +135,7 @@ end;
 
 procedure TfMain.RefreshGrid;
 var
-  row, col: Integer;
+  row: Integer;
 
   bandNameAt: String;
   bandAt: TBand;
@@ -209,7 +238,7 @@ const
   MIN_CELL_WIDTH_REG: Integer = 10;
   MIN_CELL_WIDTH_SPECIAL: Integer = 20;
 var
-  col, row, colWidth, cellWidth, toAdd, maxFound: Integer;
+  col, row, cellWidth, toAdd, maxFound: Integer;
 begin
   for col := 0 to grid.ColCount - 1 do
   begin
@@ -239,21 +268,52 @@ end;
 //==============================================================================
 
 procedure TfMain.btnAddBandClick(Sender: TObject);
+var
+  oldSize: Integer;
 begin
+  //if the number of bands increases, saving will be necessary
+  oldSize := dm.bands.Count;
+
   Application.CreateForm(TfAddBand, fAddBand);
   fAddBand.ShowModal;
+
+  if dm.bands.Count > oldSize then
+  begin
+    needSave := true;
+    Caption := 'Playlist Manager *';
+  end;
 end;
 
 procedure TfMain.btnAddAlbumClick(Sender: TObject);
+var
+  oldSize: Integer;
 begin
+  oldSize := dm.albums.Count;
+
   Application.CreateForm(TfAddAlbum, fAddAlbum);
   fAddAlbum.ShowModal;
+
+  if dm.albums.Count > oldSize then
+  begin
+    needSave := true;
+    Caption := 'Playlist Manager *';
+  end;
 end;
 
 procedure TfMain.btnAddSongsClick(Sender: TObject);
+var
+  oldSize: Integer;
 begin
+  oldSize := dm.songs.Count;
+
   Application.CreateForm(TfAddSong, fAddSong);
   fAddSong.ShowModal;
+
+  if dm.songs.Count > oldSize then
+  begin
+    needSave := true;
+    Caption := 'Playlist Manager *';
+  end;
 end;
 
 //==============================================================================
@@ -262,12 +322,55 @@ end;
 
 //=====  FILE MENU  =====
 
+procedure TfMain.menuItemNewClick(Sender: TObject);
+var
+  askToSaveResult: Integer;
+begin
+  if needSave then
+  begin
+    askToSaveResult := AskToSave;
+
+    if askToSaveResult = mrCancel then
+      Exit
+    else if askToSaveResult = mrYes then
+      menuItemSaveClick(nil) //this will check whether picking file is needed
+    else if askToSaveResult = mrNo then
+      needSave := false;
+  end;
+
+  dm.bands.Clear;
+  dm.bandNames.Clear;
+  dm.albums.Clear;
+  dm.albumNames.Clear;
+  dm.songs.Clear;
+  dm.songNames.Clear;
+
+  fileName := '';
+  needSave := false;
+
+  RefreshGrid;
+end;
+
 procedure TfMain.menuItemLoadClick(Sender: TObject);
 var
   dialog: TOpenDialog;
   loadList: TStringList;
   loadText: String;
+
+  askToSaveResult: Integer;
 begin
+  if needSave then
+  begin
+    askToSaveResult := AskToSave;
+
+    if askToSaveResult = mrCancel then
+      Exit
+    else if askToSaveResult = mrYes then
+      menuItemSaveClick(nil) //this will check whether picking file is needed
+    else if askToSaveResult = mrNo then
+      needSave := false;
+  end;
+
   dialog := TOpenDialog.Create(self);
   dialog.InitialDir := GetCurrentDir;
   dialog.Filter := 'JSON Files (*.json)|*.json';
@@ -277,23 +380,30 @@ begin
   if dialog.Execute then
   begin
     fileName := dialog.Files[0];
+
+    loadList := TStringList.Create;
+    loadList.LoadFromFile(fileName);
+    loadText := loadList.Text;
+    dm.ReadJSON(loadText);
+
+    loadList.Free;
   end;
 
   dialog.Free;
-
-  loadList := TStringList.Create;
-  loadList.LoadFromFile(fileName);
-  loadText := loadList.Text;
-  dm.ReadJSON(loadText);
-
-  loadList.Free;
 end;
 
 procedure TfMain.menuItemSaveClick(Sender: TObject);
+begin
+  if fileName = '' then
+    menuItemSaveAsClick(nil)
+  else
+    HandleSave;
+end;
+
+procedure TfMain.menuItemSaveAsClick(Sender: TObject);
 var
   dialog: TSaveDialog;
 begin
-  //basic save system for now, no worries about overwriting or whatever
   dialog := TSaveDialog.Create(self);
   dialog.InitialDir := GetCurrentDir;
   dialog.Filter := 'JSON Files (*.json)|*.json';
@@ -309,9 +419,23 @@ begin
   dialog.Free;
 end;
 
-procedure TfMain.menuItemSaveAsClick(Sender: TObject);
+procedure TfMain.menuItemExitClick(Sender: TObject);
+var
+  askToSaveResult: Integer;
 begin
-  //text
+  if needSave then
+  begin
+    askToSaveResult := AskToSave;
+
+    if askToSaveResult = mrCancel then
+      Exit
+    else if askToSaveResult = mrYes then
+      menuItemSaveClick(nil) //this will check whether picking file is needed
+    else if askToSaveResult = mrNo then
+      needSave := false;
+  end;
+
+  Application.Terminate;
 end;
 
 procedure TfMain.HandleSave;
@@ -325,6 +449,15 @@ begin
 
   saveList.SaveToFile(fileName);
   saveList.Free;
+
+  needSave := false;
+  Caption := 'Playlist Manager';
+end;
+
+function TfMain.AskToSave: Integer;
+begin
+  Result := messageDlg('Do you want to save changes to ' + #13#10 + fileName + '?',
+    mtConfirmation, [mbYes, mbNo, mbCancel], 0, mbCancel);
 end;
 
 //=====  EXPORT MENU  =====
@@ -336,6 +469,12 @@ begin
   showMessage(IntToStr(dm.bands.Count) + ' bands,' + #13#10 +
     IntToStr(dm.albums.Count) + ' albums, and' + #13#10 +
     IntToStr(dm.songs.Count) + ' songs.');
+end;
+
+procedure TfMain.menuItemAboutClick(Sender: TObject);
+begin
+  MessageDlg('Playlist Manager v0.1 Alpha' + #13#10 + 'by Jordan Knapp',
+    mtInformation, [mbOk], 0, mbOk);
 end;
 
 end.
