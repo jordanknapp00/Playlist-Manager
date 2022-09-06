@@ -254,7 +254,10 @@ begin
   fAddBand.ShowModal;
 
   if dm.bands.Count > oldSize then
+  begin
     needSave := true;
+    Caption := 'Playlist Manager *';
+  end;
 end;
 
 procedure TfMain.btnAddAlbumClick(Sender: TObject);
@@ -267,7 +270,10 @@ begin
   fAddAlbum.ShowModal;
 
   if dm.albums.Count > oldSize then
+  begin
     needSave := true;
+    Caption := 'Playlist Manager *';
+  end;
 end;
 
 procedure TfMain.btnAddSongsClick(Sender: TObject);
@@ -280,7 +286,10 @@ begin
   fAddSong.ShowModal;
 
   if dm.songs.Count > oldSize then
+  begin
     needSave := true;
+    Caption := 'Playlist Manager *';
+  end;
 end;
 
 //==============================================================================
@@ -399,6 +408,7 @@ begin
   saveList.Free;
 
   needSave := false;
+  Caption := 'Playlist Manager';
 end;
 
 function TfMain.AskToSave: Integer;
