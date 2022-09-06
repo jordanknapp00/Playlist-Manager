@@ -45,6 +45,8 @@ type
       State: TGridDrawState);
     procedure menuItemAboutClick(Sender: TObject);
     procedure menuItemNewClick(Sender: TObject);
+    procedure menuItemExitClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     { Private declarations }
     fileName: String;
@@ -67,6 +69,28 @@ uses
   fAddBand_, fAddAlbum_, fAddSong_, DataModule, DataStructs;
 
 {$R *.dfm}
+
+procedure TfMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+var
+  askToSaveResult: Integer;
+begin
+  CanClose := true;
+
+  if needSave then
+  begin
+    askToSaveResult := AskToSave;
+
+    if askToSaveResult = mrCancel then
+    begin
+      CanClose := false;
+      Exit;
+    end
+    else if askToSaveResult = mrYes then
+      menuItemSaveClick(nil) //this will check whether picking file is needed
+    else if askToSaveResult = mrNo then
+      needSave := false;
+  end;
+end;
 
 procedure TfMain.FormCreate(Sender: TObject);
 begin
@@ -393,6 +417,25 @@ begin
   end;
 
   dialog.Free;
+end;
+
+procedure TfMain.menuItemExitClick(Sender: TObject);
+var
+  askToSaveResult: Integer;
+begin
+  if needSave then
+  begin
+    askToSaveResult := AskToSave;
+
+    if askToSaveResult = mrCancel then
+      Exit
+    else if askToSaveResult = mrYes then
+      menuItemSaveClick(nil) //this will check whether picking file is needed
+    else if askToSaveResult = mrNo then
+      needSave := false;
+  end;
+
+  Application.Terminate;
 end;
 
 procedure TfMain.HandleSave;
