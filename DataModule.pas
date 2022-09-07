@@ -21,7 +21,8 @@ type
     albumNames: TList<String>;
     songNames: TList<String>;
 
-    //also have dictionaries for easy access to data
+    //all we strictly need is a list of bands. albums and songs can be accessed
+    //from within
     bands: TDictionary<String, TBand>;
     albums: TDictionary<String, TAlbum>;
     songs: TDictionary<String, TSong>;
