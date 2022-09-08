@@ -286,7 +286,7 @@ begin
   if dm.bandCount > oldSize then
   begin
     needSave := true;
-    Caption := '* ' + fileName + ' - Playlist Manager';
+    Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
   end;
 end;
 
@@ -302,7 +302,7 @@ begin
   if dm.albumCount > oldSize then
   begin
     needSave := true;
-    Caption := '* ' + fileName + ' - Playlist Manager';
+    Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
   end;
 end;
 
@@ -318,7 +318,7 @@ begin
   if dm.songCount > oldSize then
   begin
     needSave := true;
-    Caption := '* ' + fileName + ' - Playlist Manager';
+    Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
   end;
 end;
 
@@ -395,6 +395,8 @@ begin
     loadList.Free;
   end;
 
+  Caption := ExtractFileName(fileName) + ' - Playlist Manager';
+
   dialog.Free;
 end;
 
@@ -457,7 +459,7 @@ begin
   saveList.Free;
 
   needSave := false;
-  Caption := 'Playlist Manager';
+  Caption := ExtractFileName(fileName) + ' - Playlist Manager';
 end;
 
 function TfMain.AskToSave: Integer;
