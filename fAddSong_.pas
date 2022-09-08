@@ -172,7 +172,8 @@ begin
 
     if not dm.AddSong(songAt, cbBands.Items[cbBands.ItemIndex],
       cbAlbums.Items[cbAlbums.ItemIndex], StrToInt(trackNumAt)) then
-      showMessage('Song ' + songAt + ' rejected. We don''t allow duplicates?')
+      showMessage('Song ' + songAt + ' rejected. Sorry, we don''t allow duplicate ' +
+        'songs within the same album.')
     else
       Inc(count);
 
