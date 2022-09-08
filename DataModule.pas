@@ -14,17 +14,16 @@ type
   Tdm = class(TDataModule)
   private
     { Private declarations }
+    numBands, numAlbums, numSongs: Integer;
   public
     { Public declarations }
-    //keep lists of names for easy sorting and inserting into lookup boxes
-    bandNames: TList<String>;
-    albumNames: TList<String>;
-    songNames: TList<String>;
-
-    //also have dictionaries for easy access to data
+    //all we strictly need is a dictionary bands. everything else can be
+    //accessed from within
     bands: TDictionary<String, TBand>;
-    albums: TDictionary<String, TAlbum>;
-    songs: TDictionary<String, TSong>;
+
+    property bandCount: Integer read numBands;
+    property albumCount: Integer read numAlbums;
+    property songCount: Integer read numSongs;
 
     procedure Init;
 
@@ -32,8 +31,9 @@ type
     function AddAlbum(const albumName, bandName: String; const albumYear: Integer): Boolean;
     function AddSong(const songName, bandName, albumName: String; const trackNo: Integer): Boolean;
 
-    procedure SortAlbumsOfBand(bandName: String);
-    procedure SortSongsOfAlbum(albumName: String);
+    function GetSortedBands: TStringList;
+    function GetSortedAlbumsOfBand(bandName: String): TStringList;
+    function GetSortedSongsOfAlbum(bandName, albumName: String): TStringList;
 
     function WriteJSON: String;
     procedure ReadJSON(toRead: String);
@@ -50,13 +50,7 @@ implementation
 
 procedure Tdm.Init;
 begin
-  bandNames := TList<String>.Create;
-  albumNames := TList<String>.Create;
-  songNames := TList<String>.Create;
-
   bands := TDictionary<String, TBand>.Create;
-  albums := TDictionary<String, TAlbum>.Create;
-  songs := TDictionary<String, TSong>.Create;
 
   fMain.RefreshGrid;
 end;
@@ -67,16 +61,17 @@ var
 begin
   Result := true;
 
-  if bandNames.Contains(bandName) then
+  //there are no duplicate band names allowed
+  if bands.ContainsKey(bandName) then
   begin
     Result := false;
     Exit;
   end;
 
   newBand := TBand.Create(bandName);
-
-  bandNames.Add(bandName);
   bands.Add(bandName, newBand);
+
+  Inc(numBands);
 
   fMain.RefreshGrid;
 end;
@@ -87,19 +82,17 @@ var
 begin
   Result := true;
 
-  if albumNames.Contains(albumName) then
+  //no duplicate album names within the same band
+  if bands[bandName].albums.ContainsKey(albumName) then
   begin
     Result := false;
     Exit;
   end;
 
-  albumNames.Add(albumName);
-
   newAlbum := TAlbum.Create(albumName, bandName, albumYear);
-  albums.Add(albumName, newAlbum);
+  bands[bandName].albums.Add(albumName, newAlbum);
 
-  //also add this album to the band's list of albums
-  bands[bandName].albums.Add(newAlbum);
+  Inc(numAlbums);
 
   fMain.RefreshGrid;
 end;
@@ -107,29 +100,63 @@ end;
 function Tdm.AddSong(const songName, bandName, albumName: string; const trackNo: Integer): Boolean;
 var
   newSong: TSong;
+  album: TAlbum;
 begin
   Result := true;
 
-  if songNames.Contains(songName) then
+  album := bands[bandName].albums[albumName];
+
+  //no duplicate song names within the same album
+  if album.songs.ContainsKey(songName) then
   begin
     Result := false;
     Exit;
   end;
 
-  songNames.Add(songName);
-
   newSong := TSong.Create(songName, bandName, albumName, trackNo);
-  songs.Add(songName, newSong);
+  album.songs.Add(songName, newSong);
 
-  //also add this song to the album's list of songs
-  albums[albumName].songs.Add(newSong);
+  Inc(numSongs);
 
   fMain.RefreshGrid;
 end;
 
-procedure Tdm.SortAlbumsOfBand(bandName: String);
+function Tdm.GetSortedBands: TStringList;
+var
+  bandList: TList<TBand>;
+  bandAt: TBand;
 begin
-  bands[bandName].albums.Sort(
+  Result := TStringList.Create;
+  bandList := TList<TBand>.Create;
+
+  for bandAt in bands.Values do
+    bandList.Add(bandAt);
+
+  bandList.Sort(
+    TComparer<TBand>.Construct(
+      function(const left, right: TBand): Integer
+      begin
+        Result := CompareStr(left.name, right.name);
+      end
+    )
+  );
+
+  for bandAt in bandList do
+    Result.Add(bandAt.name);
+end;
+
+function Tdm.GetSortedAlbumsOfBand(bandName: String): TStringList;
+var
+  albumList: TList<TAlbum>;
+  albumAt: TAlbum;
+begin
+  Result := TStringList.Create;
+  albumList := TList<TAlbum>.Create;
+
+  for albumAt in bands[bandName].albums.Values do
+    albumList.Add(albumAt);
+
+  albumList.Sort(
     TComparer<TAlbum>.Construct(
       function(const left, right: TAlbum): Integer
       begin
@@ -142,11 +169,23 @@ begin
       end
     )
   );
+
+  for albumAt in albumList do
+    Result.Add(albumAt.name);
 end;
 
-procedure Tdm.SortSongsOfAlbum(albumName: String);
+function Tdm.GetSortedSongsOfAlbum(bandName, albumName: String): TStringList;
+var
+  songList: TList<TSong>;
+  songAt: TSong;
 begin
-  albums[albumName].songs.Sort(
+  Result := TStringList.Create;
+  songList := TList<TSong>.Create;
+
+  for songAt in bands[bandName].albums[albumName].songs.Values do
+    songList.Add(songAt);
+
+  songList.Sort(
     TComparer<TSong>.Construct(
       function(const left, right: TSong): Integer
       begin
@@ -159,6 +198,9 @@ begin
       end
     )
   );
+
+  for songAt in songList do
+    Result.Add(songAt.name);
 end;
 
 function Tdm.WriteJSON: String;
@@ -180,8 +222,6 @@ begin
   begin
     writer.WriteStartObject;
 
-    writer.WritePropertyName('id');
-    writer.WriteValue(bandAt.id);
     writer.WritePropertyName('name');
     writer.WriteValue(bandAt.name);
     writer.WritePropertyName('isFavorite');
@@ -193,12 +233,10 @@ begin
     writer.WriteStartArray;
 
     //each band will have its list of albums
-    for albumAt in bandAt.albums do
+    for albumAt in bandAt.albums.Values do
     begin
       writer.WriteStartObject;
 
-      writer.WritePropertyName('id');
-      writer.WriteValue(albumAt.id);
       writer.WritePropertyName('name');
       writer.WriteValue(albumAt.name);
       writer.WritePropertyName('year');
@@ -210,12 +248,10 @@ begin
       writer.WriteStartArray;
 
       //each album has its list of songs
-      for songAt in albumAt.songs do
+      for songAt in albumAt.songs.Values do
       begin
         writer.WriteStartObject;
 
-        writer.WritePropertyName('id');
-        writer.WriteValue(songAt.id);
         writer.WritePropertyName('name');
         writer.WriteValue(songAt.name);
         writer.WritePropertyName('trackNo');
@@ -276,10 +312,9 @@ begin
     begin
       bandName := bandAt.GetValue<String>('name');
       bandFav := bandAt.GetValue<Boolean>('isFavorite');
-      bandID := bandAt.GetValue<Integer>('id');
 
       //create a new band using the values retrieved from json
-      newBand := TBand.Create(bandName, bandID, bandFav);
+      newBand := TBand.Create(bandName, bandFav);
 
       //get the list of albums and iterate through it, creating objects for each
       //of them, and their songs
@@ -291,10 +326,9 @@ begin
         albumName := albumAt.GetValue<String>('name');
         albumYear := albumAt.GetValue<Integer>('year');
         albumFav := albumAt.GetValue<Boolean>('isFavorite');
-        albumID := albumAt.GetValue<Integer>('id');
 
         //create the object
-        newAlbum := TAlbum.Create(albumName, bandName, albumYear, albumID, albumFav);
+        newAlbum := TAlbum.Create(albumName, bandName, albumYear, albumFav);
 
         //then handle the inner list before adding object to the system
         songList := (albumAt as TJSonObject).Get('songs').JSONValue as TJSONArray;
@@ -305,26 +339,23 @@ begin
           songName := songAt.GetValue<String>('name');
           songTrack := songAt.GetValue<Integer>('trackNo');
           songFav := songAt.GetValue<Boolean>('isFavorite');
-          songID := songAt.GetValue<Integer>('id');
 
           //create object
-          newSong := TSong.Create(songName, bandName, albumName, songTrack, songID, songFav);
+          newSong := TSong.Create(songName, bandName, albumName, songTrack, songFav);
 
           //no further data beyond the song, so go ahead and add this song to
           //the system
-          newAlbum.songs.Add(newSong);
-          songs.Add(songName, newSong);
+          newAlbum.songs.Add(songName, newSong);
+          Inc(numSongs);
         end;
 
-        //add the album to the current band's list of albums, then add the song
-        //to the dictionary of songs
-        newBand.albums.Add(newAlbum);
-        albums.Add(albumName, newAlbum);
+        newBand.albums.Add(albumName, newAlbum);
+        Inc(numAlbums);
       end;
 
       //once albums have all been added, the band can be added to the system
-      bandNames.Add(bandName);
       bands.Add(bandName, newBand);
+      Inc(numBands);
     end;
   except
     on E: Exception do

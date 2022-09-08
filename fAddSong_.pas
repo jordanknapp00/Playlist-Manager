@@ -40,6 +40,7 @@ implementation
 
 procedure TfAddSong.FormCreate(Sender: TObject);
 var
+  bandList: TStringList;
   bandAt: String;
 begin
   //put this dialog in the exact middle of the main window
@@ -56,10 +57,11 @@ begin
     'by album.';
 
   //add list of bands to the dropdown after sorting, if there are any bands
-  if dm.bandNames.Count > 0 then
+  if dm.bandCount > 0 then
   begin
-    dm.bandNames.Sort;
-    for bandAt in dm.bandNames do
+    bandList := dm.GetSortedBands;
+
+    for bandAt in bandList do
     begin
       cbBands.Items.Add(bandAt);
     end;
@@ -68,7 +70,8 @@ end;
 
 procedure TfAddSong.cbBandsChange(Sender: TObject);
 var
-  albumAt: TAlbum;
+  albumList: TStringList;
+  albumAt: String;
   choice: Integer;
 begin
   if (oldBandSelection <> '') and (oldBandSelection <> cbBands.Items[cbBands.ItemIndex])
@@ -90,6 +93,7 @@ begin
     end;
   end;
 
+  //somewhat confusing, i guess oldBandSelection is now the CURRENT selection
   oldBandSelection := cbBands.Items[cbBands.ItemIndex];
 
   //how handle the album lookup box.
@@ -101,11 +105,10 @@ begin
   cbAlbums.Items.Add('N/A');
 
   //put that band's albums in the album lookup box after sorting
-  dm.SortAlbumsOfBand(oldBandSelection);
-  for albumAt in dm.bands[oldBandSelection].albums do
+  albumList := dm.GetSortedAlbumsOfBand(oldBandSelection);
+  for albumAt in albumList do
   begin
-    if albumAt.band = oldBandSelection then
-      cbAlbums.Items.Add(albumAt.name);
+    cbAlbums.Items.Add(albumAt);
   end;
 end;
 
@@ -169,7 +172,8 @@ begin
 
     if not dm.AddSong(songAt, cbBands.Items[cbBands.ItemIndex],
       cbAlbums.Items[cbAlbums.ItemIndex], StrToInt(trackNumAt)) then
-      showMessage('Song ' + songAt + ' rejected. We don''t allow duplicates?')
+      showMessage('Song ' + songAt + ' rejected. Sorry, we don''t allow duplicate ' +
+        'songs within the same album.')
     else
       Inc(count);
 
