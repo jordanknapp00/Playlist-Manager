@@ -14,11 +14,16 @@ type
   Tdm = class(TDataModule)
   private
     { Private declarations }
+    numBands, numAlbums, numSongs: Integer;
   public
     { Public declarations }
     //all we strictly need is a dictionary bands. everything else can be
     //accessed from within
     bands: TDictionary<String, TBand>;
+
+    property bandCount: Integer read numBands;
+    property albumCount: Integer read numAlbums;
+    property songCount: Integer read numSongs;
 
     procedure Init;
 
@@ -26,8 +31,9 @@ type
     function AddAlbum(const albumName, bandName: String; const albumYear: Integer): Boolean;
     function AddSong(const songName, bandName, albumName: String; const trackNo: Integer): Boolean;
 
-    procedure SortAlbumsOfBand(bandName: String);
-    procedure SortSongsOfAlbum(albumName: String);
+    function GetSortedBands: TStringList;
+    function GetSortedAlbumsOfBand(bandName: String): TStringList;
+    function GetSortedSongsOfAlbum(bandName, albumName: String): TStringList;
 
     function WriteJSON: String;
     procedure ReadJSON(toRead: String);
@@ -65,6 +71,8 @@ begin
   newBand := TBand.Create(bandName);
   bands.Add(bandName, newBand);
 
+  Inc(numBands);
+
   fMain.RefreshGrid;
 end;
 
@@ -83,6 +91,8 @@ begin
 
   newAlbum := TAlbum.Create(albumName, bandName, albumYear);
   bands[bandName].albums.Add(albumName, newAlbum);
+
+  Inc(numAlbums);
 
   fMain.RefreshGrid;
 end;
@@ -106,41 +116,91 @@ begin
   newSong := TSong.Create(songName, bandName, albumName, trackNo);
   album.songs.Add(songName, newSong);
 
+  Inc(numSongs);
+
   fMain.RefreshGrid;
 end;
 
-procedure Tdm.SortAlbumsOfBand(bandName: String);
+function Tdm.GetSortedBands: TStringList;
+var
+  bandList: TList<TBand>;
+  bandAt: TBand;
 begin
-//  bands[bandName].albums.Sort(
-//    TComparer<TAlbum>.Construct(
-//      function(const left, right: TAlbum): Integer
-//      begin
-//        if left.year < right.year then
-//          Result := -1
-//        else if left.year > right.year then
-//          Result := 1
-//        else
-//          Result := CompareStr(left.name, right.name);
-//      end
-//    )
-//  );
+  Result := TStringList.Create;
+  bandList := TList<TBand>.Create;
+
+  for bandAt in bands.Values do
+    bandList.Add(bandAt);
+
+  bandList.Sort(
+    TComparer<TBand>.Construct(
+      function(const left, right: TBand): Integer
+      begin
+        Result := CompareStr(left.name, right.name);
+      end
+    )
+  );
+
+  for bandAt in bandList do
+    Result.Add(bandAt.name);
 end;
 
-procedure Tdm.SortSongsOfAlbum(albumName: String);
+function Tdm.GetSortedAlbumsOfBand(bandName: String): TStringList;
+var
+  albumList: TList<TAlbum>;
+  albumAt: TAlbum;
 begin
-//  albums[albumName].songs.Sort(
-//    TComparer<TSong>.Construct(
-//      function(const left, right: TSong): Integer
-//      begin
-//        if left.trackNo < right.trackNo then
-//          Result := -1
-//        else if left.trackNo > right.trackNo then
-//          Result := 1
-//        else
-//          Result := 0;
-//      end
-//    )
-//  );
+  Result := TStringList.Create;
+  albumList := TList<TAlbum>.Create;
+
+  for albumAt in bands[bandName].albums.Values do
+    albumList.Add(albumAt);
+
+  albumList.Sort(
+    TComparer<TAlbum>.Construct(
+      function(const left, right: TAlbum): Integer
+      begin
+        if left.year < right.year then
+          Result := -1
+        else if left.year > right.year then
+          Result := 1
+        else
+          Result := CompareStr(left.name, right.name);
+      end
+    )
+  );
+
+  for albumAt in albumList do
+    Result.Add(albumAt.name);
+end;
+
+function Tdm.GetSortedSongsOfAlbum(bandName, albumName: String): TStringList;
+var
+  songList: TList<TSong>;
+  songAt: TSong;
+begin
+  Result := TStringList.Create;
+  songList := TList<TSong>.Create;
+
+  for songAt in bands[bandName].albums[albumName].songs.Values do
+    songList.Add(songAt);
+
+  songList.Sort(
+    TComparer<TSong>.Construct(
+      function(const left, right: TSong): Integer
+      begin
+        if left.trackNo < right.trackNo then
+          Result := -1
+        else if left.trackNo > right.trackNo then
+          Result := 1
+        else
+          Result := 0;
+      end
+    )
+  );
+
+  for songAt in songList do
+    Result.Add(songAt.name);
 end;
 
 function Tdm.WriteJSON: String;
@@ -286,15 +346,16 @@ begin
           //no further data beyond the song, so go ahead and add this song to
           //the system
           newAlbum.songs.Add(songName, newSong);
+          Inc(numSongs);
         end;
 
-        //add the album to the current band's list of albums, then add the song
-        //to the dictionary of songs
         newBand.albums.Add(albumName, newAlbum);
+        Inc(numAlbums);
       end;
 
       //once albums have all been added, the band can be added to the system
       bands.Add(bandName, newBand);
+      Inc(numBands);
     end;
   except
     on E: Exception do

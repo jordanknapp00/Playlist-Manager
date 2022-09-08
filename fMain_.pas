@@ -70,6 +70,32 @@ uses
 
 {$R *.dfm}
 
+procedure TfMain.FormCreate(Sender: TObject);
+begin
+  fileName := 'Untitled';
+  needSave := false;
+
+  Caption := fileName + ' - Playlist Manager';
+
+  //set up the grid
+  grid.Cells[0, 0] := 'Band';
+  grid.Cells[1, 0] := 'Fav?';
+  grid.Cells[2, 0] := 'Album';
+  grid.Cells[3, 0] := 'Year';
+  grid.Cells[4, 0] := 'Fav?';
+  grid.Cells[5, 0] := 'Song';
+  grid.Cells[6, 0] := 'Track No.';
+  grid.Cells[7, 0] := 'Fav?';
+end;
+
+procedure TfMain.FormShow(Sender: TObject);
+begin
+  //for whatever reason, DataModule initialization must be done in FormShow,
+  //rather than FormCreate. I guess because the DM may not have been created at
+  //this form's create time.
+  dm.Init;
+end;
+
 procedure TfMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 var
   askToSaveResult: Integer;
@@ -90,30 +116,6 @@ begin
     else if askToSaveResult = mrNo then
       needSave := false;
   end;
-end;
-
-procedure TfMain.FormCreate(Sender: TObject);
-begin
-  fileName := '';
-  needSave := false;
-
-  //set up the grid
-  grid.Cells[0, 0] := 'Band';
-  grid.Cells[1, 0] := 'Fav?';
-  grid.Cells[2, 0] := 'Album';
-  grid.Cells[3, 0] := 'Year';
-  grid.Cells[4, 0] := 'Fav?';
-  grid.Cells[5, 0] := 'Song';
-  grid.Cells[6, 0] := 'Track No.';
-  grid.Cells[7, 0] := 'Fav?';
-end;
-
-procedure TfMain.FormShow(Sender: TObject);
-begin
-  //for whatever reason, DataModule initialization must be done in FormShow,
-  //rather than FormCreate. I guess because the DM may not have been created at
-  //this form's create time.
-  dm.Init;
 end;
 
 //==============================================================================
@@ -137,7 +139,7 @@ procedure TfMain.RefreshGrid;
 var
   row: Integer;
 
-  bandNameAt: String;
+  bandNameAt, albumNameAt, songNameAt: String;
   bandAt: TBand;
   albumAt: TAlbum;
   songAt: TSong;
@@ -149,10 +151,10 @@ begin
   row := 1;
 
   //dont bother if there are no bands
-  if dm.bandNames.Count = 0 then
+  if dm.bandCount = 0 then
     Exit;
 
-  for bandNameAt in dm.bandNames do
+  for bandNameAt in dm.GetSortedBands do
   begin
     bandAt := dm.bands[bandNameAt];
 
@@ -170,8 +172,10 @@ begin
       Inc(row);
     end;
 
-    for albumAt in bandAt.albums do
+    for albumNameAt in dm.GetSortedAlbumsOfBand(bandNameAt) do
     begin
+      albumAt := bandAt.albums[albumNameAt];
+
       //if there are no songs, print the album. if we reached this point, the
       //band also has not been printed
       if albumAt.songs.Count = 0 then
@@ -195,8 +199,10 @@ begin
         Inc(row);
       end;
 
-      for songAt in albumAt.songs do
+      for songNameAt in dm.GetSortedSongsOfAlbum(bandNameAt, albumNameAt) do
       begin
+        songAt := albumAt.songs[songNameAt];
+
         //print everything if we make it to the songs loop
         grid.Cells[0, row] := bandNameAt;
 
@@ -272,15 +278,15 @@ var
   oldSize: Integer;
 begin
   //if the number of bands increases, saving will be necessary
-  oldSize := dm.bands.Count;
+  oldSize := dm.bandCount;
 
   Application.CreateForm(TfAddBand, fAddBand);
   fAddBand.ShowModal;
 
-  if dm.bands.Count > oldSize then
+  if dm.bandCount > oldSize then
   begin
     needSave := true;
-    Caption := 'Playlist Manager *';
+    Caption := '* ' + fileName + ' - Playlist Manager';
   end;
 end;
 
@@ -288,15 +294,15 @@ procedure TfMain.btnAddAlbumClick(Sender: TObject);
 var
   oldSize: Integer;
 begin
-  oldSize := dm.albums.Count;
+  oldSize := dm.albumCount;
 
   Application.CreateForm(TfAddAlbum, fAddAlbum);
   fAddAlbum.ShowModal;
 
-  if dm.albums.Count > oldSize then
+  if dm.albumCount > oldSize then
   begin
     needSave := true;
-    Caption := 'Playlist Manager *';
+    Caption := '* ' + fileName + ' - Playlist Manager';
   end;
 end;
 
@@ -304,15 +310,15 @@ procedure TfMain.btnAddSongsClick(Sender: TObject);
 var
   oldSize: Integer;
 begin
-  oldSize := dm.songs.Count;
+  oldSize := dm.songCount;
 
   Application.CreateForm(TfAddSong, fAddSong);
   fAddSong.ShowModal;
 
-  if dm.songs.Count > oldSize then
+  if dm.songCount > oldSize then
   begin
     needSave := true;
-    Caption := 'Playlist Manager *';
+    Caption := '* ' + fileName + ' - Playlist Manager';
   end;
 end;
 
@@ -339,13 +345,13 @@ begin
   end;
 
   dm.bands.Clear;
-  dm.bandNames.Clear;
-  dm.albums.Clear;
-  dm.albumNames.Clear;
-  dm.songs.Clear;
-  dm.songNames.Clear;
+//  dm.bandNames.Clear;
+//  dm.albums.Clear;
+//  dm.albumNames.Clear;
+//  dm.songs.Clear;
+//  dm.songNames.Clear;
 
-  fileName := '';
+  fileName := 'Untitled';
   needSave := false;
 
   RefreshGrid;
@@ -466,9 +472,9 @@ end;
 
 procedure TfMain.menuItemStatsClick(Sender: TObject);
 begin
-  showMessage(IntToStr(dm.bands.Count) + ' bands,' + #13#10 +
-    IntToStr(dm.albums.Count) + ' albums, and' + #13#10 +
-    IntToStr(dm.songs.Count) + ' songs.');
+  showMessage(IntToStr(dm.bandCount) + ' bands,' + #13#10 +
+    IntToStr(dm.albumCount) + ' albums, and' + #13#10 +
+    IntToStr(dm.songCount) + ' songs.');
 end;
 
 procedure TfMain.menuItemAboutClick(Sender: TObject);
