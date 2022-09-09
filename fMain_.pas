@@ -27,9 +27,9 @@ type
     btnAddBand: TButton;
     btnAddAlbum: TButton;
     btnAddSongs: TButton;
-    btnDeleteBand: TButton;
-    btnDeleteAlbum: TButton;
-    btnDeleteSong: TButton;
+    btnManageBand: TButton;
+    btnManageAlbum: TButton;
+    btnManageSongs: TButton;
     menuItemStats: TMenuItem;
     grid: TStringGrid;
     procedure btnAddBandClick(Sender: TObject);

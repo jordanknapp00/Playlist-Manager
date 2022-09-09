@@ -61,31 +61,31 @@ object fMain: TfMain
     TabOrder = 3
     OnClick = btnAddSongsClick
   end
-  object btnDeleteBand: TButton
+  object btnManageBand: TButton
     Left = 572
     Top = 428
     Width = 120
     Height = 25
     Anchors = [akRight, akBottom]
-    Caption = 'Delete Band(s)'
+    Caption = 'Manage Bands'
     TabOrder = 4
   end
-  object btnDeleteAlbum: TButton
+  object btnManageAlbum: TButton
     Left = 572
     Top = 459
     Width = 120
     Height = 25
     Anchors = [akRight, akBottom]
-    Caption = 'Delete Album(s)'
+    Caption = 'Manage Albums'
     TabOrder = 5
   end
-  object btnDeleteSong: TButton
+  object btnManageSongs: TButton
     Left = 572
-    Top = 492
+    Top = 490
     Width = 120
     Height = 25
     Anchors = [akRight, akBottom]
-    Caption = 'Delete Song(s)'
+    Caption = 'Manage Songs'
     TabOrder = 6
   end
   object grid: TStringGrid
