@@ -2,10 +2,10 @@ object fManageSong: TfManageSong
   Left = 0
   Top = 0
   Caption = 'Manage Songs'
-  ClientHeight = 466
+  ClientHeight = 441
   ClientWidth = 257
   Color = clBtnFace
-  Constraints.MinHeight = 505
+  Constraints.MinHeight = 480
   Constraints.MinWidth = 273
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,7 +15,7 @@ object fManageSong: TfManageSong
   OldCreateOrder = False
   DesignSize = (
     257
-    466)
+    441)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -47,7 +47,7 @@ object fManageSong: TfManageSong
   end
   object Label4: TLabel
     Left = 23
-    Top = 272
+    Top = 256
     Width = 201
     Height = 13
     Anchors = [akTop]
@@ -55,7 +55,7 @@ object fManageSong: TfManageSong
   end
   object Label5: TLabel
     Left = 23
-    Top = 232
+    Top = 224
     Width = 97
     Height = 13
     Anchors = [akLeft, akTop, akRight]
@@ -87,7 +87,7 @@ object fManageSong: TfManageSong
   end
   object cbFavorite: TCheckBox
     Left = 23
-    Top = 192
+    Top = 198
     Width = 210
     Height = 17
     Anchors = [akTop]
@@ -96,35 +96,38 @@ object fManageSong: TfManageSong
   end
   object edTags: TMemo
     Left = 23
-    Top = 291
+    Top = 275
     Width = 210
-    Height = 86
+    Height = 78
     Anchors = [akLeft, akTop, akRight, akBottom]
     Lines.Strings = (
       'Memo1')
     TabOrder = 4
+    ExplicitHeight = 86
   end
   object btnSave: TButton
     Left = 23
-    Top = 400
+    Top = 376
     Width = 210
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Save'
     TabOrder = 5
+    ExplicitTop = 384
   end
   object btnDelete: TButton
     Left = 23
-    Top = 431
+    Top = 408
     Width = 210
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Delete Selected Song'
     TabOrder = 6
+    ExplicitTop = 416
   end
   object edTrackNo: TEdit
     Left = 126
-    Top = 229
+    Top = 221
     Width = 107
     Height = 21
     Anchors = [akLeft, akTop, akRight]

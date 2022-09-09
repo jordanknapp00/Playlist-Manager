@@ -2,10 +2,10 @@ object fManageAlbum: TfManageAlbum
   Left = 0
   Top = 0
   Caption = 'Manage Albums'
-  ClientHeight = 408
+  ClientHeight = 381
   ClientWidth = 257
   Color = clBtnFace
-  Constraints.MinHeight = 447
+  Constraints.MinHeight = 420
   Constraints.MinWidth = 273
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,7 +15,7 @@ object fManageAlbum: TfManageAlbum
   OldCreateOrder = False
   DesignSize = (
     257
-    408)
+    381)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -38,7 +38,7 @@ object fManageAlbum: TfManageAlbum
   end
   object Label3: TLabel
     Left = 23
-    Top = 216
+    Top = 200
     Width = 210
     Height = 13
     Anchors = [akTop]
@@ -46,7 +46,7 @@ object fManageAlbum: TfManageAlbum
   end
   object Label4: TLabel
     Left = 23
-    Top = 176
+    Top = 168
     Width = 58
     Height = 13
     Anchors = [akLeft, akTop, akRight]
@@ -79,9 +79,9 @@ object fManageAlbum: TfManageAlbum
   end
   object edTags: TMemo
     Left = 23
-    Top = 235
+    Top = 219
     Width = 210
-    Height = 86
+    Height = 78
     Anchors = [akLeft, akTop, akRight, akBottom]
     Lines.Strings = (
       'Memo1')
@@ -89,25 +89,27 @@ object fManageAlbum: TfManageAlbum
   end
   object btnSave: TButton
     Left = 23
-    Top = 344
+    Top = 315
     Width = 210
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Save'
     TabOrder = 4
+    ExplicitTop = 320
   end
   object btnDelete: TButton
     Left = 23
-    Top = 375
+    Top = 346
     Width = 210
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Delete Selected Album'
     TabOrder = 5
+    ExplicitTop = 351
   end
   object edYear: TEdit
     Left = 87
-    Top = 173
+    Top = 165
     Width = 146
     Height = 21
     Anchors = [akLeft, akTop, akRight]
