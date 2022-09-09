@@ -3,9 +3,7 @@ unit DataStructs;
 interface
 
 uses
-  System.Generics.Collections, System.Generics.Defaults,
-
-  Vcl.Dialogs;
+  System.Generics.Collections, System.Generics.Defaults, System.Classes;
 
 type
   {
@@ -27,6 +25,7 @@ type
 
   public
     isFavorite: Boolean;
+    tags: TStringList;
 
     property name: String read songName;
     property trackNo: Integer read track;
@@ -56,6 +55,7 @@ type
 
   public
     isFavorite: Boolean;
+    tags: TStringList;
 
     songs: TDictionary<String, TSong>;
 
@@ -82,6 +82,7 @@ type
 
   public
     isFavorite: Boolean;
+    tags: TStringList;
 
     albums: TDictionary<String, TAlbum>;
 
@@ -107,6 +108,7 @@ begin
   self.albumName := albumName;
 
   isFavorite := false;
+  tags := TStringList.Create;
 end;
 
 //constructor with id and fav
@@ -119,6 +121,7 @@ begin
   self.albumName := albumName;
 
   isFavorite := fav;
+  tags := TStringList.Create;
 end;
 
 //==============================================================================
@@ -133,6 +136,7 @@ begin
   self.bandName := bandName;
 
   isFavorite := false;
+  tags := TStringList.Create;
 
   songs := TDictionary<String, TSong>.Create;
 end;
@@ -146,6 +150,7 @@ begin
   self.bandName := bandName;
 
   isFavorite := fav;
+  tags := TStringList.Create;
 
   songs := TDictionary<String, TSong>.Create;
 end;
@@ -159,6 +164,7 @@ begin
   self.bandName := bandName;
 
   isFavorite := false;
+  tags := TStringList.Create;
 
   albums := TDictionary<String, TAlbum>.Create;
 end;
@@ -168,6 +174,7 @@ begin
   self.bandName := bandName;
 
   isFavorite := fav;
+  tags := TStringList.Create;
 
   albums := TDictionary<String, TAlbum>.Create;
 end;
