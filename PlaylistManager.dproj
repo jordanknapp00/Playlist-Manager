@@ -131,6 +131,10 @@
             <Form>fManageBand</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="fManageAlbum_.pas">
+            <Form>fManageAlbum</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

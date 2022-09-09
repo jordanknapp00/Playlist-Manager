@@ -25,7 +25,7 @@ object fManageBand: TfManageBand
     Height = 13
     Alignment = taCenter
     Anchors = [akTop]
-    Caption = 'Select a Band to Add Album(s) To:'
+    Caption = 'Select a Band to Modify:'
   end
   object Label2: TLabel
     Left = 23
@@ -43,7 +43,7 @@ object fManageBand: TfManageBand
     Anchors = [akTop]
     TabOrder = 0
   end
-  object CheckBox1: TCheckBox
+  object cbFavorite: TCheckBox
     Left = 23
     Top = 80
     Width = 201
@@ -56,7 +56,7 @@ object fManageBand: TfManageBand
     Left = 23
     Top = 139
     Width = 201
-    Height = 110
+    Height = 86
     Anchors = [akLeft, akTop, akRight, akBottom]
     Lines.Strings = (
       'Memo1')
@@ -64,11 +64,22 @@ object fManageBand: TfManageBand
   end
   object btnSave: TButton
     Left = 23
-    Top = 270
+    Top = 246
     Width = 201
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Save'
     TabOrder = 3
+    ExplicitTop = 293
+  end
+  object btnDelete: TButton
+    Left = 23
+    Top = 278
+    Width = 201
+    Height = 25
+    Anchors = [akLeft, akRight, akBottom]
+    Caption = 'Delete Selected Band'
+    TabOrder = 4
+    ExplicitTop = 325
   end
 end

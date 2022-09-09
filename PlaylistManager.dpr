@@ -8,7 +8,8 @@ uses
   fAddAlbum_ in 'fAddAlbum_.pas' {fAddAlbum},
   fAddSong_ in 'fAddSong_.pas' {fAddSong},
   DataModule in 'DataModule.pas' {dm: TDataModule},
-  fManageBand_ in 'fManageBand_.pas' {fManageBand};
+  fManageBand_ in 'fManageBand_.pas' {fManageBand},
+  fManageAlbum_ in 'fManageAlbum_.pas' {fManageAlbum};
 
 {$R *.res}
 
@@ -18,5 +19,6 @@ begin
   Application.CreateForm(TfMain, fMain);
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TfManageBand, fManageBand);
+  Application.CreateForm(TfManageAlbum, fManageAlbum);
   Application.Run;
 end.
