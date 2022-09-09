@@ -69,6 +69,7 @@ object fMain: TfMain
     Anchors = [akRight, akBottom]
     Caption = 'Manage Bands'
     TabOrder = 4
+    OnClick = btnManageBandClick
   end
   object btnManageAlbum: TButton
     Left = 572
@@ -78,6 +79,7 @@ object fMain: TfMain
     Anchors = [akRight, akBottom]
     Caption = 'Manage Albums'
     TabOrder = 5
+    OnClick = btnManageAlbumClick
   end
   object btnManageSongs: TButton
     Left = 572
@@ -87,6 +89,7 @@ object fMain: TfMain
     Anchors = [akRight, akBottom]
     Caption = 'Manage Songs'
     TabOrder = 6
+    OnClick = btnManageSongsClick
   end
   object grid: TStringGrid
     Left = 8

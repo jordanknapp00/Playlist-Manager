@@ -19,8 +19,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfMain, fMain);
   Application.CreateForm(Tdm, dm);
-  Application.CreateForm(TfManageBand, fManageBand);
-  Application.CreateForm(TfManageAlbum, fManageAlbum);
-  Application.CreateForm(TfManageSong, fManageSong);
   Application.Run;
 end.
