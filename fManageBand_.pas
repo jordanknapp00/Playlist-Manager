@@ -12,7 +12,7 @@ type
     cbBands: TComboBox;
     cbFavorite: TCheckBox;
     Label2: TLabel;
-    Memo1: TMemo;
+    edTags: TMemo;
     btnSave: TButton;
     btnDelete: TButton;
   private

@@ -52,14 +52,14 @@ object fManageBand: TfManageBand
     Caption = 'Band is a favorite'
     TabOrder = 1
   end
-  object Memo1: TMemo
+  object edTags: TMemo
     Left = 23
     Top = 139
     Width = 201
     Height = 86
     Anchors = [akLeft, akTop, akRight, akBottom]
     Lines.Strings = (
-      'Memo1')
+      'edTags')
     TabOrder = 2
   end
   object btnSave: TButton

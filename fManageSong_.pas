@@ -1,4 +1,4 @@
-unit fManageAlbum_;
+unit fManageSong_;
 
 interface
 
@@ -7,18 +7,20 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
 
 type
-  TfManageAlbum = class(TForm)
+  TfManageSong = class(TForm)
     Label1: TLabel;
     cbBands: TComboBox;
     Label2: TLabel;
     cbAlbums: TComboBox;
-    cbFavorite: TCheckBox;
     Label3: TLabel;
+    cbSongs: TComboBox;
+    cbFavorite: TCheckBox;
+    Label4: TLabel;
     edTags: TMemo;
     btnSave: TButton;
     btnDelete: TButton;
-    Label4: TLabel;
-    edYear: TEdit;
+    Label5: TLabel;
+    edTrackNo: TEdit;
   private
     { Private declarations }
   public
@@ -26,7 +28,7 @@ type
   end;
 
 var
-  fManageAlbum: TfManageAlbum;
+  fManageSong: TfManageSong;
 
 implementation
 
