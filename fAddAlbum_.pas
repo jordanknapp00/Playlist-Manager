@@ -70,6 +70,7 @@ end;
 procedure TfAddAlbum.FormCreate(Sender: TObject);
 var
   bandAt: String;
+  listOfBands: TStringList;
 begin
   //put this dialog in the exact middle of the main window
   Top := fMain.Top + Trunc(fMain.Height / 2) - Trunc(Height / 2);
@@ -81,10 +82,11 @@ begin
   oldSelection := '';
 
   //add list of bands to the dropdown after sorting, if there are any bands
-  if dm.bandNames.Count > 0 then
+  if dm.bandCount > 0 then
   begin
-    dm.bandNames.Sort;
-    for bandAt in dm.bandNames do
+    listOfBands := dm.GetSortedBands;
+
+    for bandAt in listOfBands do
     begin
       cbBands.Items.Add(bandAt);
     end;
@@ -118,7 +120,7 @@ begin
 
     if not dm.AddAlbum(albumAt, cbBands.Items[cbBands.ItemIndex], StrToInt(yearAt)) then
       showMessage('Album ' + albumAt + ' rejected, because it is a duplicate. ' +
-        'Sorry, but at this time, we do not accept duplicate album names.')
+        'Sorry, but we do not accept duplicate album names under the same band.')
     else
       Inc(count);
 

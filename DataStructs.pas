@@ -3,9 +3,7 @@ unit DataStructs;
 interface
 
 uses
-  System.Generics.Collections, System.Generics.Defaults,
-
-  Vcl.Dialogs;
+  System.Generics.Collections, System.Generics.Defaults, System.Classes;
 
 type
   {
@@ -23,21 +21,21 @@ type
   TSong = class
   private
     songName, bandName, albumName: String;
-    track, itemID: Integer;
+    track: Integer;
 
   public
     isFavorite: Boolean;
+    tags: TStringList;
 
     property name: String read songName;
     property trackNo: Integer read track;
-    property id: Integer read itemID;
 
     //relational properties
     property band: String read bandName;
     property album: String read albumName;
 
     constructor Create(const songName, bandName, albumName: String; const trackNo: Integer); overload;
-    constructor Create(const songName, bandName, albumName: String; const trackNo, id: Integer; const fav: Boolean); overload;
+    constructor Create(const songName, bandName, albumName: String; const trackNo: Integer; const fav: Boolean); overload;
   end;
 
   {
@@ -53,22 +51,22 @@ type
   TAlbum = class
   private
     albumName, bandName: String;
-    albumYear, itemID: Integer;
+    albumYear: Integer;
 
   public
     isFavorite: Boolean;
+    tags: TStringList;
 
-    songs: TList<TSong>;
+    songs: TDictionary<String, TSong>;
 
     property name: String read albumName;
     property year: Integer read albumYear;
-    property id: Integer read itemID;
 
     //relational property
     property band: String read bandName;
 
     constructor Create(const albumName, bandName: String; const albumYear: Integer); overload;
-    constructor Create(const albumName, bandName: String; const albumYear, id: Integer; const fav: Boolean); overload;
+    constructor Create(const albumName, bandName: String; const albumYear: Integer; const fav: Boolean); overload;
   end;
 
   {
@@ -81,28 +79,18 @@ type
   TBand = class
   private
     bandName: String;
-    itemID: Integer;
 
   public
     isFavorite: Boolean;
+    tags: TStringList;
 
-    albums: TList<TAlbum>;
+    albums: TDictionary<String, TAlbum>;
 
     property name: String read bandName;
-    property id: Integer read itemID;
 
     constructor Create(const bandName: String); overload;
-    constructor Create(const bandName: String; const id: Integer; const fav: Boolean); overload;
+    constructor Create(const bandName: String; const fav: Boolean); overload;
   end;
-
-//this is basically a static variable that we use to give everything a unique id.
-//the {$J} compiler directive turns on writable constants. why should constants
-//be writable? i dunno, then they're not really constants. but it lets us create
-//an analog to static variables, so whatever
-const
-  {$J+}
-  idCount: Integer = 0;
-  {$J-}
 
 implementation
 
@@ -120,13 +108,11 @@ begin
   self.albumName := albumName;
 
   isFavorite := false;
-
-  itemID := idCount;
-  Inc(idCount);
+  tags := TStringList.Create;
 end;
 
 //constructor with id and fav
-constructor Tsong.Create(const songName, bandName, albumName: string; const trackNo, id: Integer; const fav: Boolean);
+constructor TSong.Create(const songName, bandName, albumName: string; const trackNo: Integer; const fav: Boolean);
 begin
   self.songName := songName;
   self.track := trackNo;
@@ -135,7 +121,7 @@ begin
   self.albumName := albumName;
 
   isFavorite := fav;
-  itemId := id;
+  tags := TStringList.Create;
 end;
 
 //==============================================================================
@@ -150,15 +136,13 @@ begin
   self.bandName := bandName;
 
   isFavorite := false;
+  tags := TStringList.Create;
 
-  songs := TList<TSong>.Create();
-
-  itemID := idCount;
-  Inc(idCount);
+  songs := TDictionary<String, TSong>.Create;
 end;
 
 //constructor with id and fav
-constructor TAlbum.Create(const albumName, bandName: String; const albumYear, id: Integer; const fav: Boolean);
+constructor TAlbum.Create(const albumName, bandName: String; const albumYear: Integer; const fav: Boolean);
 begin
   self.albumName := albumName;
   self.albumYear := albumYear;
@@ -166,9 +150,9 @@ begin
   self.bandName := bandName;
 
   isFavorite := fav;
-  itemID := id;
+  tags := TStringList.Create;
 
-  songs := TList<TSong>.Create();
+  songs := TDictionary<String, TSong>.Create;
 end;
 
 //==============================================================================
@@ -180,21 +164,19 @@ begin
   self.bandName := bandName;
 
   isFavorite := false;
+  tags := TStringList.Create;
 
-  albums := TList<TAlbum>.Create;
-
-  itemID := idCount;
-  Inc(idCount);
+  albums := TDictionary<String, TAlbum>.Create;
 end;
 
-constructor TBand.Create(const bandName: String; const id: Integer; const fav: Boolean);
+constructor TBand.Create(const bandName: String; const fav: Boolean);
 begin
   self.bandName := bandName;
 
   isFavorite := fav;
-  itemID := id;
+  tags := TStringList.Create;
 
-  albums := TList<TAlbum>.Create;
+  albums := TDictionary<String, TAlbum>.Create;
 end;
 
 end.

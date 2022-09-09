@@ -22,9 +22,8 @@ object fAddSong: TfAddSong
   object Label1: TLabel
     Left = 192
     Top = 8
-    Width = 129
+    Width = 172
     Height = 13
-    Alignment = taCenter
     Anchors = [akTop, akRight]
     Caption = 'Select an Album (optional):'
   end
@@ -46,9 +45,8 @@ object fAddSong: TfAddSong
   object Label4: TLabel
     Left = 8
     Top = 8
-    Width = 69
+    Width = 169
     Height = 13
-    Alignment = taCenter
     Caption = 'Select a Band:'
   end
   object lblUseNA: TLabel
