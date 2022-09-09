@@ -27,9 +27,9 @@ type
     btnAddBand: TButton;
     btnAddAlbum: TButton;
     btnAddSongs: TButton;
-    btnDeleteBand: TButton;
-    btnDeleteAlbum: TButton;
-    btnDeleteSong: TButton;
+    btnManageBand: TButton;
+    btnManageAlbum: TButton;
+    btnManageSongs: TButton;
     menuItemStats: TMenuItem;
     grid: TStringGrid;
     procedure btnAddBandClick(Sender: TObject);
@@ -47,6 +47,9 @@ type
     procedure menuItemNewClick(Sender: TObject);
     procedure menuItemExitClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure btnManageBandClick(Sender: TObject);
+    procedure btnManageAlbumClick(Sender: TObject);
+    procedure btnManageSongsClick(Sender: TObject);
   private
     { Private declarations }
     fileName: String;
@@ -66,7 +69,8 @@ var
 implementation
 
 uses
-  fAddBand_, fAddAlbum_, fAddSong_, DataModule, DataStructs;
+  fAddBand_, fAddAlbum_, fAddSong_, DataModule, DataStructs, fManageBand_,
+  fManageAlbum_, fManageSong_;
 
 {$R *.dfm}
 
@@ -320,6 +324,24 @@ begin
     needSave := true;
     Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
   end;
+end;
+
+procedure TfMain.btnManageBandClick(Sender: TObject);
+begin
+  Application.CreateForm(TfManageBand, fManageBand);
+  fManageBand.ShowModal;
+end;
+
+procedure TfMain.btnManageAlbumClick(Sender: TObject);
+begin
+  Application.CreateForm(TfManageAlbum, fManageAlbum);
+  fManageAlbum.ShowModal;
+end;
+
+procedure TfMain.btnManageSongsClick(Sender: TObject);
+begin
+  Application.CreateForm(TfManageSong, fManageSong);
+  fManageSong.ShowModal;
 end;
 
 //==============================================================================
