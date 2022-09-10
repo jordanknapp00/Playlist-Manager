@@ -11,17 +11,20 @@ uses
 type
   TfManageBand = class(TForm)
     Label1: TLabel;
-    cbBands: TComboBox;
+    luBands: TComboBox;
     cbFavorite: TCheckBox;
     Label2: TLabel;
     textBox: TMemo;
     btnSave: TButton;
     btnDelete: TButton;
     procedure FormCreate(Sender: TObject);
-    procedure cbBandsChange(Sender: TObject);
-    procedure cbFavoriteClick(Sender: TObject);
-    procedure textBoxChange(Sender: TObject);
+    procedure luBandsChange(Sender: TObject);
     procedure btnSaveClick(Sender: TObject);
+
+    procedure DetermineNeedSave(Sender: TObject);
+    procedure btnDeleteClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     { Private declarations }
     oldSelection: String;
@@ -63,44 +66,47 @@ begin
 
     for bandAt in listOfBands do
     begin
-      cbBands.Items.Add(bandAt);
+      luBands.Items.Add(bandAt);
     end;
   end;
 end;
 
-procedure TfManageBand.cbBandsChange(Sender: TObject);
-var
-  choice: Integer;
+procedure TfManageBand.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  fMain.RefreshGrid;
+
+  Action := caFree;
+  fManageBand := nil;
+end;
+
+procedure TfManageBand.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  if needSave and (messageDlg('Your changes have not been saved. Continue?',
+      mtConfirmation, [mbYes, mbNo], 0, mbYes) <> mrYes) then
+    CanClose := false;
+end;
+
+procedure TfManageBand.luBandsChange(Sender: TObject);
 begin
   if (oldSelection <> '') and needSave then
   begin
-    choice := messageDlg('Your changes have not been saved. Continue?',
-      mtConfirmation, [mbYes, mbNo], 0, mbYes);
 
-    if choice <> mrYes then
+    if messageDlg('Your changes have not been saved. Continue?',
+        mtConfirmation, [mbYes, mbNo], 0, mbYes) <> mrYes then
     begin
-      cbBands.ItemIndex := cbBands.Items.IndexOf(oldSelection);
+      luBands.ItemIndex := luBands.Items.IndexOf(oldSelection);
       Exit;
     end;
   end;
 
-  oldSelection := cbBands.Items[cbBands.ItemIndex];
-  needSave := false;
+  oldSelection := luBands.Items[luBands.ItemIndex];
 
   cbFavorite.Checked := dm.bands[oldSelection].isFavorite;
 
   textBox.Clear;
   textBox.Lines := dm.bands[oldSelection].tags;
-end;
 
-procedure TfManageBand.cbFavoriteClick(Sender: TObject);
-begin
-  needSave := true;
-end;
-
-procedure TfManageBand.textBoxChange(Sender: TObject);
-begin
-  needSave := true;
+  needSave := false;
 end;
 
 procedure TfManageBand.btnSaveClick(Sender: TObject);
@@ -109,8 +115,48 @@ begin
   dm.bands[oldSelection].tags.Clear;
   dm.bands[oldSelection].tags.Assign(textBox.Lines);
 
+  if needSave then
+    fMain.manageNeedSave := true;
+
+  needSave := false;
+
   messageDlg('Saved.', mtInformation, [mbOk], 0, mbOk);
-  cbBands.DroppedDown := true;
+  luBands.DroppedDown := true;
+end;
+
+procedure TfManageBand.btnDeleteClick(Sender: TObject);
+begin
+  if messageDlg('Are you sure you want to delete ' + oldSelection + ' from the ' +
+      'system?', mtConfirmation, [mbYes, mbNo], 0, mbNo) = mrYes then
+  begin
+    //we'll need to do some freeing at some point in the future
+    dm.bands.Remove(oldSelection);
+
+    needSave := false;
+    oldSelection := '';
+    luBands.DroppedDown := true;
+  end;
+end;
+
+procedure TfManageBand.DetermineNeedSave(Sender: TObject);
+var
+  band: TBand;
+  total: Integer;
+begin
+  if oldSelection = '' then
+    Exit;
+
+  band := dm.bands[oldSelection];
+  total := 0;
+
+  if band.isFavorite <> cbFavorite.Checked then
+    Inc(total);
+
+  if textBox.Lines <> band.tags then
+    Inc(total);
+
+  //if any value has changed, need save. otherwise, don't need save
+  needSave := total > 0;
 end;
 
 end.

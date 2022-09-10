@@ -60,6 +60,8 @@ type
     procedure ResizeGrid;
   public
     { Public declarations }
+    manageNeedSave: Boolean;
+
     procedure RefreshGrid;
   end;
 
@@ -78,6 +80,7 @@ procedure TfMain.FormCreate(Sender: TObject);
 begin
   fileName := 'Untitled';
   needSave := false;
+  manageNeedSave := false;
 
   Caption := fileName + ' - Playlist Manager';
 
@@ -330,18 +333,42 @@ procedure TfMain.btnManageBandClick(Sender: TObject);
 begin
   Application.CreateForm(TfManageBand, fManageBand);
   fManageBand.ShowModal;
+
+  if manageNeedSave then
+  begin
+    needSave := true;
+    Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
+  end;
+
+  manageNeedSave := false;
 end;
 
 procedure TfMain.btnManageAlbumClick(Sender: TObject);
 begin
   Application.CreateForm(TfManageAlbum, fManageAlbum);
   fManageAlbum.ShowModal;
+
+  if manageNeedSave then
+  begin
+    needSave := true;
+    Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
+  end;
+
+  manageNeedSave := false;
 end;
 
 procedure TfMain.btnManageSongsClick(Sender: TObject);
 begin
   Application.CreateForm(TfManageSong, fManageSong);
   fManageSong.ShowModal;
+
+  if manageNeedSave then
+  begin
+    needSave := true;
+    Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
+  end;
+
+  manageNeedSave := false;
 end;
 
 //==============================================================================

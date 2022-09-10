@@ -13,6 +13,8 @@ object fManageBand: TfManageBand
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   DesignSize = (
     247
@@ -36,14 +38,14 @@ object fManageBand: TfManageBand
     Anchors = [akTop]
     Caption = 'Enter Tags (put each one on its own line):'
   end
-  object cbBands: TComboBox
+  object luBands: TComboBox
     Left = 23
     Top = 27
     Width = 201
     Height = 21
     Anchors = [akTop]
     TabOrder = 0
-    OnChange = cbBandsChange
+    OnChange = luBandsChange
   end
   object cbFavorite: TCheckBox
     Left = 23
@@ -53,7 +55,7 @@ object fManageBand: TfManageBand
     Anchors = [akTop]
     Caption = 'Band is a favorite'
     TabOrder = 1
-    OnClick = cbFavoriteClick
+    OnClick = DetermineNeedSave
   end
   object textBox: TMemo
     Left = 23
@@ -64,7 +66,7 @@ object fManageBand: TfManageBand
     Lines.Strings = (
       'edTags')
     TabOrder = 2
-    OnChange = textBoxChange
+    OnChange = DetermineNeedSave
   end
   object btnSave: TButton
     Left = 23
@@ -84,5 +86,6 @@ object fManageBand: TfManageBand
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Delete Selected Band'
     TabOrder = 4
+    OnClick = btnDeleteClick
   end
 end
