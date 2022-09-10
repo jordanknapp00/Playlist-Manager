@@ -13,6 +13,7 @@ object fManageBand: TfManageBand
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   DesignSize = (
     247
     279)
@@ -21,7 +22,7 @@ object fManageBand: TfManageBand
   object Label1: TLabel
     Left = 23
     Top = 8
-    Width = 201
+    Width = 117
     Height = 13
     Alignment = taCenter
     Anchors = [akTop]
@@ -42,6 +43,7 @@ object fManageBand: TfManageBand
     Height = 21
     Anchors = [akTop]
     TabOrder = 0
+    OnChange = cbBandsChange
   end
   object cbFavorite: TCheckBox
     Left = 23
@@ -51,8 +53,9 @@ object fManageBand: TfManageBand
     Anchors = [akTop]
     Caption = 'Band is a favorite'
     TabOrder = 1
+    OnClick = cbFavoriteClick
   end
-  object edTags: TMemo
+  object textBox: TMemo
     Left = 23
     Top = 115
     Width = 201
@@ -61,17 +64,17 @@ object fManageBand: TfManageBand
     Lines.Strings = (
       'edTags')
     TabOrder = 2
-    ExplicitHeight = 62
+    OnChange = textBoxChange
   end
   object btnSave: TButton
     Left = 23
-    Top = 214
+    Top = 215
     Width = 201
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Save'
     TabOrder = 3
-    ExplicitTop = 196
+    OnClick = btnSaveClick
   end
   object btnDelete: TButton
     Left = 23
@@ -81,6 +84,5 @@ object fManageBand: TfManageBand
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Delete Selected Band'
     TabOrder = 4
-    ExplicitTop = 228
   end
 end
