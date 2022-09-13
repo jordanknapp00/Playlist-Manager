@@ -17,6 +17,8 @@ type
     textBox: TMemo;
     btnSave: TButton;
     btnDelete: TButton;
+    btnApplyAlbums: TButton;
+    btnApplySongs: TButton;
     procedure FormCreate(Sender: TObject);
     procedure luBandsChange(Sender: TObject);
     procedure btnSaveClick(Sender: TObject);
@@ -25,6 +27,8 @@ type
     procedure btnDeleteClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure btnApplyAlbumsClick(Sender: TObject);
+    procedure btnApplySongsClick(Sender: TObject);
   private
     { Private declarations }
     oldSelection: String;
@@ -122,6 +126,47 @@ begin
 
   messageDlg('Saved.', mtInformation, [mbOk], 0, mbOk);
   luBands.DroppedDown := true;
+end;
+
+procedure TfManageBand.btnApplyAlbumsClick(Sender: TObject);
+var
+  albumAt: TAlbum;
+begin
+  if messageDlg('Apply these tags to ' + oldSelection + '''s ' +
+        IntToStr(dm.bands[oldSelection].albums.Count) + ' albums?' + #13#10 +
+        'Note: This will not apply to those albums'' songs.', mtConfirmation,
+        [mbYes, mbNo], 0, mbYes) = mrNo then
+    Exit;
+
+  for albumAt in dm.bands[oldSelection].albums.Values do
+    albumAt.AddTags(textBox.Lines);
+
+  messageDlg('Done.', mtInformation, [mbOk], 0, mbOk);
+end;
+
+procedure TfManageBand.btnApplySongsClick(Sender: TObject);
+var
+  songCount: Integer;
+  songAt: TSong;
+  albumAt: TAlbum;
+begin
+  songCount := 0;
+  for albumAt in dm.bands[oldSelection].albums.Values do
+    songCount := songCount + albumAt.songs.Count;
+
+  if messageDlg('Apply these tags to ' + oldSelection + '''s ' +
+        IntToStr(songCount) + ' songs?' + #13#10 + 'Note: This will not apply ' +
+        'to their ' + IntTOStr(dm.bands[oldSelection].albums.Count) + ' albums.',
+        mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrNo then
+    Exit;
+
+  for albumAt in dm.bands[oldSelection].albums.Values do
+  begin
+    for songAt in albumAt.songs.Values do
+      songAt.AddTags(textBox.Lines);
+  end;
+
+  messageDlg('Done.', mtInformation, [mbOk], 0, mbOk);
 end;
 
 procedure TfManageBand.btnDeleteClick(Sender: TObject);

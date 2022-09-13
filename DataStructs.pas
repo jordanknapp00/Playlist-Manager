@@ -36,6 +36,8 @@ type
 
     constructor Create(const songName, bandName, albumName: String; const trackNo: Integer); overload;
     constructor Create(const songName, bandName, albumName: String; const trackNo: Integer; const fav: Boolean); overload;
+
+    procedure AddTags(toAdd: TStrings);
   end;
 
   {
@@ -67,6 +69,8 @@ type
 
     constructor Create(const albumName, bandName: String; const albumYear: Integer); overload;
     constructor Create(const albumName, bandName: String; const albumYear: Integer; const fav: Boolean); overload;
+
+    procedure AddTags(toAdd: TStrings);
   end;
 
   {
@@ -90,6 +94,8 @@ type
 
     constructor Create(const bandName: String); overload;
     constructor Create(const bandName: String; const fav: Boolean); overload;
+
+    procedure AddTags(toAdd: TStrings);
   end;
 
 implementation
@@ -124,6 +130,17 @@ begin
   tags := TStringList.Create;
 end;
 
+procedure TSong.AddTags(toAdd: TStrings);
+var
+  at: String;
+begin
+  for at in toAdd do
+  begin
+    if tags.IndexOf(at) = -1 then
+      tags.Add(at);
+  end;
+end;
+
 //==============================================================================
 //                                TAlbum Methods
 //==============================================================================
@@ -155,6 +172,17 @@ begin
   songs := TDictionary<String, TSong>.Create;
 end;
 
+procedure TAlbum.AddTags(toAdd: TStrings);
+var
+  at: String;
+begin
+  for at in toAdd do
+  begin
+    if tags.IndexOf(at) = -1 then
+      tags.Add(at);
+  end;
+end;
+
 //==============================================================================
 //                                TBand Methods
 //==============================================================================
@@ -177,6 +205,17 @@ begin
   tags := TStringList.Create;
 
   albums := TDictionary<String, TAlbum>.Create;
+end;
+
+procedure TBand.AddTags(toAdd: TStrings);
+var
+  at: String;
+begin
+  for at in toAdd do
+  begin
+    if tags.IndexOf(at) = -1 then
+      tags.Add(at);
+  end;
 end;
 
 end.

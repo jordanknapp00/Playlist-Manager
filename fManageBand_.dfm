@@ -2,10 +2,10 @@ object fManageBand: TfManageBand
   Left = 0
   Top = 0
   Caption = 'Manage Bands'
-  ClientHeight = 279
+  ClientHeight = 344
   ClientWidth = 247
   Color = clBtnFace
-  Constraints.MinHeight = 318
+  Constraints.MinHeight = 383
   Constraints.MinWidth = 263
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object fManageBand: TfManageBand
   OnCreate = FormCreate
   DesignSize = (
     247
-    279)
+    344)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -61,31 +61,54 @@ object fManageBand: TfManageBand
     Left = 23
     Top = 115
     Width = 201
-    Height = 80
+    Height = 82
     Anchors = [akLeft, akTop, akRight, akBottom]
     Lines.Strings = (
       'edTags')
     TabOrder = 2
     OnChange = DetermineNeedSave
+    ExplicitHeight = 80
   end
   object btnSave: TButton
     Left = 23
-    Top = 215
+    Top = 280
     Width = 201
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Save'
     TabOrder = 3
     OnClick = btnSaveClick
+    ExplicitTop = 297
   end
   object btnDelete: TButton
     Left = 23
-    Top = 246
+    Top = 311
     Width = 201
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Delete Selected Band'
     TabOrder = 4
     OnClick = btnDeleteClick
+    ExplicitTop = 246
+  end
+  object btnApplyAlbums: TButton
+    Left = 23
+    Top = 201
+    Width = 201
+    Height = 25
+    Anchors = [akLeft, akRight, akBottom]
+    Caption = 'Apply Tags to All This Band'#39's Albums'
+    TabOrder = 5
+    OnClick = btnApplyAlbumsClick
+  end
+  object btnApplySongs: TButton
+    Left = 23
+    Top = 232
+    Width = 201
+    Height = 25
+    Anchors = [akLeft, akRight, akBottom]
+    Caption = 'Apply Tags to All This Band'#39's Songs'
+    TabOrder = 6
+    OnClick = btnApplySongsClick
   end
 end
