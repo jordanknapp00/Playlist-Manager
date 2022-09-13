@@ -13,6 +13,9 @@ object fManageAlbum: TfManageAlbum
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
   DesignSize = (
     257
     401)
@@ -52,21 +55,23 @@ object fManageAlbum: TfManageAlbum
     Anchors = [akLeft, akTop, akRight]
     Caption = 'Year:'
   end
-  object cbBands: TComboBox
+  object luBands: TComboBox
     Left = 23
     Top = 27
     Width = 210
     Height = 21
     Anchors = [akTop]
     TabOrder = 0
+    OnChange = luBandsChange
   end
-  object cbAlbums: TComboBox
+  object luAlbums: TComboBox
     Left = 23
     Top = 83
     Width = 210
     Height = 21
     Anchors = [akTop]
     TabOrder = 1
+    OnChange = luAlbumsChange
   end
   object cbFavorite: TCheckBox
     Left = 120
@@ -77,7 +82,7 @@ object fManageAlbum: TfManageAlbum
     Caption = 'Album is a favorite'
     TabOrder = 2
   end
-  object edTags: TMemo
+  object textBox: TMemo
     Left = 23
     Top = 179
     Width = 210

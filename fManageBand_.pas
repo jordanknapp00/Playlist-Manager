@@ -79,6 +79,7 @@ procedure TfManageBand.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   fMain.RefreshGrid;
 
+  //don't know if this is needed, maybe add it to all other dialogs as wel
   Action := caFree;
   fManageBand := nil;
 end;
@@ -94,7 +95,6 @@ procedure TfManageBand.luBandsChange(Sender: TObject);
 begin
   if (oldSelection <> '') and needSave then
   begin
-
     if messageDlg('Your changes have not been saved. Continue?',
         mtConfirmation, [mbYes, mbNo], 0, mbYes) <> mrYes then
     begin
