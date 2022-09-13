@@ -4,7 +4,9 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+
+  fMain_, DataStructs, DataModule;
 
 type
   TfManageAlbum = class(TForm)
@@ -19,6 +21,8 @@ type
     btnDelete: TButton;
     Label4: TLabel;
     edYear: TEdit;
+    btnApplyBand: TButton;
+    btnApplySong: TButton;
   private
     { Private declarations }
   public

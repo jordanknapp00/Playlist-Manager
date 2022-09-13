@@ -49,7 +49,7 @@ object fManageBand: TfManageBand
   end
   object cbFavorite: TCheckBox
     Left = 23
-    Top = 73
+    Top = 65
     Width = 201
     Height = 17
     Anchors = [akTop]
