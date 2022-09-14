@@ -170,6 +170,8 @@ begin
 end;
 
 procedure TfManageBand.btnDeleteClick(Sender: TObject);
+var
+  bandAt: String;
 begin
   if messageDlg('Are you sure you want to delete ' + oldSelection + ' from the ' +
       'system?', mtConfirmation, [mbYes, mbNo], 0, mbNo) = mrYes then
@@ -179,6 +181,14 @@ begin
 
     needSave := false;
     oldSelection := '';
+
+    //need to clear out the removed band from the lookup's list of items.
+    //best way to do this seems to be constructing a new list without the old one
+    luBands.Items.Clear;
+    for bandAt in dm.GetSortedBands do
+      luBands.Items.Add(bandAt);
+
+    luBands.ItemIndex := -1;
     luBands.DroppedDown := true;
   end;
 end;

@@ -81,6 +81,7 @@ object fManageAlbum: TfManageAlbum
     Anchors = [akTop]
     Caption = 'Album is a favorite'
     TabOrder = 2
+    OnClick = DetermineNeedSave
   end
   object textBox: TMemo
     Left = 23
@@ -91,6 +92,7 @@ object fManageAlbum: TfManageAlbum
     Lines.Strings = (
       'Memo1')
     TabOrder = 3
+    OnChange = DetermineNeedSave
   end
   object btnSave: TButton
     Left = 23
@@ -100,6 +102,7 @@ object fManageAlbum: TfManageAlbum
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Save'
     TabOrder = 4
+    OnClick = btnSaveClick
     ExplicitTop = 315
   end
   object btnDelete: TButton
@@ -110,6 +113,7 @@ object fManageAlbum: TfManageAlbum
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Delete Selected Album'
     TabOrder = 5
+    OnClick = btnDeleteClick
     ExplicitTop = 346
   end
   object edYear: TEdit
@@ -118,6 +122,7 @@ object fManageAlbum: TfManageAlbum
     Width = 59
     Height = 21
     Anchors = [akLeft, akTop, akRight]
+    ReadOnly = True
     TabOrder = 6
   end
   object btnApplyBand: TButton
@@ -128,6 +133,7 @@ object fManageAlbum: TfManageAlbum
     Anchors = [akLeft, akTop, akBottom]
     Caption = 'Apply Tags to This Album'#39's Band'
     TabOrder = 7
+    OnClick = btnApplyBandClick
   end
   object btnApplySong: TButton
     Left = 23
@@ -137,5 +143,6 @@ object fManageAlbum: TfManageAlbum
     Anchors = [akLeft, akTop, akBottom]
     Caption = 'Apply Tags to All This Album'#39's Songs'
     TabOrder = 8
+    OnClick = btnApplySongClick
   end
 end

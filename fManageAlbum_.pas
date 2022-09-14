@@ -28,6 +28,11 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure luBandsChange(Sender: TObject);
     procedure luAlbumsChange(Sender: TObject);
+    procedure btnSaveClick(Sender: TObject);
+    procedure btnDeleteClick(Sender: TObject);
+    procedure btnApplyBandClick(Sender: TObject);
+    procedure btnApplySongClick(Sender: TObject);
+    procedure DetermineNeedSave(Sender: TObject);
   private
     { Private declarations }
     oldBandSelection, oldAlbumSelection: String;
@@ -155,6 +160,94 @@ begin
   edYear.Text := IntToStr(dm.bands[oldBandSelection].albums[oldAlbumSelection].year);
 
   needSave := false;
+end;
+
+procedure TfManageAlbum.btnDeleteClick(Sender: TObject);
+var
+  albumAt: String;
+begin
+  if messageDlg('Are you sure you want to delete ' + oldAlbumSelection + ' from the ' +
+      'system?', mtConfirmation, [mbYes, mbNo], 0, mbNo) = mrYes then
+  begin
+    //we'll need to do some freeing at some point in the future
+    dm.bands[oldBandSelection].albums.Remove(oldAlbumSelection);
+
+    needSave := false;
+    oldAlbumSelection := '';
+
+    //need to clear out the removed album from the lookup's list of items.
+    //best way to do this seems to be constructing a new list without the old one
+    luAlbums.Items.Clear;
+    luAlbums.Items.Add('N/A');
+    for albumAt in dm.GetSortedAlbumsOfBand(oldBandSelection) do
+      luAlbums.Items.Add(albumAt);
+
+    luAlbums.ItemIndex := -1;
+    luAlbums.DroppedDown := true;
+  end;
+end;
+
+procedure TfManageAlbum.btnSaveClick(Sender: TObject);
+begin
+  dm.bands[oldBandSelection].albums[oldAlbumSelection].isFavorite := cbFavorite.Checked;
+  dm.bands[oldBandSelection].albums[oldAlbumSelection].tags.Clear;
+  dm.bands[oldBandSelection].albums[oldAlbumSelection].tags.Assign(textBox.Lines);
+
+  if needSave then
+    fMain.manageNeedSave := true;
+
+  needSave := false;
+
+  messageDlg('Saved.', mtInformation, [mbOk], 0, mbOk);
+  luAlbums.DroppedDown := true;
+end;
+
+procedure TfManageAlbum.DetermineNeedSave(Sender: TObject);
+var
+  album: TAlbum;
+  total: Integer;
+begin
+  if (oldBandSelection = '') or (oldAlbumSelection = '') then
+    Exit;
+
+  album := dm.bands[oldBandSelection].albums[oldAlbumSelection];
+  total := 0;
+
+  if album.isFavorite <> cbFavorite.Checked then
+    Inc(total);
+
+  if textBox.Lines <> album.tags then
+    Inc(total);
+
+  //if any value has changed, need save. otherwise, don't need save
+  needSave := total > 0;
+end;
+
+procedure TfManageAlbum.btnApplyBandClick(Sender: TObject);
+begin
+  if messageDlg('Apply these tags to ' + oldBandSelection + '?' + #13#10 +
+        'Note: This will not apply to any of that band''s songs.', mtConfirmation,
+        [mbYes, mbNo], 0, mbYes) = mrNo then
+    Exit;
+
+  dm.bands[oldBandSelection].AddTags(textBox.Lines);
+
+  messageDlg('Done.', mtInformation, [mbOk], 0, mbOk);
+end;
+
+procedure TfManageAlbum.btnApplySongClick(Sender: TObject);
+var
+  songAt: TSong;
+begin
+  if messageDlg('Apply these tags to ' + oldAlbumSelection + '''s ' +
+        IntToStr(dm.bands[oldBandSelection].albums[oldAlbumSelection].songs.Count)
+        + ' songs?' + #13#10, mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrNo then
+    Exit;
+
+  for songAt in dm.bands[oldBandSelection].albums[oldAlbumSelection].songs.Values do
+    songAt.AddTags(textBox.Lines);
+
+  messageDlg('Done.', mtInformation, [mbOk], 0, mbOk);
 end;
 
 end.

@@ -352,8 +352,6 @@ begin
     needSave := true;
     Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
   end;
-
-  manageNeedSave := false;
 end;
 
 procedure TfMain.btnManageAlbumClick(Sender: TObject);
@@ -366,8 +364,6 @@ begin
     needSave := true;
     Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
   end;
-
-  manageNeedSave := false;
 end;
 
 procedure TfMain.btnManageSongsClick(Sender: TObject);
@@ -380,8 +376,6 @@ begin
     needSave := true;
     Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
   end;
-
-  manageNeedSave := false;
 end;
 
 //==============================================================================
@@ -502,7 +496,10 @@ begin
     else if askToSaveResult = mrYes then
       menuItemSaveClick(nil) //this will check whether picking file is needed
     else if askToSaveResult = mrNo then
+    begin
       needSave := false;
+      manageNeedSave := false;
+    end;
   end;
 
   Application.Terminate;
@@ -521,6 +518,7 @@ begin
   saveList.Free;
 
   needSave := false;
+  manageNeedSave := false;
   Caption := ExtractFileName(fileName) + ' - Playlist Manager';
 end;
 
