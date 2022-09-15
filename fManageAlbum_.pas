@@ -112,6 +112,7 @@ begin
 
   //somewhat confusing, i guess oldBandSelection is now the CURRENT selection
   oldBandSelection := luBands.Items[luBands.ItemIndex];
+  oldAlbumSelection := '';
 
   //how handle the album lookup box.
   //first, clear it out entirely and add back in the N/A
