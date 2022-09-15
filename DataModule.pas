@@ -302,12 +302,14 @@ end;
 procedure Tdm.ReadJSON(toRead: string);
 var
   val: TJSONValue;
-  bandList, albumList, songList: TJSONArray;
-  bandAt, albumAt, songAt: TJSONValue;
+  bandList, albumList, songList, tagList: TJSONArray;
+  bandAt, albumAt, songAt, tagAt: TJSONValue;
 
   newBand: TBand;
   newAlbum: TAlbum;
   newSong: TSong;
+
+  newTags: TStringList;
 
   //vals for current band
   bandName: String;
@@ -326,6 +328,8 @@ var
   songFav: Boolean;
   songID: Integer;
 begin
+  newTags := TStringList.Create;
+
   try
     val := TJSONObject.ParseJSONValue(toRead);
 
@@ -336,8 +340,16 @@ begin
       bandName := bandAt.GetValue<String>('name');
       bandFav := bandAt.GetValue<Boolean>('isFavorite');
 
+      //get the list of tags and iterate through it
+      tagList := (bandAt as TJSONObject).Get('tags').JSONValue as TJSONArray;
+
+      newTags.Clear;
+      for tagAt in tagList do
+        newTags.Add(tagAt.GetValue<String>);
+
       //create a new band using the values retrieved from json
       newBand := TBand.Create(bandName, bandFav);
+      newBand.AddTags(newTags);
 
       //get the list of albums and iterate through it, creating objects for each
       //of them, and their songs
@@ -350,8 +362,15 @@ begin
         albumYear := albumAt.GetValue<Integer>('year');
         albumFav := albumAt.GetValue<Boolean>('isFavorite');
 
+        tagList := (albumAt as TJSONObject).Get('tags').JSONValue as TJSONArray;
+
+        newTags.Clear;
+        for tagAt in tagList do
+          newTags.Add(tagAt.GetValue<String>);
+
         //create the object
         newAlbum := TAlbum.Create(albumName, bandName, albumYear, albumFav);
+        newAlbum.AddTags(newTags);
 
         //then handle the inner list before adding object to the system
         songList := (albumAt as TJSonObject).Get('songs').JSONValue as TJSONArray;
@@ -363,8 +382,15 @@ begin
           songTrack := songAt.GetValue<Integer>('trackNo');
           songFav := songAt.GetValue<Boolean>('isFavorite');
 
+          tagList := (songAt as TJSONObject).Get('tags').JSONValue as TJSONArray;
+
+          newTags.Clear;
+          for tagAt in tagList do
+            newTags.Add(tagAt.GetValue<String>);
+
           //create object
           newSong := TSong.Create(songName, bandName, albumName, songTrack, songFav);
+          newSong.AddTags(newTags);
 
           //no further data beyond the song, so go ahead and add this song to
           //the system
@@ -388,6 +414,7 @@ begin
   end;
 
   val.Free;
+  newTags.Free;
 
   fMain.RefreshGrid;
 end;
