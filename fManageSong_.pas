@@ -21,6 +21,8 @@ type
     btnDelete: TButton;
     Label5: TLabel;
     edTrackNo: TEdit;
+    btnApplyAlbum: TButton;
+    btnApplyBand: TButton;
   private
     { Private declarations }
   public
