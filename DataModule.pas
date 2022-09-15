@@ -210,6 +210,7 @@ var
   bandAt: TBand;
   albumAt: TAlbum;
   songAt: TSong;
+  tagAt: String;
 begin
   writer := TJSONObjectWriter.Create;
 
@@ -227,7 +228,13 @@ begin
     writer.WritePropertyName('isFavorite');
     writer.WriteValue(bandAt.isFavorite);
 
-    //showMessage(bandAt.name);
+    writer.WritePropertyName('tags');
+    writer.WriteStartArray;
+
+    for tagAt in bandAt.tags do
+      writer.WriteValue(tagAt);
+
+    writer.WriteEndArray;
 
     writer.WritePropertyName('albums');
     writer.WriteStartArray;
@@ -244,6 +251,14 @@ begin
       writer.WritePropertyName('isFavorite');
       writer.WriteValue(albumAt.isFavorite);
 
+      writer.WritePropertyName('tags');
+      writer.WriteStartArray;
+
+      for tagAt in albumAt.tags do
+        writer.WriteValue(tagAt);
+
+      writer.WriteEndArray;
+
       writer.WritePropertyName('songs');
       writer.WriteStartArray;
 
@@ -258,6 +273,14 @@ begin
         writer.WriteValue(songAt.trackNo);
         writer.WritePropertyName('isFavorite');
         writer.WriteValue(songAt.isFavorite);
+
+        writer.WritePropertyName('tags');
+        writer.WriteStartArray;
+
+        for tagAt in songAt.tags do
+          writer.WriteValue(tagAt);
+
+        writer.WriteEndArray;
 
         writer.WriteEndObject;
       end;
