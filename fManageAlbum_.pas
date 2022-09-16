@@ -167,6 +167,18 @@ procedure TfManageAlbum.btnDeleteClick(Sender: TObject);
 var
   albumAt: String;
 begin
+  if not dm.bands.ContainsKey(oldBandSelection) then
+  begin
+    messageDlg('Please select a band.', mtWarning, [mbok], 0, mbOk);
+    Exit;
+  end;
+
+  if not dm.bands[oldBandSelection].albums.ContainsKey(oldAlbumSelection) then
+  begin
+    messageDlg('Please select an album.', mtWarning, [mbOk], 0, mbOk);
+    Exit;
+  end;
+
   if messageDlg('Are you sure you want to delete ' + oldAlbumSelection + ' from the ' +
       'system?', mtConfirmation, [mbYes, mbNo], 0, mbNo) = mrYes then
   begin
@@ -190,6 +202,18 @@ end;
 
 procedure TfManageAlbum.btnSaveClick(Sender: TObject);
 begin
+  if not dm.bands.ContainsKey(oldBandSelection) then
+  begin
+    messageDlg('Please select a band.', mtWarning, [mbok], 0, mbOk);
+    Exit;
+  end;
+
+  if not dm.bands[oldBandSelection].albums.ContainsKey(oldAlbumSelection) then
+  begin
+    messageDlg('Please select an album.', mtWarning, [mbOk], 0, mbOk);
+    Exit;
+  end;
+
   dm.bands[oldBandSelection].albums[oldAlbumSelection].isFavorite := cbFavorite.Checked;
   dm.bands[oldBandSelection].albums[oldAlbumSelection].tags.Clear;
   dm.bands[oldBandSelection].albums[oldAlbumSelection].tags.Assign(textBox.Lines);
@@ -226,6 +250,18 @@ end;
 
 procedure TfManageAlbum.btnApplyBandClick(Sender: TObject);
 begin
+  if not dm.bands.ContainsKey(oldBandSelection) then
+  begin
+    messageDlg('Please select a band.', mtWarning, [mbok], 0, mbOk);
+    Exit;
+  end;
+
+  if not dm.bands[oldBandSelection].albums.ContainsKey(oldAlbumSelection) then
+  begin
+    messageDlg('Please select an album.', mtWarning, [mbOk], 0, mbOk);
+    Exit;
+  end;
+
   if messageDlg('Apply these tags to ' + oldBandSelection + '?' + #13#10 +
         'Note: This will not apply to any of that band''s songs.', mtConfirmation,
         [mbYes, mbNo], 0, mbYes) = mrNo then
@@ -240,6 +276,18 @@ procedure TfManageAlbum.btnApplySongClick(Sender: TObject);
 var
   songAt: TSong;
 begin
+  if not dm.bands.ContainsKey(oldBandSelection) then
+  begin
+    messageDlg('Please select a band.', mtWarning, [mbok], 0, mbOk);
+    Exit;
+  end;
+
+  if not dm.bands[oldBandSelection].albums.ContainsKey(oldAlbumSelection) then
+  begin
+    messageDlg('Please select an album.', mtWarning, [mbOk], 0, mbOk);
+    Exit;
+  end;
+
   if messageDlg('Apply these tags to ' + oldAlbumSelection + '''s ' +
         IntToStr(dm.bands[oldBandSelection].albums[oldAlbumSelection].songs.Count)
         + ' songs?' + #13#10, mtConfirmation, [mbYes, mbNo], 0, mbYes) = mrNo then

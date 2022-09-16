@@ -13,6 +13,9 @@ object fManageSong: TfManageSong
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
   DesignSize = (
     257
     470)
@@ -61,7 +64,7 @@ object fManageSong: TfManageSong
     Anchors = [akLeft, akTop, akRight]
     Caption = 'Song Track Number:'
   end
-  object cbBands: TComboBox
+  object luBands: TComboBox
     Left = 23
     Top = 27
     Width = 210
@@ -69,7 +72,7 @@ object fManageSong: TfManageSong
     Anchors = [akTop]
     TabOrder = 0
   end
-  object cbAlbums: TComboBox
+  object luAlbums: TComboBox
     Left = 23
     Top = 83
     Width = 210
@@ -77,7 +80,7 @@ object fManageSong: TfManageSong
     Anchors = [akTop]
     TabOrder = 1
   end
-  object cbSongs: TComboBox
+  object luSongs: TComboBox
     Left = 23
     Top = 139
     Width = 210
@@ -94,7 +97,7 @@ object fManageSong: TfManageSong
     Caption = 'Song is a favorite'
     TabOrder = 3
   end
-  object edTags: TMemo
+  object textBox: TMemo
     Left = 23
     Top = 248
     Width = 210

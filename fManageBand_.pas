@@ -115,6 +115,12 @@ end;
 
 procedure TfManageBand.btnSaveClick(Sender: TObject);
 begin
+  if not dm.bands.ContainsKey(oldSelection) then
+  begin
+    messageDlg('Please select a band.', mtWarning, [mbOk], 0, mbOk);
+    Exit;
+  end;
+  
   dm.bands[oldSelection].isFavorite := cbFavorite.Checked;
   dm.bands[oldSelection].tags.Clear;
   dm.bands[oldSelection].tags.Assign(textBox.Lines);
@@ -132,6 +138,12 @@ procedure TfManageBand.btnApplyAlbumsClick(Sender: TObject);
 var
   albumAt: TAlbum;
 begin
+  if not dm.bands.ContainsKey(oldSelection) then
+  begin
+    messageDlg('Please select a band.', mtWarning, [mbOk], 0, mbOk);
+    Exit;
+  end;
+  
   if messageDlg('Apply these tags to ' + oldSelection + '''s ' +
         IntToStr(dm.bands[oldSelection].albums.Count) + ' albums?' + #13#10 +
         'Note: This will not apply to those albums'' songs.', mtConfirmation,
@@ -150,6 +162,12 @@ var
   songAt: TSong;
   albumAt: TAlbum;
 begin
+  if not dm.bands.ContainsKey(oldSelection) then
+  begin
+    messageDlg('Please select a band.', mtWarning, [mbOk], 0, mbOk);
+    Exit;
+  end;
+  
   songCount := 0;
   for albumAt in dm.bands[oldSelection].albums.Values do
     songCount := songCount + albumAt.songs.Count;
@@ -173,6 +191,12 @@ procedure TfManageBand.btnDeleteClick(Sender: TObject);
 var
   bandAt: String;
 begin
+  if not dm.bands.ContainsKey(oldSelection) then
+  begin
+    messageDlg('Please select a band.', mtWarning, [mbOk], 0, mbOk);
+    Exit;
+  end;
+
   if messageDlg('Are you sure you want to delete ' + oldSelection + ' from the ' +
       'system?', mtConfirmation, [mbYes, mbNo], 0, mbNo) = mrYes then
   begin
