@@ -2,10 +2,10 @@ object fManageAlbum: TfManageAlbum
   Left = 0
   Top = 0
   Caption = 'Manage Albums'
-  ClientHeight = 381
+  ClientHeight = 401
   ClientWidth = 257
   Color = clBtnFace
-  Constraints.MinHeight = 420
+  Constraints.MinHeight = 440
   Constraints.MinWidth = 273
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,9 +13,12 @@ object fManageAlbum: TfManageAlbum
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
   DesignSize = (
     257
-    381)
+    401)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -30,7 +33,7 @@ object fManageAlbum: TfManageAlbum
   object Label2: TLabel
     Left = 23
     Top = 64
-    Width = 210
+    Width = 113
     Height = 13
     Alignment = taCenter
     Anchors = [akTop]
@@ -38,81 +41,108 @@ object fManageAlbum: TfManageAlbum
   end
   object Label3: TLabel
     Left = 23
-    Top = 200
-    Width = 210
+    Top = 160
+    Width = 201
     Height = 13
     Anchors = [akTop]
     Caption = 'Enter Tags (put each one on its own line):'
   end
   object Label4: TLabel
     Left = 23
-    Top = 168
-    Width = 58
+    Top = 129
+    Width = 26
     Height = 13
     Anchors = [akLeft, akTop, akRight]
-    Caption = 'Album Year:'
+    Caption = 'Year:'
   end
-  object cbBands: TComboBox
+  object luBands: TComboBox
     Left = 23
     Top = 27
     Width = 210
     Height = 21
     Anchors = [akTop]
     TabOrder = 0
+    OnChange = luBandsChange
   end
-  object cbAlbums: TComboBox
+  object luAlbums: TComboBox
     Left = 23
     Top = 83
     Width = 210
     Height = 21
     Anchors = [akTop]
     TabOrder = 1
+    OnChange = luAlbumsChange
   end
   object cbFavorite: TCheckBox
-    Left = 23
-    Top = 136
-    Width = 210
+    Left = 120
+    Top = 128
+    Width = 113
     Height = 17
     Anchors = [akTop]
     Caption = 'Album is a favorite'
     TabOrder = 2
+    OnClick = DetermineNeedSave
   end
-  object edTags: TMemo
+  object textBox: TMemo
     Left = 23
-    Top = 219
+    Top = 179
     Width = 210
     Height = 78
     Anchors = [akLeft, akTop, akRight, akBottom]
     Lines.Strings = (
       'Memo1')
     TabOrder = 3
+    OnChange = DetermineNeedSave
   end
   object btnSave: TButton
     Left = 23
-    Top = 315
+    Top = 335
     Width = 210
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Save'
     TabOrder = 4
-    ExplicitTop = 320
+    OnClick = btnSaveClick
+    ExplicitTop = 315
   end
   object btnDelete: TButton
     Left = 23
-    Top = 346
+    Top = 366
     Width = 210
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Delete Selected Album'
     TabOrder = 5
-    ExplicitTop = 351
+    OnClick = btnDeleteClick
+    ExplicitTop = 346
   end
   object edYear: TEdit
-    Left = 87
-    Top = 165
-    Width = 146
+    Left = 55
+    Top = 126
+    Width = 59
     Height = 21
     Anchors = [akLeft, akTop, akRight]
+    ReadOnly = True
     TabOrder = 6
+  end
+  object btnApplyBand: TButton
+    Left = 23
+    Top = 263
+    Width = 210
+    Height = 25
+    Anchors = [akLeft, akTop, akBottom]
+    Caption = 'Apply Tags to This Album'#39's Band'
+    TabOrder = 7
+    OnClick = btnApplyBandClick
+  end
+  object btnApplySong: TButton
+    Left = 23
+    Top = 294
+    Width = 210
+    Height = 25
+    Anchors = [akLeft, akTop, akBottom]
+    Caption = 'Apply Tags to All This Album'#39's Songs'
+    TabOrder = 8
+    OnClick = btnApplySongClick
   end
 end

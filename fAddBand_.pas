@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
 
-  fMain_, DataStructs;
+  fMain_, DataStructs, DataModule;
 
 type
   TfAddBand = class(TForm)
@@ -25,9 +25,6 @@ var
   fAddBand: TfAddBand;
 
 implementation
-
-uses
-  DataModule;
 
 {$R *.dfm}
 

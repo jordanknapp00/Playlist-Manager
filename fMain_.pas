@@ -60,6 +60,8 @@ type
     procedure ResizeGrid;
   public
     { Public declarations }
+    manageNeedSave: Boolean;
+
     procedure RefreshGrid;
   end;
 
@@ -78,6 +80,7 @@ procedure TfMain.FormCreate(Sender: TObject);
 begin
   fileName := 'Untitled';
   needSave := false;
+  manageNeedSave := false;
 
   Caption := fileName + ' - Playlist Manager';
 
@@ -141,13 +144,18 @@ end;
 
 procedure TfMain.RefreshGrid;
 var
-  row: Integer;
+  row, selectedRow, selectedCol: Integer;
 
   bandNameAt, albumNameAt, songNameAt: String;
   bandAt: TBand;
   albumAt: TAlbum;
   songAt: TSong;
 begin
+  //keep track of the currently selected row and column, because it will reset
+  //it otherwise
+  selectedRow := grid.Row;
+  selectedCol := grid.Col;
+
   for row := 1 to grid.RowCount - 1 do
     grid.Rows[row].Clear;
 
@@ -237,10 +245,18 @@ begin
     end;
   end;
 
+  ResizeGrid;
+
   //can only have fixed rows if there is more than one row. whatever
   grid.FixedRows := 1;
 
-  ResizeGrid;
+  //for some reason, trying this when the selected row is 0 (the fixed row)
+  //causes problems. this works, so whatever. fixed rows are clearly annoying
+  if (grid.Row <> selectedRow) and (selectedRow <> 0) then
+    grid.Row := selectedRow;
+
+  if (grid.Col <> selectedCol) and (selectedCol <> 0) then
+    grid.Col := selectedCol;
 end;
 
 procedure TfMain.ResizeGrid;
@@ -330,18 +346,36 @@ procedure TfMain.btnManageBandClick(Sender: TObject);
 begin
   Application.CreateForm(TfManageBand, fManageBand);
   fManageBand.ShowModal;
+
+  if manageNeedSave then
+  begin
+    needSave := true;
+    Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
+  end;
 end;
 
 procedure TfMain.btnManageAlbumClick(Sender: TObject);
 begin
   Application.CreateForm(TfManageAlbum, fManageAlbum);
   fManageAlbum.ShowModal;
+
+  if manageNeedSave then
+  begin
+    needSave := true;
+    Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
+  end;
 end;
 
 procedure TfMain.btnManageSongsClick(Sender: TObject);
 begin
   Application.CreateForm(TfManageSong, fManageSong);
   fManageSong.ShowModal;
+
+  if manageNeedSave then
+  begin
+    needSave := true;
+    Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
+  end;
 end;
 
 //==============================================================================
@@ -462,7 +496,10 @@ begin
     else if askToSaveResult = mrYes then
       menuItemSaveClick(nil) //this will check whether picking file is needed
     else if askToSaveResult = mrNo then
+    begin
       needSave := false;
+      manageNeedSave := false;
+    end;
   end;
 
   Application.Terminate;
@@ -481,6 +518,7 @@ begin
   saveList.Free;
 
   needSave := false;
+  manageNeedSave := false;
   Caption := ExtractFileName(fileName) + ' - Playlist Manager';
 end;
 
