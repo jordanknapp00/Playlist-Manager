@@ -196,7 +196,10 @@ begin
       luAlbums.Items.Add(albumAt);
 
     luAlbums.ItemIndex := -1;
+    luAlbums.Text := '';
     luAlbums.DroppedDown := true;
+
+    fMain.manageneedSave := true;
   end;
 end;
 

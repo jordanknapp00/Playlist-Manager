@@ -71,6 +71,7 @@ object fManageSong: TfManageSong
     Height = 21
     Anchors = [akTop]
     TabOrder = 0
+    OnChange = luBandsChange
   end
   object luAlbums: TComboBox
     Left = 23
@@ -79,6 +80,7 @@ object fManageSong: TfManageSong
     Height = 21
     Anchors = [akTop]
     TabOrder = 1
+    OnChange = luAlbumsChange
   end
   object luSongs: TComboBox
     Left = 23
@@ -87,6 +89,7 @@ object fManageSong: TfManageSong
     Height = 21
     Anchors = [akTop]
     TabOrder = 2
+    OnChange = luSongsChange
   end
   object cbFavorite: TCheckBox
     Left = 23
@@ -96,6 +99,7 @@ object fManageSong: TfManageSong
     Anchors = [akTop]
     Caption = 'Song is a favorite'
     TabOrder = 3
+    OnClick = DetermineNeedSave
   end
   object textBox: TMemo
     Left = 23
@@ -106,6 +110,7 @@ object fManageSong: TfManageSong
     Lines.Strings = (
       'Memo1')
     TabOrder = 4
+    OnChange = DetermineNeedSave
   end
   object btnSave: TButton
     Left = 23
@@ -115,6 +120,7 @@ object fManageSong: TfManageSong
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Save'
     TabOrder = 5
+    OnClick = btnSaveClick
     ExplicitTop = 405
   end
   object btnDelete: TButton
@@ -125,6 +131,7 @@ object fManageSong: TfManageSong
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Delete Selected Song'
     TabOrder = 6
+    OnClick = btnDeleteClick
     ExplicitTop = 436
   end
   object edTrackNo: TEdit
@@ -134,6 +141,7 @@ object fManageSong: TfManageSong
     Height = 21
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 7
+    OnChange = DetermineNeedSave
   end
   object btnApplyAlbum: TButton
     Left = 23
@@ -143,6 +151,7 @@ object fManageSong: TfManageSong
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Apply Tags to This Song'#39's Album'
     TabOrder = 8
+    OnClick = btnApplyAlbumClick
   end
   object btnApplyBand: TButton
     Left = 23
@@ -152,5 +161,6 @@ object fManageSong: TfManageSong
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Apply Tags to This Song'#39's Band'
     TabOrder = 9
+    OnClick = btnApplyBandClick
   end
 end

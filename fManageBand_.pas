@@ -213,7 +213,10 @@ begin
       luBands.Items.Add(bandAt);
 
     luBands.ItemIndex := -1;
+    luBands.Text := '';
     luBands.DroppedDown := true;
+
+    fMain.manageneedSave := true;
   end;
 end;
 
