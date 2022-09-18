@@ -32,6 +32,7 @@ type
     btnManageSongs: TButton;
     menuItemStats: TMenuItem;
     grid: TStringGrid;
+    btnClear: TButton;
     procedure btnAddBandClick(Sender: TObject);
     procedure btnAddAlbumClick(Sender: TObject);
     procedure btnAddSongsClick(Sender: TObject);
@@ -50,6 +51,7 @@ type
     procedure btnManageBandClick(Sender: TObject);
     procedure btnManageAlbumClick(Sender: TObject);
     procedure btnManageSongsClick(Sender: TObject);
+    procedure btnQueryClick(Sender: TObject);
   private
     { Private declarations }
     fileName: String;
@@ -72,7 +74,7 @@ implementation
 
 uses
   fAddBand_, fAddAlbum_, fAddSong_, DataModule, DataStructs, fManageBand_,
-  fManageAlbum_, fManageSong_;
+  fManageAlbum_, fManageSong_, fQuery_;
 
 {$R *.dfm}
 
@@ -376,6 +378,12 @@ begin
     needSave := true;
     Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
   end;
+end;
+
+procedure TfMain.btnQueryClick(Sender: TObject);
+begin
+  Application.CreateForm(TfQuery, fQuery);
+  fQuery.ShowModal;
 end;
 
 //==============================================================================

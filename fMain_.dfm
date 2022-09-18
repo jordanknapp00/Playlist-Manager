@@ -25,11 +25,12 @@ object fMain: TfMain
   object btnQuery: TButton
     Left = 8
     Top = 430
-    Width = 317
+    Width = 265
     Height = 87
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Query'
     TabOrder = 0
+    OnClick = btnQueryClick
   end
   object btnAddBand: TButton
     Left = 340
@@ -109,6 +110,15 @@ object fMain: TfMain
     ParentFont = False
     TabOrder = 7
     OnDrawCell = gridDrawCell
+  end
+  object btnClear: TButton
+    Left = 279
+    Top = 428
+    Width = 54
+    Height = 87
+    Caption = 'Clear Queried Results'
+    TabOrder = 8
+    WordWrap = True
   end
   object menuBar: TMainMenu
     Left = 552

@@ -139,6 +139,10 @@
             <Form>fManageSong</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="fQuery_.pas">
+            <Form>fQuery</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
