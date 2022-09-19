@@ -180,6 +180,7 @@ object fQuery: TfQuery
         'Enter year for each album')
       TabOrder = 1
       WordWrap = True
+      OnClick = rgAlbumYearClick
     end
     object edYears: TMemo
       Left = 327
@@ -230,10 +231,10 @@ object fQuery: TfQuery
       Caption = 'Enter Song Names:'
     end
     object lblTrackNums: TLabel
-      Left = 352
-      Top = 8
-      Width = 104
-      Height = 39
+      Left = 342
+      Top = 19
+      Width = 114
+      Height = 34
       Anchors = [akTop, akRight]
       Caption = 'Enter Track Nums for Corresponding Songs:'
       Visible = False
@@ -241,7 +242,7 @@ object fQuery: TfQuery
     end
     object lblTrackNum: TLabel
       Left = 343
-      Top = 146
+      Top = 151
       Width = 75
       Height = 13
       Anchors = [akTop, akRight]
@@ -252,16 +253,16 @@ object fQuery: TfQuery
       Left = 8
       Top = 44
       Width = 185
-      Height = 93
+      Height = 101
       Anchors = [akLeft, akTop, akRight]
       ScrollBars = ssBoth
       TabOrder = 0
     end
     object rgSongTrackNo: TRadioGroup
-      Left = 216
-      Top = 40
+      Left = 206
+      Top = 43
       Width = 130
-      Height = 97
+      Height = 102
       Anchors = [akTop, akRight]
       Caption = 'Query Track No. By'
       ItemIndex = 0
@@ -271,19 +272,20 @@ object fQuery: TfQuery
         'Enter track no. for each song')
       TabOrder = 1
       WordWrap = True
+      OnClick = rgSongTrackNoClick
     end
-    object edSongTrackNums: TMemo
-      Left = 352
+    object edTrackNums: TMemo
+      Left = 342
       Top = 48
-      Width = 105
-      Height = 89
+      Width = 114
+      Height = 97
       Anchors = [akTop, akRight]
       TabOrder = 2
       Visible = False
     end
     object edTrackNum: TEdit
       Left = 424
-      Top = 143
+      Top = 151
       Width = 33
       Height = 21
       Anchors = [akTop, akRight]
@@ -292,7 +294,7 @@ object fQuery: TfQuery
     end
     object cbSongFav: TCheckBox
       Left = 8
-      Top = 145
+      Top = 151
       Width = 121
       Height = 17
       Caption = 'Select only favorites'
@@ -308,5 +310,6 @@ object fQuery: TfQuery
     Caption = 'Query!'
     TabOrder = 6
     Visible = False
+    OnClick = btnQueryClick
   end
 end
