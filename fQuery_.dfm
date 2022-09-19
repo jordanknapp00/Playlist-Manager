@@ -5,6 +5,8 @@ object fQuery: TfQuery
   ClientHeight = 633
   ClientWidth = 481
   Color = clBtnFace
+  Constraints.MinHeight = 672
+  Constraints.MinWidth = 497
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -12,6 +14,9 @@ object fQuery: TfQuery
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
+  DesignSize = (
+    481
+    633)
   PixelsPerInch = 96
   TextHeight = 13
   object pnlSelectFrom: TPanel
@@ -20,6 +25,7 @@ object fQuery: TfQuery
     Width = 185
     Height = 49
     Alignment = taLeftJustify
+    Anchors = [akLeft, akTop, akRight]
     Caption = '  Select'
     TabOrder = 0
     VerticalAlignment = taAlignTop
@@ -56,6 +62,7 @@ object fQuery: TfQuery
     Top = 8
     Width = 130
     Height = 49
+    Anchors = [akTop, akRight]
     Caption = 'Load Query from File'
     TabOrder = 1
     WordWrap = True
@@ -65,6 +72,7 @@ object fQuery: TfQuery
     Top = 8
     Width = 130
     Height = 49
+    Anchors = [akTop, akRight]
     Caption = 'Save Query to File'
     TabOrder = 2
     WordWrap = True
@@ -75,10 +83,14 @@ object fQuery: TfQuery
     Width = 465
     Height = 138
     Alignment = taLeftJustify
+    Anchors = [akLeft, akTop, akRight]
     Caption = '  Bands'
     TabOrder = 3
     VerticalAlignment = taAlignTop
     Visible = False
+    DesignSize = (
+      465
+      138)
     object Label1: TLabel
       Left = 8
       Top = 25
@@ -88,9 +100,10 @@ object fQuery: TfQuery
     end
     object edBands: TMemo
       Left = 8
-      Top = 40
+      Top = 44
       Width = 185
       Height = 89
+      Anchors = [akLeft, akTop, akRight]
       ScrollBars = ssBoth
       TabOrder = 0
     end
@@ -99,6 +112,7 @@ object fQuery: TfQuery
       Top = 40
       Width = 122
       Height = 17
+      Anchors = [akTop, akRight]
       Caption = 'Select only favorites'
       TabOrder = 1
     end
@@ -109,10 +123,14 @@ object fQuery: TfQuery
     Width = 465
     Height = 170
     Alignment = taLeftJustify
+    Anchors = [akLeft, akTop, akRight]
     Caption = '  Albums'
     TabOrder = 4
     VerticalAlignment = taAlignTop
     Visible = False
+    DesignSize = (
+      465
+      170)
     object Label2: TLabel
       Left = 8
       Top = 27
@@ -125,6 +143,7 @@ object fQuery: TfQuery
       Top = 10
       Width = 130
       Height = 30
+      Anchors = [akTop, akRight]
       Caption = 'Enter Years for Corresponding Albums:'
       Visible = False
       WordWrap = True
@@ -134,6 +153,7 @@ object fQuery: TfQuery
       Top = 146
       Width = 55
       Height = 13
+      Anchors = [akTop, akRight]
       Caption = 'Enter Year:'
       Visible = False
     end
@@ -142,6 +162,7 @@ object fQuery: TfQuery
       Top = 46
       Width = 185
       Height = 91
+      Anchors = [akLeft, akTop, akRight]
       ScrollBars = ssBoth
       TabOrder = 0
     end
@@ -150,6 +171,7 @@ object fQuery: TfQuery
       Top = 32
       Width = 105
       Height = 108
+      Anchors = [akTop, akRight]
       Caption = 'Query Years By'
       ItemIndex = 0
       Items.Strings = (
@@ -164,6 +186,7 @@ object fQuery: TfQuery
       Top = 40
       Width = 130
       Height = 97
+      Anchors = [akTop, akRight]
       TabOrder = 2
       Visible = False
     end
@@ -172,6 +195,7 @@ object fQuery: TfQuery
       Top = 143
       Width = 42
       Height = 21
+      Anchors = [akTop, akRight]
       TabOrder = 3
       Visible = False
     end
@@ -190,10 +214,14 @@ object fQuery: TfQuery
     Width = 465
     Height = 178
     Alignment = taLeftJustify
+    Anchors = [akLeft, akTop, akRight]
     Caption = '  Songs'
     TabOrder = 5
     VerticalAlignment = taAlignTop
     Visible = False
+    DesignSize = (
+      465
+      178)
     object Label5: TLabel
       Left = 8
       Top = 25
@@ -206,6 +234,7 @@ object fQuery: TfQuery
       Top = 8
       Width = 104
       Height = 39
+      Anchors = [akTop, akRight]
       Caption = 'Enter Track Nums for Corresponding Songs:'
       Visible = False
       WordWrap = True
@@ -215,6 +244,7 @@ object fQuery: TfQuery
       Top = 146
       Width = 75
       Height = 13
+      Anchors = [akTop, akRight]
       Caption = 'Enter Track No.'
       Visible = False
     end
@@ -223,6 +253,7 @@ object fQuery: TfQuery
       Top = 44
       Width = 185
       Height = 93
+      Anchors = [akLeft, akTop, akRight]
       ScrollBars = ssBoth
       TabOrder = 0
     end
@@ -231,6 +262,7 @@ object fQuery: TfQuery
       Top = 40
       Width = 130
       Height = 97
+      Anchors = [akTop, akRight]
       Caption = 'Query Track No. By'
       ItemIndex = 0
       Items.Strings = (
@@ -245,6 +277,7 @@ object fQuery: TfQuery
       Top = 48
       Width = 105
       Height = 89
+      Anchors = [akTop, akRight]
       TabOrder = 2
       Visible = False
     end
@@ -253,6 +286,7 @@ object fQuery: TfQuery
       Top = 143
       Width = 33
       Height = 21
+      Anchors = [akTop, akRight]
       TabOrder = 3
       Visible = False
     end
@@ -270,6 +304,7 @@ object fQuery: TfQuery
     Top = 567
     Width = 465
     Height = 58
+    Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Query!'
     TabOrder = 6
     Visible = False
