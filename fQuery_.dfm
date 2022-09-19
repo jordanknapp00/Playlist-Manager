@@ -11,6 +11,7 @@ object fQuery: TfQuery
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object pnlSelectFrom: TPanel
@@ -29,6 +30,7 @@ object fQuery: TfQuery
       Height = 17
       Caption = 'Bands'
       TabOrder = 0
+      OnClick = SelectChange
     end
     object cbAlbums: TCheckBox
       Left = 63
@@ -37,6 +39,7 @@ object fQuery: TfQuery
       Height = 17
       Caption = 'Albums'
       TabOrder = 1
+      OnClick = SelectChange
     end
     object cbSongs: TCheckBox
       Left = 127
@@ -45,6 +48,7 @@ object fQuery: TfQuery
       Height = 17
       Caption = 'Songs'
       TabOrder = 2
+      OnClick = SelectChange
     end
   end
   object btnLoadQuery: TButton
@@ -74,6 +78,7 @@ object fQuery: TfQuery
     Caption = '  Bands'
     TabOrder = 3
     VerticalAlignment = taAlignTop
+    Visible = False
     object Label1: TLabel
       Left = 8
       Top = 25
@@ -107,6 +112,7 @@ object fQuery: TfQuery
     Caption = '  Albums'
     TabOrder = 4
     VerticalAlignment = taAlignTop
+    Visible = False
     object Label2: TLabel
       Left = 8
       Top = 27
@@ -114,20 +120,22 @@ object fQuery: TfQuery
       Height = 13
       Caption = 'Enter Album Names:'
     end
-    object Label3: TLabel
+    object lblYears: TLabel
       Left = 327
       Top = 10
       Width = 130
       Height = 30
       Caption = 'Enter Years for Corresponding Albums:'
+      Visible = False
       WordWrap = True
     end
-    object Label4: TLabel
+    object lblYear: TLabel
       Left = 327
       Top = 146
       Width = 55
       Height = 13
       Caption = 'Enter Year:'
+      Visible = False
     end
     object edAlbums: TMemo
       Left = 8
@@ -157,6 +165,7 @@ object fQuery: TfQuery
       Width = 130
       Height = 97
       TabOrder = 2
+      Visible = False
     end
     object edYear: TEdit
       Left = 388
@@ -164,6 +173,7 @@ object fQuery: TfQuery
       Width = 42
       Height = 21
       TabOrder = 3
+      Visible = False
     end
     object cbAlbumFav: TCheckBox
       Left = 8
@@ -183,6 +193,7 @@ object fQuery: TfQuery
     Caption = '  Songs'
     TabOrder = 5
     VerticalAlignment = taAlignTop
+    Visible = False
     object Label5: TLabel
       Left = 8
       Top = 25
@@ -190,20 +201,22 @@ object fQuery: TfQuery
       Height = 13
       Caption = 'Enter Song Names:'
     end
-    object Label6: TLabel
+    object lblTrackNums: TLabel
       Left = 352
       Top = 8
       Width = 104
       Height = 39
       Caption = 'Enter Track Nums for Corresponding Songs:'
+      Visible = False
       WordWrap = True
     end
-    object Label7: TLabel
+    object lblTrackNum: TLabel
       Left = 343
       Top = 146
       Width = 75
       Height = 13
       Caption = 'Enter Track No.'
+      Visible = False
     end
     object edSongs: TMemo
       Left = 8
@@ -233,6 +246,7 @@ object fQuery: TfQuery
       Width = 105
       Height = 89
       TabOrder = 2
+      Visible = False
     end
     object edTrackNum: TEdit
       Left = 424
@@ -240,6 +254,7 @@ object fQuery: TfQuery
       Width = 33
       Height = 21
       TabOrder = 3
+      Visible = False
     end
     object cbSongFav: TCheckBox
       Left = 8
@@ -257,5 +272,6 @@ object fQuery: TfQuery
     Height = 58
     Caption = 'Query!'
     TabOrder = 6
+    Visible = False
   end
 end
