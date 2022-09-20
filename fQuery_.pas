@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.StdCtrls, Vcl.ExtCtrls,
 
-  System.Generics.Collections;
+  System.Generics.Collections, System.StrUtils;
 
 type
   TfQuery = class(TForm)
@@ -46,6 +46,7 @@ type
     procedure btnQueryClick(Sender: TObject);
   private
     { Private declarations }
+    function SearchText(ed: TMemo; Search: String): Boolean;
   public
     { Public declarations }
   end;
@@ -59,6 +60,11 @@ uses
   fMain_, DataStructs, DataModule;
 
 {$R *.dfm}
+
+function TfQuery.SearchText(ed: TMemo; Search: string): Boolean;
+begin
+  Result := PosEx(Search, ed.Text, 1) > 0;
+end;
 
 procedure TfQuery.FormCreate(Sender: TObject);
 begin
@@ -149,13 +155,15 @@ end;
 
 procedure TfQuery.btnQueryClick(Sender: TObject);
 var
-  //this list will contain the bands that are to be shown. each one will have a
-  //list of albums to be shown, and each album will have a list of songs. if
-  //albums and songs are not being shown, a single entry with name '' will be
-  //used, that way nothing is displayed in the table
-  selectedSet: TList<TBand>;
+  selectedSet: TDictionary<String, TBand>;
 
-  emptyBand: TBand;
+  tempBandSet: TStringList;
+  newBand, realBandAt: TBand;
+  bandAt: String;
+
+  tempAlbumSet: TStringList;
+  newAlbum, realAlbumAt: TAlbum;
+  albumAt: String;
 begin
   //we need some kind of way to get a set of all bands, albums, and songs to show.
   //what is the easiest way to do this?
@@ -174,15 +182,66 @@ begin
   //then we do. not an easy problem to solve, sounds like the former is a better
   //plan, even if it uses more memory.
 
+  //
+
+  //OKAY OKAY, NEW PLAN
+  //All data is always gotten for a record no matter what now. If you only query
+  //by a specific album name, you're still going to get the information related
+  //to its band, at the very least. Maybe this should specifically mean that
+  //you always get all higher-level information on a query. In other words, you
+  //can get just bands if you want. But if you query by album, you're gonna get
+  //the band. And if you query by song, you're gonna get the album and band.
+
+  tempBandSet := TStringList.Create;
+  selectedSet := TDictionary<String, TBand>.Create;
+
   if cbBands.Checked then
   begin
-    //add checked bands here
+    //first, reduce the set to only those that are favorites, if applicable
+    if cbBandFav.Checked then
+    begin
+      for bandAt in dm.GetSortedBands do
+      begin
+        if dm.bands[bandAt].isFavorite then
+          tempBandSet.Add(bandAt);
+      end;
+    end
+    else
+      tempBandSet := dm.GetSortedBands;
+
+    //then reduce to only the ones in edBands, if it's not empty
+    if edBands.Lines.Count > 0 then
+    begin
+      for bandAt in tempBandSet do
+      begin
+        if not SearchText(edBands, bandAt) then
+          tempBandSet.Delete(tempBandSet.IndexOf(bandAt));
+      end;
+    end;
+
+    for bandAt in tempBandSet do
+    begin
+      newBand := TBand.Create(bandAt, dm.bands[bandAt].isFavorite);
+      selectedSet.Add(bandAt, newBand);
+    end;
   end
   else
   begin
-    emptyBand := TBand.Create('', false);
-
+    //this is wrong, i think we just want to get all bands, as any and all bands
+    //could appear in the output? maybe? i dunno. maybe at the end of it, any
+    //band that has no albums will be removed from the queried set IF WE AREN'T
+    //QUERYING BANDS.
+    newBand := TBand.Create('', false);
+    selectedSet.Add('', newBand);
   end;
+
+  //OKAY OKAY, NEW PLAN
+  //All data is always gotten for a record no matter what now. If you only query
+  //by a specific album name, you're still going to get the information related
+  //to its band, at the very least. Maybe this should specifically mean that
+  //you always get all higher-level information on a query. In other words, you
+  //can get just bands if you want. But if you query by album, you're gonna get
+  //the band. And if you query by song, you're gonna get the album and band.
 end;
 
 end.
