@@ -145,7 +145,6 @@ object fQuery: TfQuery
       Height = 13
       Anchors = [akTop, akRight]
       Caption = 'Enter Year:'
-      Visible = False
     end
     object Label3: TLabel
       Left = 199
@@ -185,7 +184,6 @@ object fQuery: TfQuery
         'OR')
       TabOrder = 1
       WordWrap = True
-      OnClick = rgAlbumYearClick
     end
     object edYear: TEdit
       Left = 407
@@ -194,7 +192,6 @@ object fQuery: TfQuery
       Height = 21
       Anchors = [akTop, akRight]
       TabOrder = 2
-      Visible = False
     end
     object cbAlbumFav: TCheckBox
       Left = 8
@@ -233,7 +230,6 @@ object fQuery: TfQuery
       Height = 13
       Anchors = [akTop, akRight]
       Caption = 'Enter Track No.'
-      Visible = False
     end
     object Label4: TLabel
       Left = 207
@@ -273,7 +269,6 @@ object fQuery: TfQuery
         'OR')
       TabOrder = 1
       WordWrap = True
-      OnClick = rgSongTrackNoClick
     end
     object edTrackNum: TEdit
       Left = 423
@@ -282,7 +277,6 @@ object fQuery: TfQuery
       Height = 21
       Anchors = [akTop, akRight]
       TabOrder = 2
-      Visible = False
     end
     object cbSongFav: TCheckBox
       Left = 8
@@ -302,6 +296,5 @@ object fQuery: TfQuery
     Caption = 'Query!'
     TabOrder = 6
     Visible = False
-    OnClick = btnQueryClick
   end
 end
