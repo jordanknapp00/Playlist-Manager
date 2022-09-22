@@ -138,24 +138,30 @@ object fQuery: TfQuery
       Height = 13
       Caption = 'Enter Album Names:'
     end
-    object lblYears: TLabel
-      Left = 327
-      Top = 10
-      Width = 130
-      Height = 30
-      Anchors = [akTop, akRight]
-      Caption = 'Enter Years for Corresponding Albums:'
-      Visible = False
-      WordWrap = True
-    end
     object lblYear: TLabel
-      Left = 327
-      Top = 146
+      Left = 346
+      Top = 49
       Width = 55
       Height = 13
       Anchors = [akTop, akRight]
       Caption = 'Enter Year:'
       Visible = False
+    end
+    object Label3: TLabel
+      Left = 199
+      Top = 106
+      Width = 125
+      Height = 44
+      Caption = 
+        'Whether albums queried must match both album name AND year, or j' +
+        'ust one OR the other.'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -9
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      WordWrap = True
     end
     object edAlbums: TMemo
       Left = 8
@@ -167,37 +173,27 @@ object fQuery: TfQuery
       TabOrder = 0
     end
     object rgAlbumYear: TRadioGroup
-      Left = 216
-      Top = 32
-      Width = 105
-      Height = 108
+      Left = 199
+      Top = 40
+      Width = 130
+      Height = 60
       Anchors = [akTop, akRight]
-      Caption = 'Query Years By'
+      Caption = 'Name (And/Or) Year'
       ItemIndex = 0
       Items.Strings = (
-        'Don'#39't query by year'
-        'Single year'
-        'Enter year for each album')
+        'AND'
+        'OR')
       TabOrder = 1
       WordWrap = True
       OnClick = rgAlbumYearClick
     end
-    object edYears: TMemo
-      Left = 327
-      Top = 40
-      Width = 130
-      Height = 97
-      Anchors = [akTop, akRight]
-      TabOrder = 2
-      Visible = False
-    end
     object edYear: TEdit
-      Left = 388
-      Top = 143
-      Width = 42
+      Left = 407
+      Top = 46
+      Width = 49
       Height = 21
       Anchors = [akTop, akRight]
-      TabOrder = 3
+      TabOrder = 2
       Visible = False
     end
     object cbAlbumFav: TCheckBox
@@ -206,7 +202,7 @@ object fQuery: TfQuery
       Width = 121
       Height = 17
       Caption = 'Select only favorites'
-      TabOrder = 4
+      TabOrder = 3
     end
   end
   object pnlSongs: TPanel
@@ -230,24 +226,30 @@ object fQuery: TfQuery
       Height = 13
       Caption = 'Enter Song Names:'
     end
-    object lblTrackNums: TLabel
-      Left = 342
-      Top = 19
-      Width = 114
-      Height = 34
-      Anchors = [akTop, akRight]
-      Caption = 'Enter Track Nums for Corresponding Songs:'
-      Visible = False
-      WordWrap = True
-    end
     object lblTrackNum: TLabel
       Left = 343
-      Top = 151
+      Top = 47
       Width = 75
       Height = 13
       Anchors = [akTop, akRight]
       Caption = 'Enter Track No.'
       Visible = False
+    end
+    object Label4: TLabel
+      Left = 207
+      Top = 111
+      Width = 130
+      Height = 34
+      Caption = 
+        'Whether songs queried must match both song name AND year, or jus' +
+        't one OR the other.'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -9
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      WordWrap = True
     end
     object edSongs: TMemo
       Left = 8
@@ -259,37 +261,27 @@ object fQuery: TfQuery
       TabOrder = 0
     end
     object rgSongTrackNo: TRadioGroup
-      Left = 206
+      Left = 207
       Top = 43
       Width = 130
-      Height = 102
+      Height = 62
       Anchors = [akTop, akRight]
-      Caption = 'Query Track No. By'
+      Caption = 'Name (And/Or) Track'
       ItemIndex = 0
       Items.Strings = (
-        'Don'#39't query by track no.'
-        'Single track no.'
-        'Enter track no. for each song')
+        'AND'
+        'OR')
       TabOrder = 1
       WordWrap = True
       OnClick = rgSongTrackNoClick
     end
-    object edTrackNums: TMemo
-      Left = 342
-      Top = 48
-      Width = 114
-      Height = 97
-      Anchors = [akTop, akRight]
-      TabOrder = 2
-      Visible = False
-    end
     object edTrackNum: TEdit
-      Left = 424
-      Top = 151
+      Left = 423
+      Top = 44
       Width = 33
       Height = 21
       Anchors = [akTop, akRight]
-      TabOrder = 3
+      TabOrder = 2
       Visible = False
     end
     object cbSongFav: TCheckBox
@@ -298,7 +290,7 @@ object fQuery: TfQuery
       Width = 121
       Height = 17
       Caption = 'Select only favorites'
-      TabOrder = 4
+      TabOrder = 3
     end
   end
   object btnQuery: TButton

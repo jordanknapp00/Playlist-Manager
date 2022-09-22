@@ -24,8 +24,6 @@ type
     edAlbums: TMemo;
     Label2: TLabel;
     rgAlbumYear: TRadioGroup;
-    edYears: TMemo;
-    lblYears: TLabel;
     edYear: TEdit;
     lblYear: TLabel;
     cbAlbumFav: TCheckBox;
@@ -33,12 +31,12 @@ type
     edSongs: TMemo;
     Label5: TLabel;
     rgSongTrackNo: TRadioGroup;
-    edTrackNums: TMemo;
-    lblTrackNums: TLabel;
     edTrackNum: TEdit;
     lblTrackNum: TLabel;
     cbSongFav: TCheckBox;
     btnQuery: TButton;
+    Label3: TLabel;
+    Label4: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure SelectChange(Sender: TObject);
     procedure rgAlbumYearClick(Sender: TObject);
@@ -242,6 +240,14 @@ begin
   //you always get all higher-level information on a query. In other words, you
   //can get just bands if you want. But if you query by album, you're gonna get
   //the band. And if you query by song, you're gonna get the album and band.
+
+  //we'll start by getting every album that meets the conditions already set
+  //out. if we're looking for favorites, only get favorites. if we're looking
+  for realBandAt in dm.bands.Values do
+  begin
+    for realAlbumAt in realBandAt.albums.Values do
+
+  end;
 end;
 
 end.
