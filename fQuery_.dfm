@@ -22,13 +22,13 @@ object fQuery: TfQuery
   object Label6: TLabel
     Left = 8
     Top = 8
-    Width = 288
+    Width = 298
     Height = 52
     Caption = 
       'Leave text fields blank to ignore them. i.e. Leave band names bl' +
-      'ank to select all bands. AND conditions will be used for all fie' +
-      'lds. i.e. Query will return all record with a band name of X AND' +
-      ' an album name of Y, etc.'
+      'ank to select all bands. AND conditions are used across fields, ' +
+      'but OR is used within text boxes. i.e. Bands with name X or Y,  ' +
+      'but either MUST have albums Z or W.'
     WordWrap = True
   end
   object btnLoadQuery: TButton
@@ -251,5 +251,6 @@ object fQuery: TfQuery
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Query!'
     TabOrder = 5
+    OnClick = btnQueryClick
   end
 end
