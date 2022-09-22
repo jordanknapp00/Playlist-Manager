@@ -19,62 +19,36 @@ object fQuery: TfQuery
     633)
   PixelsPerInch = 96
   TextHeight = 13
-  object pnlSelectFrom: TPanel
+  object Label6: TLabel
     Left = 8
     Top = 8
-    Width = 185
-    Height = 49
-    Alignment = taLeftJustify
-    Anchors = [akLeft, akTop, akRight]
-    Caption = '  Select'
-    TabOrder = 0
-    VerticalAlignment = taAlignTop
-    object cbBands: TCheckBox
-      Left = 8
-      Top = 24
-      Width = 49
-      Height = 17
-      Caption = 'Bands'
-      TabOrder = 0
-      OnClick = SelectChange
-    end
-    object cbAlbums: TCheckBox
-      Left = 63
-      Top = 24
-      Width = 66
-      Height = 17
-      Caption = 'Albums'
-      TabOrder = 1
-      OnClick = SelectChange
-    end
-    object cbSongs: TCheckBox
-      Left = 127
-      Top = 24
-      Width = 97
-      Height = 17
-      Caption = 'Songs'
-      TabOrder = 2
-      OnClick = SelectChange
-    end
+    Width = 288
+    Height = 52
+    Caption = 
+      'Leave text fields blank to ignore them. i.e. Leave band names bl' +
+      'ank to select all bands. AND conditions will be used for all fie' +
+      'lds. i.e. Query will return all record with a band name of X AND' +
+      ' an album name of Y, etc.'
+    WordWrap = True
   end
   object btnLoadQuery: TButton
-    Left = 207
+    Left = 313
     Top = 8
-    Width = 130
+    Width = 81
     Height = 49
     Anchors = [akTop, akRight]
     Caption = 'Load Query from File'
-    TabOrder = 1
+    TabOrder = 0
     WordWrap = True
   end
   object btnSaveQuery: TButton
-    Left = 343
+    Left = 400
     Top = 8
-    Width = 130
+    Width = 73
     Height = 49
     Anchors = [akTop, akRight]
     Caption = 'Save Query to File'
-    TabOrder = 2
+    TabOrder = 1
     WordWrap = True
   end
   object pnlBands: TPanel
@@ -85,18 +59,24 @@ object fQuery: TfQuery
     Alignment = taLeftJustify
     Anchors = [akLeft, akTop, akRight]
     Caption = '  Bands'
-    TabOrder = 3
+    TabOrder = 2
     VerticalAlignment = taAlignTop
-    Visible = False
     DesignSize = (
       465
       138)
     object Label1: TLabel
       Left = 8
-      Top = 25
+      Top = 29
       Width = 92
       Height = 13
       Caption = 'Enter Band Names:'
+    end
+    object Label3: TLabel
+      Left = 319
+      Top = 29
+      Width = 83
+      Height = 13
+      Caption = 'Enter Band Tags:'
     end
     object edBands: TMemo
       Left = 8
@@ -109,12 +89,20 @@ object fQuery: TfQuery
     end
     object cbBandFav: TCheckBox
       Left = 199
-      Top = 40
-      Width = 122
+      Top = 44
+      Width = 114
       Height = 17
       Anchors = [akTop, akRight]
       Caption = 'Select only favorites'
       TabOrder = 1
+    end
+    object edBandTags: TMemo
+      Left = 320
+      Top = 44
+      Width = 138
+      Height = 89
+      ScrollBars = ssBoth
+      TabOrder = 2
     end
   end
   object pnlAlbums: TPanel
@@ -125,80 +113,64 @@ object fQuery: TfQuery
     Alignment = taLeftJustify
     Anchors = [akLeft, akTop, akRight]
     Caption = '  Albums'
-    TabOrder = 4
+    TabOrder = 3
     VerticalAlignment = taAlignTop
-    Visible = False
     DesignSize = (
       465
       170)
     object Label2: TLabel
       Left = 8
-      Top = 27
+      Top = 31
       Width = 97
       Height = 13
       Caption = 'Enter Album Names:'
     end
     object lblYear: TLabel
-      Left = 346
-      Top = 49
+      Left = 199
+      Top = 48
       Width = 55
       Height = 13
       Anchors = [akTop, akRight]
       Caption = 'Enter Year:'
     end
-    object Label3: TLabel
-      Left = 199
-      Top = 106
-      Width = 125
-      Height = 44
-      Caption = 
-        'Whether albums queried must match both album name AND year, or j' +
-        'ust one OR the other.'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -9
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      WordWrap = True
+    object Label4: TLabel
+      Left = 319
+      Top = 31
+      Width = 88
+      Height = 13
+      Caption = 'Enter Album Tags:'
     end
     object edAlbums: TMemo
       Left = 8
       Top = 46
       Width = 185
-      Height = 91
+      Height = 115
       Anchors = [akLeft, akTop, akRight]
       ScrollBars = ssBoth
       TabOrder = 0
     end
-    object rgAlbumYear: TRadioGroup
-      Left = 199
-      Top = 40
-      Width = 130
-      Height = 60
-      Anchors = [akTop, akRight]
-      Caption = 'Name (And/Or) Year'
-      ItemIndex = 0
-      Items.Strings = (
-        'AND'
-        'OR')
-      TabOrder = 1
-      WordWrap = True
-    end
     object edYear: TEdit
-      Left = 407
-      Top = 46
+      Left = 264
+      Top = 45
       Width = 49
       Height = 21
       Anchors = [akTop, akRight]
-      TabOrder = 2
+      TabOrder = 1
     end
     object cbAlbumFav: TCheckBox
-      Left = 8
-      Top = 143
+      Left = 199
+      Top = 80
       Width = 121
       Height = 17
       Caption = 'Select only favorites'
+      TabOrder = 2
+    end
+    object edAlbumTags: TMemo
+      Left = 319
+      Top = 46
+      Width = 139
+      Height = 115
+      ScrollBars = ssBoth
       TabOrder = 3
     end
   end
@@ -210,80 +182,64 @@ object fQuery: TfQuery
     Alignment = taLeftJustify
     Anchors = [akLeft, akTop, akRight]
     Caption = '  Songs'
-    TabOrder = 5
+    TabOrder = 4
     VerticalAlignment = taAlignTop
-    Visible = False
     DesignSize = (
       465
       178)
     object Label5: TLabel
       Left = 8
-      Top = 25
+      Top = 29
       Width = 92
       Height = 13
       Caption = 'Enter Song Names:'
     end
     object lblTrackNum: TLabel
-      Left = 343
-      Top = 47
+      Left = 199
+      Top = 48
       Width = 75
       Height = 13
       Anchors = [akTop, akRight]
       Caption = 'Enter Track No.'
     end
-    object Label4: TLabel
-      Left = 207
-      Top = 111
-      Width = 130
-      Height = 34
-      Caption = 
-        'Whether songs queried must match both song name AND year, or jus' +
-        't one OR the other.'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -9
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      WordWrap = True
+    object Label7: TLabel
+      Left = 319
+      Top = 29
+      Width = 83
+      Height = 13
+      Caption = 'Enter Song Tags:'
     end
     object edSongs: TMemo
       Left = 8
       Top = 44
       Width = 185
-      Height = 101
+      Height = 125
       Anchors = [akLeft, akTop, akRight]
       ScrollBars = ssBoth
       TabOrder = 0
     end
-    object rgSongTrackNo: TRadioGroup
-      Left = 207
-      Top = 43
-      Width = 130
-      Height = 62
-      Anchors = [akTop, akRight]
-      Caption = 'Name (And/Or) Track'
-      ItemIndex = 0
-      Items.Strings = (
-        'AND'
-        'OR')
-      TabOrder = 1
-      WordWrap = True
-    end
     object edTrackNum: TEdit
-      Left = 423
+      Left = 280
       Top = 44
       Width = 33
       Height = 21
       Anchors = [akTop, akRight]
-      TabOrder = 2
+      TabOrder = 1
     end
     object cbSongFav: TCheckBox
-      Left = 8
-      Top = 151
+      Left = 199
+      Top = 80
       Width = 121
       Height = 17
       Caption = 'Select only favorites'
+      TabOrder = 2
+    end
+    object edSongTags: TMemo
+      Left = 319
+      Top = 44
+      Width = 139
+      Height = 125
+      ScrollBars = ssBoth
       TabOrder = 3
     end
   end
@@ -294,7 +250,6 @@ object fQuery: TfQuery
     Height = 58
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Query!'
-    TabOrder = 6
-    Visible = False
+    TabOrder = 5
   end
 end
