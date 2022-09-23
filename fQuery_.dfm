@@ -20,15 +20,15 @@ object fQuery: TfQuery
   PixelsPerInch = 96
   TextHeight = 13
   object Label6: TLabel
-    Left = 8
+    Left = 9
     Top = 8
-    Width = 298
+    Width = 297
     Height = 52
     Caption = 
       'Leave text fields blank to ignore them. i.e. Leave band names bl' +
       'ank to select all bands. AND conditions are used across fields, ' +
-      'but OR is used within text boxes. i.e. Bands with name X or Y,  ' +
-      'but either MUST have albums Z or W.'
+      'but OR is used within name text boxes. i.e. Bands with name X or' +
+      ' Y,  but either MUST have albums Z or W.'
     WordWrap = True
   end
   object btnLoadQuery: TButton
@@ -104,6 +104,18 @@ object fQuery: TfQuery
       ScrollBars = ssBoth
       TabOrder = 2
     end
+    object rgBandMatch: TRadioGroup
+      Left = 199
+      Top = 67
+      Width = 115
+      Height = 66
+      Caption = 'Match ALL Tags?'
+      ItemIndex = 0
+      Items.Strings = (
+        'Match All'
+        'Match Only One')
+      TabOrder = 3
+    end
   end
   object pnlAlbums: TPanel
     Left = 8
@@ -159,7 +171,7 @@ object fQuery: TfQuery
     end
     object cbAlbumFav: TCheckBox
       Left = 199
-      Top = 80
+      Top = 72
       Width = 121
       Height = 17
       Caption = 'Select only favorites'
@@ -172,6 +184,18 @@ object fQuery: TfQuery
       Height = 115
       ScrollBars = ssBoth
       TabOrder = 3
+    end
+    object rgAlbumMatch: TRadioGroup
+      Left = 198
+      Top = 95
+      Width = 115
+      Height = 66
+      Caption = 'Match ALL Tags?'
+      ItemIndex = 0
+      Items.Strings = (
+        'Match All'
+        'Match Only One')
+      TabOrder = 4
     end
   end
   object pnlSongs: TPanel
@@ -241,6 +265,18 @@ object fQuery: TfQuery
       Height = 125
       ScrollBars = ssBoth
       TabOrder = 3
+    end
+    object rgSongMatch: TRadioGroup
+      Left = 198
+      Top = 103
+      Width = 115
+      Height = 66
+      Caption = 'Match ALL Tags?'
+      ItemIndex = 0
+      Items.Strings = (
+        'Match All'
+        'Match Only One')
+      TabOrder = 4
     end
   end
   object btnQuery: TButton
