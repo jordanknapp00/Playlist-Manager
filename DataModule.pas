@@ -32,8 +32,13 @@ type
     function AddSong(const songName, bandName, albumName: String; const trackNo: Integer): Boolean;
 
     function GetSortedBands: TStringList;
+    function GetSortedQueriedBands(bands: TDictionary<String, TBand>): TStringList;
+
     function GetSortedAlbumsOfBand(bandName: String): TStringList;
+    function GetSortedQueriedAlbumsOfBand(bands: TDictionary<String, TBand>; bandName: String): TStringList;
+
     function GetSortedSongsOfAlbum(bandName, albumName: String): TStringList;
+    function GetSortedQueriedSongsOfAlbum(bands: TDictionary<String, TBand>; bandName, albumName: String): TStringList;
 
     function WriteJSON: String;
     procedure ReadJSON(toRead: String);
@@ -122,6 +127,11 @@ begin
 end;
 
 function Tdm.GetSortedBands: TStringList;
+begin
+  Result := GetSortedQueriedBands(bands);
+end;
+
+function Tdm.GetSortedQueriedBands(bands: TDictionary<String, TBand>): TStringList;
 var
   bandList: TList<TBand>;
   bandAt: TBand;
@@ -146,6 +156,11 @@ begin
 end;
 
 function Tdm.GetSortedAlbumsOfBand(bandName: String): TStringList;
+begin
+  Result := GetSortedQueriedAlbumsOfBand(bands, bandName);
+end;
+
+function Tdm.GetSortedQueriedAlbumsOfBand(bands: TDictionary<String, TBand>; bandName: String): TStringList;
 var
   albumList: TList<TAlbum>;
   albumAt: TAlbum;
@@ -175,6 +190,11 @@ begin
 end;
 
 function Tdm.GetSortedSongsOfAlbum(bandName, albumName: String): TStringList;
+begin
+  Result := GetSortedQueriedSongsOfAlbum(bands, bandName, albumName);
+end;
+
+function Tdm.GetSortedQueriedSongsOfAlbum(bands: TDictionary<String, TBand>; bandName, albumName: String): TStringList;
 var
   songList: TList<TSong>;
   songAt: TSong;
