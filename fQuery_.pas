@@ -98,7 +98,7 @@ end;
 procedure TfQuery.btnQueryClick(Sender: TObject);
 var
   queriedSet: TDictionary<String, TBand>;
-  toRemove: TStringList;
+  toRemove, toRemove2, toRemove3: TStringList;
 
   bandAt, newBand: TBand;
   albumAt, newAlbum: TAlbum;
@@ -173,6 +173,8 @@ begin
 
   toRemove.Clear;
 
+  toRemove2 := TStringList.Create;
+
   for bandAt in queriedSet.Values do
   begin
     for albumAt in bandAt.albums.Values do
@@ -196,8 +198,19 @@ begin
     for at in toRemove do
       bandAt.albums.Remove(at);
 
+    //bands that no longer have any albums should be eliminated
+    if bandAt.albums.Count = 0 then
+      toRemove2.Add(bandAt.name);
+
     toRemove.Clear;
   end;
+
+  for at in toRemove2 do
+    queriedSet.Remove(at);
+
+  toRemove2.Clear;
+
+  toRemove3 := TStringList.Create;
 
   //repeat the process one more time
   for bandAt in queriedSet.values do
@@ -222,9 +235,30 @@ begin
       for at in toRemove do
         albumAt.songs.Remove(at);
 
+      //albums that no longer have any songs should be removed
+      if albumAt.songs.Count = 0 then
+        toRemove3.Add(albumAt.name);
+
       toRemove.Clear;
     end;
+
+    for at in toRemove3 do
+      bandAt.albums.Remove(at);
+
+    toRemove3.clear;
+
+    //and now bands that have no albums should also be removed again
+    if bandAt.albums.Count = 0 then
+      toRemove2.Add(bandAt.name);
   end;
+
+  for at in toRemove2 do
+    queriedSet.Remove(at);
+
+  //free the various TStringLists
+  toRemove.Free;
+  toRemove2.Free;
+  toRemove3.Free;
 
   Screen.Cursor := crDefault;
 
