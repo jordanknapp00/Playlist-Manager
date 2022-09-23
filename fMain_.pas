@@ -394,7 +394,7 @@ end;
 procedure TfMain.btnQueryClick(Sender: TObject);
 begin
   Application.CreateForm(TfQuery, fQuery);
-  fQuery.ShowModal;
+  fQuery.Show;
 end;
 
 procedure TfMain.btnClearClick(Sender: TObject);
