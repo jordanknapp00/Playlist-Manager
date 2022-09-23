@@ -116,9 +116,10 @@ object fMain: TfMain
     Top = 428
     Width = 54
     Height = 87
-    Caption = 'Clear Queried Results'
+    Caption = 'Clear Queried Results / Refresh Table'
     TabOrder = 8
     WordWrap = True
+    OnClick = btnClearClick
   end
   object menuBar: TMainMenu
     Left = 552

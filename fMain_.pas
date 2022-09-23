@@ -5,7 +5,11 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.Menus, Vcl.ExtCtrls,
-  Vcl.StdCtrls, Vcl.Grids, System.UITypes;
+  Vcl.StdCtrls, Vcl.Grids, System.UITypes,
+
+  System.Generics.Collections,
+
+  DataStructs;
 
 type
   TfMain = class(TForm)
@@ -52,6 +56,7 @@ type
     procedure btnManageAlbumClick(Sender: TObject);
     procedure btnManageSongsClick(Sender: TObject);
     procedure btnQueryClick(Sender: TObject);
+    procedure btnClearClick(Sender: TObject);
   private
     { Private declarations }
     fileName: String;
@@ -64,7 +69,8 @@ type
     { Public declarations }
     manageNeedSave: Boolean;
 
-    procedure RefreshGrid;
+    procedure RefreshGrid; overload;
+    procedure RefreshGrid(bands: TDictionary<String, TBand>); overload;
   end;
 
 var
@@ -73,7 +79,7 @@ var
 implementation
 
 uses
-  fAddBand_, fAddAlbum_, fAddSong_, DataModule, DataStructs, fManageBand_,
+  fAddBand_, fAddAlbum_, fAddSong_, DataModule, fManageBand_,
   fManageAlbum_, fManageSong_, fQuery_;
 
 {$R *.dfm}
@@ -144,7 +150,7 @@ begin
 //  end;
 end;
 
-procedure TfMain.RefreshGrid;
+procedure TfMain.RefreshGrid(bands: TDictionary<String, TBand>);
 var
   row, selectedRow, selectedCol: Integer;
 
@@ -165,12 +171,12 @@ begin
   row := 1;
 
   //dont bother if there are no bands
-  if dm.bandCount = 0 then
+  if bands.Keys.Count = 0 then
     Exit;
 
-  for bandNameAt in dm.GetSortedBands do
+  for bandNameAt in dm.GetSortedQueriedBands(bands) do
   begin
-    bandAt := dm.bands[bandNameAt];
+    bandAt := bands[bandNameAt];
 
     //if there are no albums (and thus no songs, print out the band now)
     if bandAt.albums.Count = 0 then
@@ -186,7 +192,7 @@ begin
       Inc(row);
     end;
 
-    for albumNameAt in dm.GetSortedAlbumsOfBand(bandNameAt) do
+    for albumNameAt in dm.GetSortedQueriedAlbumsOfBand(bands, bandNameAt) do
     begin
       albumAt := bandAt.albums[albumNameAt];
 
@@ -213,7 +219,7 @@ begin
         Inc(row);
       end;
 
-      for songNameAt in dm.GetSortedSongsOfAlbum(bandNameAt, albumNameAt) do
+      for songNameAt in dm.GetSortedQueriedSongsOfAlbum(bands, bandNameAt, albumNameAt) do
       begin
         songAt := albumAt.songs[songNameAt];
 
@@ -259,6 +265,11 @@ begin
 
   if (grid.Col <> selectedCol) and (selectedCol <> 0) then
     grid.Col := selectedCol;
+end;
+
+procedure TfMain.RefreshGrid;
+begin
+  RefreshGrid(dm.bands);
 end;
 
 procedure TfMain.ResizeGrid;
@@ -384,6 +395,11 @@ procedure TfMain.btnQueryClick(Sender: TObject);
 begin
   Application.CreateForm(TfQuery, fQuery);
   fQuery.ShowModal;
+end;
+
+procedure TfMain.btnClearClick(Sender: TObject);
+begin
+  RefreshGrid;
 end;
 
 //==============================================================================

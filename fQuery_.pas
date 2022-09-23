@@ -227,6 +227,8 @@ begin
   end;
 
   Screen.Cursor := crDefault;
+
+  fMain.RefreshGrid(queriedSet);
 end;
 
 end.
