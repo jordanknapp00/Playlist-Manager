@@ -20,15 +20,14 @@ object fQuery: TfQuery
   PixelsPerInch = 96
   TextHeight = 13
   object Label6: TLabel
-    Left = 9
+    Left = 10
     Top = 8
     Width = 297
-    Height = 52
+    Height = 26
+    Anchors = [akLeft, akTop, akRight]
     Caption = 
-      'Leave text fields blank to ignore them. i.e. Leave band names bl' +
-      'ank to select all bands. AND conditions are used across fields, ' +
-      'but OR is used within name text boxes. i.e. Bands with name X or' +
-      ' Y,  but either MUST have albums Z or W.'
+      'Leave text fields blank to not use. i.e. Leave band names blank ' +
+      'to select all bands.'
     WordWrap = True
   end
   object btnLoadQuery: TButton
@@ -76,6 +75,7 @@ object fQuery: TfQuery
       Top = 29
       Width = 83
       Height = 13
+      Anchors = [akTop, akRight]
       Caption = 'Enter Band Tags:'
     end
     object edBands: TMemo
@@ -101,6 +101,7 @@ object fQuery: TfQuery
       Top = 44
       Width = 138
       Height = 89
+      Anchors = [akTop, akRight]
       ScrollBars = ssBoth
       TabOrder = 2
     end
@@ -109,6 +110,7 @@ object fQuery: TfQuery
       Top = 67
       Width = 115
       Height = 66
+      Anchors = [akTop, akRight]
       Caption = 'Match ALL Tags?'
       ItemIndex = 0
       Items.Strings = (
@@ -150,6 +152,7 @@ object fQuery: TfQuery
       Top = 31
       Width = 88
       Height = 13
+      Anchors = [akTop, akRight]
       Caption = 'Enter Album Tags:'
     end
     object edAlbums: TMemo
@@ -174,6 +177,7 @@ object fQuery: TfQuery
       Top = 72
       Width = 121
       Height = 17
+      Anchors = [akTop, akRight]
       Caption = 'Select only favorites'
       TabOrder = 2
     end
@@ -182,6 +186,7 @@ object fQuery: TfQuery
       Top = 46
       Width = 139
       Height = 115
+      Anchors = [akTop, akRight]
       ScrollBars = ssBoth
       TabOrder = 3
     end
@@ -190,6 +195,7 @@ object fQuery: TfQuery
       Top = 95
       Width = 115
       Height = 66
+      Anchors = [akTop, akRight]
       Caption = 'Match ALL Tags?'
       ItemIndex = 0
       Items.Strings = (
@@ -231,6 +237,7 @@ object fQuery: TfQuery
       Top = 29
       Width = 83
       Height = 13
+      Anchors = [akTop, akRight]
       Caption = 'Enter Song Tags:'
     end
     object edSongs: TMemo
@@ -255,6 +262,7 @@ object fQuery: TfQuery
       Top = 80
       Width = 121
       Height = 17
+      Anchors = [akTop, akRight]
       Caption = 'Select only favorites'
       TabOrder = 2
     end
@@ -263,6 +271,7 @@ object fQuery: TfQuery
       Top = 44
       Width = 139
       Height = 125
+      Anchors = [akTop, akRight]
       ScrollBars = ssBoth
       TabOrder = 3
     end
@@ -271,6 +280,7 @@ object fQuery: TfQuery
       Top = 103
       Width = 115
       Height = 66
+      Anchors = [akTop, akRight]
       Caption = 'Match ALL Tags?'
       ItemIndex = 0
       Items.Strings = (
@@ -288,5 +298,15 @@ object fQuery: TfQuery
     Caption = 'Query!'
     TabOrder = 5
     OnClick = btnQueryClick
+  end
+  object btnClear: TButton
+    Left = 8
+    Top = 40
+    Width = 299
+    Height = 17
+    Anchors = [akLeft, akTop, akRight]
+    Caption = 'Clear all fields'
+    TabOrder = 6
+    OnClick = btnClearClick
   end
 end

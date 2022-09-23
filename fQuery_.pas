@@ -39,8 +39,10 @@ type
     rgBandMatch: TRadioGroup;
     rgAlbumMatch: TRadioGroup;
     rgSongMatch: TRadioGroup;
+    btnClear: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnQueryClick(Sender: TObject);
+    procedure btnClearClick(Sender: TObject);
   private
     { Private declarations }
     function SearchText(ed: TMemo; Search: String): Boolean; overload;
@@ -93,6 +95,23 @@ procedure TfQuery.FormCreate(Sender: TObject);
 begin
   Top := fMain.Top + Trunc(fMain.Height / 2) - Trunc(Height / 2);
   Left := fMain.Left + Trunc(fMain.Width / 2) - Trunc(Width / 2);
+end;
+
+procedure TfQuery.btnClearClick(Sender: TObject);
+begin
+  edBands.Clear;
+  cbBandFav.Checked := false;
+  edBandTags.Clear;
+
+  edAlbums.Clear;
+  cbAlbumFav.Checked := false;
+  edAlbumTags.Clear;
+  edYear.Clear;
+
+  edSongs.Clear;
+  cbSongFav.Checked := false;
+  edSongTags.Clear;
+  edTrackNum.Clear;
 end;
 
 procedure TfQuery.btnQueryClick(Sender: TObject);
