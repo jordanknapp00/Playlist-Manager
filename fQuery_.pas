@@ -44,6 +44,7 @@ type
     procedure btnQueryClick(Sender: TObject);
     procedure btnClearClick(Sender: TObject);
     procedure btnSaveQueryClick(Sender: TObject);
+    procedure btnLoadQueryClick(Sender: TObject);
   private
     { Private declarations }
     function SearchText(ed: TMemo; Search: String): Boolean; overload;
@@ -385,7 +386,7 @@ begin
 
   saveDialog.Title := 'Select a location to save to';
   saveDialog.InitialDir := GetCurrentDir;
-  saveDialog.Filter := 'JSON file|*.json';
+  saveDialog.Filter := 'JSON files (*.json)|*.json';
   saveDialog.DefaultExt := 'json';
   saveDialog.FilterIndex := 1;
 
@@ -396,6 +397,53 @@ begin
   saveDialog.Free;
   toSave.Free;
   writer.Free;
+end;
+
+procedure TfQuery.btnLoadQueryClick(Sender: TObject);
+var
+  val: TJSONValue;
+  currList: TJSONArray;
+  at: TJSONValue;
+
+  currBool: Boolean;
+  currInt: Integer;
+  currString: String;
+
+  openDialog: TOpenDialog;
+  fileName: String;
+  loadList: TStringList;
+  loadText: String;
+begin
+  openDialog := TOpenDialog.Create(self);
+
+  openDialog.InitialDir := GetCurrentDir;
+  openDialog.Filter := 'JSON Files (*.json)|*.json';
+  openDialog.DefaultExt := 'json';
+  openDialog.FilterIndex := 1;
+
+  if openDialog.Execute then
+  begin
+    fileName := openDialog.Files[0];
+
+    loadList := TStringList.Create;
+    loadList.LoadFromFile(fileName);
+    loadText := loadList.Text;
+  end
+  else
+  begin
+    openDialog.Free;
+    Exit;
+  end;
+
+  try
+    //put the top-level JSON object into val
+    val := TJSONObject.ParseJSONValue(loadText);
+  except
+    on E: Exception do
+    begin
+      showMessage('Error when processing file:' + #13#10 + E.ToString);
+    end;
+  end;
 end;
 
 end.

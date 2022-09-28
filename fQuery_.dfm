@@ -39,6 +39,7 @@ object fQuery: TfQuery
     Caption = 'Load Query from File'
     TabOrder = 0
     WordWrap = True
+    OnClick = btnLoadQueryClick
   end
   object btnSaveQuery: TButton
     Left = 400
