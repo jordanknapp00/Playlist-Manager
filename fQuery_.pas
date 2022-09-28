@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.StdCtrls, Vcl.ExtCtrls,
 
-  System.Generics.Collections, System.StrUtils;
+  System.Generics.Collections, System.StrUtils, System.JSON, System.JSON.Writers;
 
 type
   TfQuery = class(TForm)
@@ -43,6 +43,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnQueryClick(Sender: TObject);
     procedure btnClearClick(Sender: TObject);
+    procedure btnSaveQueryClick(Sender: TObject);
   private
     { Private declarations }
     function SearchText(ed: TMemo; Search: String): Boolean; overload;
@@ -282,6 +283,119 @@ begin
   Screen.Cursor := crDefault;
 
   fMain.RefreshGrid(queriedSet);
+end;
+
+procedure TfQuery.btnSaveQueryClick(Sender: TObject);
+var
+  writer: TJSONObjectWriter;
+  at: String;
+
+  toSave: TStringList;
+  saveDialog: TSaveDialog;
+begin
+  writer := TJSONObjectWriter.Create;
+
+  writer.writeStartObject;
+
+  //write band properties, starting with the list of bands
+  writer.WritePropertyName('bands');
+  writer.WriteStartArray;
+
+  for at in edBands.Lines do
+    writer.WriteValue(at);
+
+  writer.WriteEndArray;
+
+  //other band properties
+  writer.WritePropertyName('bandFav');
+  writer.WriteValue(cbBandFav.Checked);
+
+  writer.WritePropertyName('matchBandTag');
+  writer.WriteValue(rgBandMatch.ItemIndex);
+
+  //finally, band tags
+  writer.WritePropertyName('bandTags');
+  writer.WriteStartArray;
+
+  for at in edBandTags.Lines do
+    writer.WriteValue(at);
+
+  writer.WriteEndArray;
+
+  //basically repeat the above process for album and song
+  writer.WritePropertyName('albums');
+  writer.WriteStartArray;
+
+  for at in edAlbums.Lines do
+    writer.WriteValue(at);
+
+  writer.WriteEndArray;
+
+  writer.WritePropertyName('albumFav');
+  writer.WriteValue(cbAlbumFav.Checked);
+
+  writer.WritePropertyName('albumYear');
+  writer.WriteValue(edYear.Text);
+
+  writer.WritePropertyName('matchAlbumTag');
+  writer.WriteValue(rgAlbumMatch.ItemIndex);
+
+  writer.WritePropertyName('albumTags');
+  writer.WriteStartArray;
+
+  for at in edAlbumTags.Lines do
+    writer.WriteValue(at);
+
+  writer.WriteEndArray;
+
+  //and now songs
+  writer.WritePropertyName('songs');
+  writer.WriteStartArray;
+
+  for at in edSongs.Lines do
+    writer.WriteValue(at);
+
+  writer.WriteEndArray;
+
+  writer.WritePropertyName('songFav');
+  writer.WriteValue(cbSongFav.checked);
+
+  writer.WritePropertyName('songTrackNo');
+  writer.Writevalue(edTrackNum.Text);
+
+  writer.WritePropertyName('matchSongTag');
+  writer.WriteValue(rgSongMatch.Itemindex);
+
+  writer.WritePropertyName('songTags');
+  writer.WriteStartArray;
+
+  for at in edSongTags.Lines do
+    writer.WriteValue(at);
+
+  //all done!
+  writer.WriteEndArray;
+  writer.WriteEndObject;
+
+  //put the text in a TStringList, which can be easily saved to a file
+  toSave := TStringList.Create;
+  toSave.Add(writer.JSON.toString);
+
+  //have user select a file to save
+  saveDialog := TSaveDialog.Create(self);
+
+  saveDialog.Title := 'Select a location to save to';
+  saveDialog.InitialDir := GetCurrentDir;
+  saveDialog.Filter := 'JSON file|*.json';
+  saveDialog.DefaultExt := 'json';
+  saveDialog.FilterIndex := 1;
+
+  if saveDialog.Execute then
+    toSave.SaveToFile(saveDialog.FileName);
+
+  // Free up the dialog
+  saveDialog.Free;
+  toSave.Free;
+  writer.Free;
 end;
 
 end.

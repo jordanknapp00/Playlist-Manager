@@ -22,7 +22,7 @@ object fQuery: TfQuery
   object Label6: TLabel
     Left = 10
     Top = 8
-    Width = 297
+    Width = 279
     Height = 26
     Anchors = [akLeft, akTop, akRight]
     Caption = 
@@ -49,6 +49,7 @@ object fQuery: TfQuery
     Caption = 'Save Query to File'
     TabOrder = 1
     WordWrap = True
+    OnClick = btnSaveQueryClick
   end
   object pnlBands: TPanel
     Left = 8
