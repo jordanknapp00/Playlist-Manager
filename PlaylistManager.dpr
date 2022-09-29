@@ -10,7 +10,8 @@ uses
   DataModule in 'DataModule.pas' {dm: TDataModule},
   fManageBand_ in 'fManageBand_.pas' {fManageBand},
   fManageAlbum_ in 'fManageAlbum_.pas' {fManageAlbum},
-  fManageSong_ in 'fManageSong_.pas' {fManageSong};
+  fManageSong_ in 'fManageSong_.pas' {fManageSong},
+  fQuery_ in 'fQuery_.pas' {fQuery};
 
 {$R *.res}
 
