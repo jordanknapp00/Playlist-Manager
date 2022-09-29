@@ -405,10 +405,6 @@ var
   currList: TJSONArray;
   at: TJSONValue;
 
-  currBool: Boolean;
-  currInt: Integer;
-  currString: String;
-
   openDialog: TOpenDialog;
   fileName: String;
   loadList: TStringList;
@@ -435,9 +431,64 @@ begin
     Exit;
   end;
 
+  //clear out the ui
+  edBands.Clear;
+  edBandTags.Clear;
+  edAlbums.Clear;
+  edAlbumTags.Clear;
+  edYear.Clear;
+  edSongs.Clear;
+  edSongTags.Clear;
+  edTrackNum.Clear;
+
   try
     //put the top-level JSON object into val
     val := TJSONObject.ParseJSONValue(loadText);
+
+    currList := (val as TJSONObject).Get('bands').JSONValue as TJSONArray;
+
+    for at in currList do
+      edBands.Lines.Add(at.GetValue<String>);
+
+    cbBandFav.Checked := (val as TJSONObject).GetValue<Boolean>('bandFav');
+    rgBandMatch.ItemIndex := (val as TJSONObject).GetValue<Integer>('matchBandTag');
+
+    currList := (val as TJSONObject).Get('bandTags').JSONValue as TJSONArray;
+
+    for at in currList do
+      edBandTags.Lines.Add(at.GetValue<String>);
+
+    currList := (val as TJSONObject).Get('albums').JSONValue as TJSONArray;
+
+    for at in currList do
+      edAlbums.Lines.Add(at.GetValue<String>);
+
+    cbAlbumFav.Checked := (val as TJSONObject).GetValue<Boolean>('albumFav');
+    rgAlbumMatch.ItemIndex := (val as TJSONObject).GetValue<Integer>('matchAlbumTag');
+    edYear.Text := (val as TJSONObject).GetValue<String>('albumYear');
+
+    currList := (val as TJSONObject).Get('albumTags').JSONValue as TJSONArray;
+
+    for at in currList do
+      edAlbumTags.Lines.Add(at.GetValue<String>);
+
+    currList := (val as TJSONObject).Get('songs').JSONValue as TJSONArray;
+
+    for at in currList do
+      edSongs.Lines.Add(at.GetValue<String>);
+
+    cbSongFav.Checked := (val as TJSONObject).GetValue<Boolean>('songFav');
+    rgSongMatch.ItemIndex := (val as TJSONObject).GetValue<Integer>('matchSongTag');
+    edTrackNum.Text := (val as TJSONObject).GetValue<String>('songTrackNo');
+
+    currList := (val as TJSONObject).Get('songTags').JSONValue as TJSONArray;
+
+    for at in currList do
+      edSongTags.Lines.Add(at.GetValue<String>);
+
+//    at.Free;
+//    currList.Free;
+//    val.Free;
   except
     on E: Exception do
     begin
