@@ -565,7 +565,7 @@ end;
 
 procedure TfMain.menuItemAboutClick(Sender: TObject);
 begin
-  MessageDlg('Playlist Manager v0.1 Alpha' + #13#10 + 'by Jordan Knapp',
+  MessageDlg('Playlist Manager v0.3 Alpha' + #13#10 + 'by Jordan Knapp',
     mtInformation, [mbOk], 0, mbOk);
 end;
 
