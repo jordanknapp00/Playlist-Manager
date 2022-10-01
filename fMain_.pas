@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.Menus, Vcl.ExtCtrls,
   Vcl.StdCtrls, Vcl.Grids, System.UITypes,
 
-  System.Generics.Collections,
+  System.Generics.Collections, System.Win.ComObj,
 
   DataStructs;
 
@@ -25,7 +25,6 @@ type
     menuItemExportCSV: TMenuItem;
     menuItemExportXLSX: TMenuItem;
     menuHelp: TMenuItem;
-    menuItemHowToUse: TMenuItem;
     menuItemAbout: TMenuItem;
     btnQuery: TButton;
     btnAddBand: TButton;
@@ -57,6 +56,8 @@ type
     procedure btnManageSongsClick(Sender: TObject);
     procedure btnQueryClick(Sender: TObject);
     procedure btnClearClick(Sender: TObject);
+    procedure menuItemExportXLSXClick(Sender: TObject);
+    procedure menuItemExportCSVClick(Sender: TObject);
   private
     { Private declarations }
     fileName: String;
@@ -64,6 +65,7 @@ type
 
     procedure HandleSave;
     function AskToSave: Integer;
+
     procedure ResizeGrid;
   public
     { Public declarations }
@@ -553,6 +555,59 @@ begin
 end;
 
 //=====  EXPORT MENU  =====
+
+procedure TfMain.menuItemExportCSVClick(Sender: TObject);
+begin
+  //
+end;
+
+procedure TfMain.menuItemExportXLSXClick(Sender: TObject);
+var
+  dialog: TSaveDialog;
+  excelFileName: String;
+
+  Excel, workBook, range: OLEVariant;
+  arrData: Variant;
+  rowCount, colCount, row, col: Integer;
+begin
+  dialog := TSaveDialog.Create(self);
+  dialog.InitialDir := GetCurrentDir;
+  dialog.Filter := 'Excel Workbooks (*.xlsx) | *.xlsx';
+  dialog.DefaultExt := 'xlsx';
+  dialog.FilterIndex := 1;
+
+  if dialog.Execute then
+    excelFileName := dialog.Files[0]
+  else
+  begin
+    dialog.Free;
+    Exit;
+  end;
+
+  rowCount := grid.RowCount;
+  colCount := grid.ColCount;
+
+  arrData := VarArrayCreate([1, RowCount, 1, ColCount], varVariant);
+
+  for row := 1 to rowCount do
+  begin
+    for col := 1 to colCount do
+      arrData[row, col] := grid.Cells[col - 1, row - 1];
+  end;
+
+  Excel := CreateOLEObject('Excel.Application');
+  workBook := Excel.Workbooks.Add;
+
+  range := workBook.Worksheets[1].Range[workBook.WorkSheets[1].Cells[1, 1],
+                              workBook.WorkSheets[1].Cells[RowCount, ColCount]];
+
+  range.Value := arrData;
+
+  Excel.Workbooks[1].SaveAs(excelFileName);
+  Excel.Application.Quit;
+
+  dialog.Free;
+end;
 
 //=====  HELP MENU  =====
 
