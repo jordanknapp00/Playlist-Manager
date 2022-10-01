@@ -4,7 +4,7 @@
 
 - Update README!
 - ~~Export to .xlsx~~
-- Export to .csv
+- ~~Export to .csv~~
 - Export to .txt
 - Improved stats screen
 

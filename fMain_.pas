@@ -557,8 +557,37 @@ end;
 //=====  EXPORT MENU  =====
 
 procedure TfMain.menuItemExportCSVClick(Sender: TObject);
+var
+  dialog: TSaveDialog;
+  csvFileName: String;
+
+  fileData: TStringList;
+  rowCount, row: Integer;
 begin
-  //
+  dialog := TSaveDialog.Create(self);
+  dialog.InitialDir := GetCurrentDir;
+  dialog.Filter := 'Comma-Separated Values File (*.csv) | *.csv';
+  dialog.DefaultExt := 'csv';
+  dialog.FilterIndex := 1;
+
+  if dialog.Execute then
+    csvFileName := dialog.Files[0]
+  else
+  begin
+    dialog.Free;
+    Exit;
+  end;
+
+  fileData := TStringList.Create;
+  rowCount := grid.RowCount;
+
+  for row := 0 to rowCount do
+    fileData.Add(grid.Rows[row].CommaText);
+
+  fileData.SaveToFile(csvFileName);
+
+  dialog.Free;
+  fileData.Free;
 end;
 
 procedure TfMain.menuItemExportXLSXClick(Sender: TObject);
