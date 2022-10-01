@@ -58,6 +58,7 @@ type
     procedure btnClearClick(Sender: TObject);
     procedure menuItemExportXLSXClick(Sender: TObject);
     procedure menuItemExportCSVClick(Sender: TObject);
+    procedure menuItemExportTXTClick(Sender: TObject);
   private
     { Private declarations }
     fileName: String;
@@ -555,6 +556,57 @@ begin
 end;
 
 //=====  EXPORT MENU  =====
+
+procedure TfMain.menuItemExportTXTClick(Sender: TObject);
+var
+  dialog: TSaveDialog;
+  txtFileName: String;
+
+  bandAt: TBand;
+  albumAt: TAlbum;
+  songAt: TSong;
+
+  bandName, albumName, songName: String;
+  fileData: TStringList;
+begin
+  dialog := TSaveDialog.Create(self);
+  dialog.InitialDir := GetCurrentDir;
+  dialog.Filter := 'Text file (*.txt) | *.txt';
+  dialog.DefaultExt := 'txt';
+  dialog.FilterIndex := 1;
+
+  if dialog.Execute then
+    txtFileName := dialog.Files[0]
+  else
+  begin
+    dialog.Free;
+    Exit;
+  end;
+
+  fileData := TStringList.Create;
+
+  for bandAt in dm.bands.Values do
+  begin
+    bandName := bandAt.name;
+
+    for albumAt in bandAt.albums.Values do
+    begin
+      albumName := albumAt.name;
+
+      for songAt in albumAt.songs.Values do
+      begin
+        songName := songAt.name;
+
+        fileData.Add(songName + ' - ' + bandName + ' - ' + albumName);
+      end;
+    end;
+  end;
+
+  fileData.SaveToFile(txtFileName);
+
+  fileData.Free;
+  dialog.Free;
+end;
 
 procedure TfMain.menuItemExportCSVClick(Sender: TObject);
 var

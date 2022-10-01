@@ -151,6 +151,7 @@ object fMain: TfMain
       Caption = 'Export'
       object menuItemExportTXT: TMenuItem
         Caption = 'Export as .txt'
+        OnClick = menuItemExportTXTClick
       end
       object menuItemExportCSV: TMenuItem
         Caption = 'Export as .csv'
