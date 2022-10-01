@@ -3,8 +3,11 @@
 ## In the next update:
 
 - Update README!
-- Add menu items, including exporting, improved stats, and how to use
+- ~~Export to .xlsx~~
+- Export to .csv
+- Export to .txt
+- Improved stats screen
 
 ## In a future update:
 
-- Migrate from the DataStructs system to a proper TClientDataSet. Should make managing data much easier.
+- Migrate from the DataStructs system to a proper TClientDataSet. Should make managing data easier.
