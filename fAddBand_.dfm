@@ -2,7 +2,7 @@ object fAddBand: TfAddBand
   Left = 0
   Top = 0
   Caption = 'Add Band(s)'
-  ClientHeight = 230
+  ClientHeight = 238
   ClientWidth = 237
   Color = clBtnFace
   Constraints.MinHeight = 269
@@ -16,7 +16,7 @@ object fAddBand: TfAddBand
   OnCreate = FormCreate
   DesignSize = (
     237
-    230)
+    238)
   PixelsPerInch = 96
   TextHeight = 13
   object lblAddBands: TLabel
@@ -39,10 +39,10 @@ object fAddBand: TfAddBand
     WordWrap = False
   end
   object btnAddBands: TButton
-    Left = 8
-    Top = 198
+    Left = 9
+    Top = 200
     Width = 220
-    Height = 24
+    Height = 30
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Add Band(s)'
     TabOrder = 1

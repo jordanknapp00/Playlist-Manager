@@ -22,7 +22,7 @@ object fAddAlbum: TfAddAlbum
   object Label1: TLabel
     Left = 103
     Top = 8
-    Width = 178
+    Width = 164
     Height = 13
     Alignment = taCenter
     Anchors = [akTop]
@@ -65,9 +65,9 @@ object fAddAlbum: TfAddAlbum
   end
   object btnAddAlbum: TButton
     Left = 8
-    Top = 262
+    Top = 256
     Width = 356
-    Height = 25
+    Height = 31
     Anchors = [akLeft, akRight]
     Caption = 'Add Album(s)'
     TabOrder = 2

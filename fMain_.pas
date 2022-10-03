@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.Menus, Vcl.ExtCtrls,
   Vcl.StdCtrls, Vcl.Grids, System.UITypes,
 
-  System.Generics.Collections,
+  System.Generics.Collections, System.Win.ComObj,
 
   DataStructs;
 
@@ -25,7 +25,6 @@ type
     menuItemExportCSV: TMenuItem;
     menuItemExportXLSX: TMenuItem;
     menuHelp: TMenuItem;
-    menuItemHowToUse: TMenuItem;
     menuItemAbout: TMenuItem;
     btnQuery: TButton;
     btnAddBand: TButton;
@@ -57,6 +56,9 @@ type
     procedure btnManageSongsClick(Sender: TObject);
     procedure btnQueryClick(Sender: TObject);
     procedure btnClearClick(Sender: TObject);
+    procedure menuItemExportXLSXClick(Sender: TObject);
+    procedure menuItemExportCSVClick(Sender: TObject);
+    procedure menuItemExportTXTClick(Sender: TObject);
   private
     { Private declarations }
     fileName: String;
@@ -64,6 +66,7 @@ type
 
     procedure HandleSave;
     function AskToSave: Integer;
+
     procedure ResizeGrid;
   public
     { Public declarations }
@@ -553,6 +556,143 @@ begin
 end;
 
 //=====  EXPORT MENU  =====
+
+procedure TfMain.menuItemExportTXTClick(Sender: TObject);
+var
+  dialog: TSaveDialog;
+  txtFileName: String;
+
+  bandAt: TBand;
+  albumAt: TAlbum;
+  songAt: TSong;
+
+  bandName, albumName, songName: String;
+  fileData: TStringList;
+begin
+  dialog := TSaveDialog.Create(self);
+  dialog.InitialDir := GetCurrentDir;
+  dialog.Filter := 'Text file (*.txt) | *.txt';
+  dialog.DefaultExt := 'txt';
+  dialog.FilterIndex := 1;
+
+  if dialog.Execute then
+    txtFileName := dialog.Files[0]
+  else
+  begin
+    dialog.Free;
+    Exit;
+  end;
+
+  fileData := TStringList.Create;
+
+  for bandAt in dm.bands.Values do
+  begin
+    bandName := bandAt.name;
+
+    for albumAt in bandAt.albums.Values do
+    begin
+      albumName := albumAt.name;
+
+      for songAt in albumAt.songs.Values do
+      begin
+        songName := songAt.name;
+
+        //ignore the N/A album
+        if albumName = 'N/A' then
+          fileData.Add(songName + ' - ' + bandName)
+        else
+          fileData.Add(songName + ' - ' + bandName + ' - ' + albumName);
+      end;
+    end;
+  end;
+
+  fileData.SaveToFile(txtFileName);
+
+  fileData.Free;
+  dialog.Free;
+end;
+
+procedure TfMain.menuItemExportCSVClick(Sender: TObject);
+var
+  dialog: TSaveDialog;
+  csvFileName: String;
+
+  fileData: TStringList;
+  rowCount, row: Integer;
+begin
+  dialog := TSaveDialog.Create(self);
+  dialog.InitialDir := GetCurrentDir;
+  dialog.Filter := 'Comma-Separated Values File (*.csv) | *.csv';
+  dialog.DefaultExt := 'csv';
+  dialog.FilterIndex := 1;
+
+  if dialog.Execute then
+    csvFileName := dialog.Files[0]
+  else
+  begin
+    dialog.Free;
+    Exit;
+  end;
+
+  fileData := TStringList.Create;
+  rowCount := grid.RowCount;
+
+  for row := 0 to rowCount do
+    fileData.Add(grid.Rows[row].CommaText);
+
+  fileData.SaveToFile(csvFileName);
+
+  dialog.Free;
+  fileData.Free;
+end;
+
+procedure TfMain.menuItemExportXLSXClick(Sender: TObject);
+var
+  dialog: TSaveDialog;
+  excelFileName: String;
+
+  Excel, workBook, range: OLEVariant;
+  arrData: Variant;
+  rowCount, colCount, row, col: Integer;
+begin
+  dialog := TSaveDialog.Create(self);
+  dialog.InitialDir := GetCurrentDir;
+  dialog.Filter := 'Excel Workbooks (*.xlsx) | *.xlsx';
+  dialog.DefaultExt := 'xlsx';
+  dialog.FilterIndex := 1;
+
+  if dialog.Execute then
+    excelFileName := dialog.Files[0]
+  else
+  begin
+    dialog.Free;
+    Exit;
+  end;
+
+  rowCount := grid.RowCount;
+  colCount := grid.ColCount;
+
+  arrData := VarArrayCreate([1, RowCount, 1, ColCount], varVariant);
+
+  for row := 1 to rowCount do
+  begin
+    for col := 1 to colCount do
+      arrData[row, col] := grid.Cells[col - 1, row - 1];
+  end;
+
+  Excel := CreateOLEObject('Excel.Application');
+  workBook := Excel.Workbooks.Add;
+
+  range := workBook.Worksheets[1].Range[workBook.WorkSheets[1].Cells[1, 1],
+                              workBook.WorkSheets[1].Cells[RowCount, ColCount]];
+
+  range.Value := arrData;
+
+  Excel.Workbooks[1].SaveAs(excelFileName);
+  Excel.Application.Quit;
+
+  dialog.Free;
+end;
 
 //=====  HELP MENU  =====
 
