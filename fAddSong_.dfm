@@ -22,7 +22,7 @@ object fAddSong: TfAddSong
   object Label1: TLabel
     Left = 192
     Top = 8
-    Width = 172
+    Width = 129
     Height = 13
     Anchors = [akTop, akRight]
     Caption = 'Select an Album (optional):'
@@ -45,7 +45,7 @@ object fAddSong: TfAddSong
   object Label4: TLabel
     Left = 8
     Top = 8
-    Width = 169
+    Width = 69
     Height = 13
     Caption = 'Select a Band:'
   end
@@ -80,9 +80,9 @@ object fAddSong: TfAddSong
   end
   object btnAddSongs: TButton
     Left = 8
-    Top = 262
+    Top = 256
     Width = 356
-    Height = 25
+    Height = 31
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Add Song(s)'
     TabOrder = 2

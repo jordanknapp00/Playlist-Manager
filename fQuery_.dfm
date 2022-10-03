@@ -99,7 +99,7 @@ object fQuery: TfQuery
       TabOrder = 1
     end
     object edBandTags: TMemo
-      Left = 320
+      Left = 319
       Top = 44
       Width = 138
       Height = 89
@@ -110,7 +110,7 @@ object fQuery: TfQuery
     object rgBandMatch: TRadioGroup
       Left = 199
       Top = 67
-      Width = 115
+      Width = 114
       Height = 66
       Anchors = [akTop, akRight]
       Caption = 'Match ALL Tags?'
@@ -142,8 +142,8 @@ object fQuery: TfQuery
       Caption = 'Enter Album Names:'
     end
     object lblYear: TLabel
-      Left = 201
-      Top = 48
+      Left = 199
+      Top = 49
       Width = 55
       Height = 13
       Anchors = [akTop, akRight]
@@ -168,7 +168,7 @@ object fQuery: TfQuery
     end
     object edYear: TEdit
       Left = 264
-      Top = 45
+      Top = 46
       Width = 49
       Height = 21
       Anchors = [akTop, akRight]
@@ -177,7 +177,7 @@ object fQuery: TfQuery
     object cbAlbumFav: TCheckBox
       Left = 199
       Top = 72
-      Width = 121
+      Width = 114
       Height = 17
       Anchors = [akTop, akRight]
       Caption = 'Select only favorites'
@@ -193,9 +193,9 @@ object fQuery: TfQuery
       TabOrder = 3
     end
     object rgAlbumMatch: TRadioGroup
-      Left = 198
+      Left = 199
       Top = 95
-      Width = 115
+      Width = 114
       Height = 66
       Anchors = [akTop, akRight]
       Caption = 'Match ALL Tags?'
@@ -206,7 +206,7 @@ object fQuery: TfQuery
       TabOrder = 4
     end
     object cbNAalbums: TCheckBox
-      Left = 320
+      Left = 319
       Top = 8
       Width = 122
       Height = 17
@@ -238,7 +238,7 @@ object fQuery: TfQuery
     end
     object lblTrackNum: TLabel
       Left = 199
-      Top = 48
+      Top = 47
       Width = 75
       Height = 13
       Anchors = [akTop, akRight]
@@ -271,7 +271,7 @@ object fQuery: TfQuery
     end
     object cbSongFav: TCheckBox
       Left = 199
-      Top = 80
+      Top = 75
       Width = 121
       Height = 17
       Anchors = [akTop, akRight]
@@ -288,9 +288,9 @@ object fQuery: TfQuery
       TabOrder = 3
     end
     object rgSongMatch: TRadioGroup
-      Left = 198
+      Left = 199
       Top = 103
-      Width = 115
+      Width = 114
       Height = 66
       Anchors = [akTop, akRight]
       Caption = 'Match ALL Tags?'
