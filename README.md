@@ -1,6 +1,8 @@
-# Playlist Manager (v0.3 alpha)
+# Playlist Manager (v1.0)
 
-Playlist Manager is a program designed to organize all the songs on your playlist. Playlist Manager makes creating a playlist easier and quicker than doing it through a streaming site's interface. It will eventually allow exporting a ```.txt``` file. There are a handful of sites out there that can import playlists into Spotify, Pandora, etc. from a ```.txt```. Thus Playlist Manager will eventually allow you to create playlists on those sites without having to deal with their slow, clunky interfaces.
+Playlist Manager is a program designed to organize all the songs on your playlist. Playlist Manager makes creating a playlist easier and quicker than doing it through a streaming site's interface. Bands, albums, and songs can be added, categorized with metadata including tags, and queried to make managing your playlist easy no matter how many songs it has. Data can be exported in a variety of formats, including ```.xlsx``` and ```.csv``` for creating spreadsheets and ```.txt``` files that can be imported into sites such as [TuneMyMusic](www.https://www.tunemymusic.com) or [Soundiiz](https://soundiiz.com). These sites will then allow you to import your playlist into a wide variety of streaming sites.
+
+Playlist Manager makes it easier than ever to create a playlist with thousands of songs, without having to deal with streaming sites' clunkly and slow interfaces.
 
 ## Current Features
 
