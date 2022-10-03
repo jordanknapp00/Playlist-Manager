@@ -597,7 +597,11 @@ begin
       begin
         songName := songAt.name;
 
-        fileData.Add(songName + ' - ' + bandName + ' - ' + albumName);
+        //ignore the N/A album
+        if albumName = 'N/A' then
+          fileData.Add(songName + ' - ' + bandName)
+        else
+          fileData.Add(songName + ' - ' + bandName + ' - ' + albumName);
       end;
     end;
   end;

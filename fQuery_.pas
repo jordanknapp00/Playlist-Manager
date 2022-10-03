@@ -40,6 +40,7 @@ type
     rgAlbumMatch: TRadioGroup;
     rgSongMatch: TRadioGroup;
     btnClear: TButton;
+    cbNAalbums: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure btnQueryClick(Sender: TObject);
     procedure btnClearClick(Sender: TObject);
@@ -109,6 +110,7 @@ begin
   cbAlbumFav.Checked := false;
   edAlbumTags.Clear;
   edYear.Clear;
+  cbNAalbums.Checked := true;
 
   edSongs.Clear;
   cbSongFav.Checked := false;
@@ -200,6 +202,10 @@ begin
   begin
     for albumAt in bandAt.albums.Values do
     begin
+      //eliminate N/A album unless we're counting it
+      if (not cbNAalbums.Checked) and (albumAt.name = 'N/A') then
+        toRemove.Add('N/A');
+
       //eliminate albums that are not favorites, if applicable
       if cbAlbumFav.Checked and not albumAt.isFavorite then
         toRemove.Add(albumAt.name);

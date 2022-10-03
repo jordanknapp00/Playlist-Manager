@@ -142,7 +142,7 @@ object fQuery: TfQuery
       Caption = 'Enter Album Names:'
     end
     object lblYear: TLabel
-      Left = 199
+      Left = 201
       Top = 48
       Width = 55
       Height = 13
@@ -204,6 +204,16 @@ object fQuery: TfQuery
         'Match All'
         'Match Only One')
       TabOrder = 4
+    end
+    object cbNAalbums: TCheckBox
+      Left = 320
+      Top = 8
+      Width = 122
+      Height = 17
+      Caption = 'Include "N/A" albums'
+      Checked = True
+      State = cbChecked
+      TabOrder = 5
     end
   end
   object pnlSongs: TPanel
