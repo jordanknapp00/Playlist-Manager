@@ -109,6 +109,10 @@ var
 begin
   Result := true;
 
+  //if the N/A album is selected, make sure it exists
+  if (albumName = 'N/A') and (not bands[bandName].albums.ContainsKey('N/A')) then
+    AddAlbum('N/A', bandName, 0);
+
   album := bands[bandName].albums[albumName];
 
   //no duplicate song names within the same album
