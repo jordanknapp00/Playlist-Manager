@@ -66,8 +66,8 @@ object fManageBand: TfManageBand
     Lines.Strings = (
       'edTags')
     TabOrder = 2
+    WordWrap = False
     OnChange = DetermineNeedSave
-    ExplicitHeight = 80
   end
   object btnSave: TButton
     Left = 23
@@ -78,7 +78,6 @@ object fManageBand: TfManageBand
     Caption = 'Save'
     TabOrder = 3
     OnClick = btnSaveClick
-    ExplicitTop = 297
   end
   object btnDelete: TButton
     Left = 23
@@ -89,7 +88,6 @@ object fManageBand: TfManageBand
     Caption = 'Delete Selected Band'
     TabOrder = 4
     OnClick = btnDeleteClick
-    ExplicitTop = 246
   end
   object btnApplyAlbums: TButton
     Left = 23

@@ -77,6 +77,7 @@ object fAddSong: TfAddSong
       'textBoxAlbums')
     ScrollBars = ssVertical
     TabOrder = 1
+    WordWrap = False
   end
   object btnAddSongs: TButton
     Left = 8
@@ -98,6 +99,7 @@ object fAddSong: TfAddSong
       'textBoxYears')
     ScrollBars = ssVertical
     TabOrder = 3
+    WordWrap = False
   end
   object cbBands: TComboBox
     Left = 8

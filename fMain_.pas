@@ -36,6 +36,9 @@ type
     menuItemStats: TMenuItem;
     grid: TStringGrid;
     btnClear: TButton;
+    saveDialog: TSaveDialog;
+    openDialog: TOpenDialog;
+    saveExportDialog: TSaveDialog;
     procedure btnAddBandClick(Sender: TObject);
     procedure btnAddAlbumClick(Sender: TObject);
     procedure btnAddSongsClick(Sender: TObject);
@@ -442,7 +445,6 @@ end;
 
 procedure TfMain.menuItemLoadClick(Sender: TObject);
 var
-  dialog: TOpenDialog;
   loadList: TStringList;
   loadText: String;
 
@@ -460,54 +462,47 @@ begin
       needSave := false;
   end;
 
-  dialog := TOpenDialog.Create(self);
-  dialog.InitialDir := GetCurrentDir;
-  dialog.Filter := 'JSON Files (*.json)|*.json';
-  dialog.DefaultExt := 'json';
-  dialog.FilterIndex := 1;
-
-  if dialog.Execute then
+  with openDialog do
   begin
-    fileName := dialog.Files[0];
+    if Execute then
+      self.fileName := FileName
+    else
+      Exit;
 
-    loadList := TStringList.Create;
-    loadList.LoadFromFile(fileName);
-    loadText := loadList.Text;
-    dm.ReadJSON(loadText);
-
-    loadList.Free;
+    FileName := ''; //prevent selected file from showing up in dialog again
   end;
 
-  Caption := ExtractFileName(fileName) + ' - Playlist Manager';
+  loadList := TStringList.Create;
+  loadList.LoadFromFile(fileName);
+  loadText := loadList.Text;
+  dm.ReadJSON(loadText);
 
-  dialog.Free;
+  loadList.Free;
+
+  Caption := ExtractFileName(fileName) + ' - Playlist Manager';
 end;
 
 procedure TfMain.menuItemSaveClick(Sender: TObject);
 begin
-  if fileName = '' then
+  if (fileName = 'Untitled') or (fileName = '') then
     menuItemSaveAsClick(nil)
   else
     HandleSave;
 end;
 
 procedure TfMain.menuItemSaveAsClick(Sender: TObject);
-var
-  dialog: TSaveDialog;
 begin
-  dialog := TSaveDialog.Create(self);
-  dialog.InitialDir := GetCurrentDir;
-  dialog.Filter := 'JSON Files (*.json)|*.json';
-  dialog.DefaultExt := 'json';
-  dialog.FilterIndex := 1;
-
-  if dialog.Execute then
+  with saveDialog do
   begin
-    fileName := dialog.Files[0];
-    HandleSave;
+    if Execute then
+      self.fileName := FileName
+    else
+      Exit;
+
+    FileName := '';
   end;
 
-  dialog.Free;
+  HandleSave;
 end;
 
 procedure TfMain.menuItemExitClick(Sender: TObject);
@@ -559,7 +554,6 @@ end;
 
 procedure TfMain.menuItemExportTXTClick(Sender: TObject);
 var
-  dialog: TSaveDialog;
   txtFileName: String;
 
   bandAt: TBand;
@@ -569,18 +563,18 @@ var
   bandName, albumName, songName: String;
   fileData: TStringList;
 begin
-  dialog := TSaveDialog.Create(self);
-  dialog.InitialDir := GetCurrentDir;
-  dialog.Filter := 'Text file (*.txt) | *.txt';
-  dialog.DefaultExt := 'txt';
-  dialog.FilterIndex := 1;
-
-  if dialog.Execute then
-    txtFileName := dialog.Files[0]
-  else
+  with saveExportDialog do
   begin
-    dialog.Free;
-    Exit;
+    Filter := 'Text file (*.txt) | *.txt';
+    DefaultExt := 'txt';
+    FilterIndex := 1;
+
+    if Execute then
+      txtFileName := FileName
+    else
+      Exit;
+
+    FileName := '';
   end;
 
   fileData := TStringList.Create;
@@ -609,29 +603,27 @@ begin
   fileData.SaveToFile(txtFileName);
 
   fileData.Free;
-  dialog.Free;
 end;
 
 procedure TfMain.menuItemExportCSVClick(Sender: TObject);
 var
-  dialog: TSaveDialog;
   csvFileName: String;
 
   fileData: TStringList;
   rowCount, row: Integer;
 begin
-  dialog := TSaveDialog.Create(self);
-  dialog.InitialDir := GetCurrentDir;
-  dialog.Filter := 'Comma-Separated Values File (*.csv) | *.csv';
-  dialog.DefaultExt := 'csv';
-  dialog.FilterIndex := 1;
-
-  if dialog.Execute then
-    csvFileName := dialog.Files[0]
-  else
+  with saveExportDialog do
   begin
-    dialog.Free;
-    Exit;
+    Filter := 'Comma-Separated Values File (*.csv) | *.csv';
+    DefaultExt := 'csv';
+    FilterIndex := 1;
+
+    if Execute then
+      csvFileName := FileName
+    else
+      Exit;
+
+    FileName := '';
   end;
 
   fileData := TStringList.Create;
@@ -642,31 +634,29 @@ begin
 
   fileData.SaveToFile(csvFileName);
 
-  dialog.Free;
   fileData.Free;
 end;
 
 procedure TfMain.menuItemExportXLSXClick(Sender: TObject);
 var
-  dialog: TSaveDialog;
   excelFileName: String;
 
   Excel, workBook, range: OLEVariant;
   arrData: Variant;
   rowCount, colCount, row, col: Integer;
 begin
-  dialog := TSaveDialog.Create(self);
-  dialog.InitialDir := GetCurrentDir;
-  dialog.Filter := 'Excel Workbooks (*.xlsx) | *.xlsx';
-  dialog.DefaultExt := 'xlsx';
-  dialog.FilterIndex := 1;
-
-  if dialog.Execute then
-    excelFileName := dialog.Files[0]
-  else
+  with saveExportDialog do
   begin
-    dialog.Free;
-    Exit;
+    Filter := 'Excel Workbooks (*.xlsx) | *.xlsx';
+    DefaultExt := 'xlsx';
+    FilterIndex := 1;
+
+    if Execute then
+      excelFileName := FileName
+    else
+      Exit;
+
+    FileName := '';
   end;
 
   rowCount := grid.RowCount;
@@ -690,8 +680,6 @@ begin
 
   Excel.Workbooks[1].SaveAs(excelFileName);
   Excel.Application.Quit;
-
-  dialog.Free;
 end;
 
 //=====  HELP MENU  =====
@@ -705,7 +693,7 @@ end;
 
 procedure TfMain.menuItemAboutClick(Sender: TObject);
 begin
-  MessageDlg('Playlist Manager v1.0' + #13#10 + 'by Jordan Knapp',
+  MessageDlg('Playlist Manager v1.0.1' + #13#10 + 'by Jordan Knapp',
     mtInformation, [mbOk], 0, mbOk);
 end;
 

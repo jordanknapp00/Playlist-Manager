@@ -82,12 +82,13 @@ object fQuery: TfQuery
     end
     object edBands: TMemo
       Left = 8
-      Top = 44
+      Top = 48
       Width = 185
       Height = 89
       Anchors = [akLeft, akTop, akRight]
       ScrollBars = ssBoth
       TabOrder = 0
+      WordWrap = False
     end
     object cbBandFav: TCheckBox
       Left = 199
@@ -100,12 +101,13 @@ object fQuery: TfQuery
     end
     object edBandTags: TMemo
       Left = 319
-      Top = 44
+      Top = 48
       Width = 138
       Height = 89
       Anchors = [akTop, akRight]
       ScrollBars = ssBoth
       TabOrder = 2
+      WordWrap = False
     end
     object rgBandMatch: TRadioGroup
       Left = 199
@@ -159,12 +161,13 @@ object fQuery: TfQuery
     end
     object edAlbums: TMemo
       Left = 8
-      Top = 46
+      Top = 50
       Width = 185
       Height = 115
       Anchors = [akLeft, akTop, akRight]
       ScrollBars = ssBoth
       TabOrder = 0
+      WordWrap = False
     end
     object edYear: TEdit
       Left = 264
@@ -185,12 +188,13 @@ object fQuery: TfQuery
     end
     object edAlbumTags: TMemo
       Left = 319
-      Top = 46
+      Top = 50
       Width = 139
       Height = 115
       Anchors = [akTop, akRight]
       ScrollBars = ssBoth
       TabOrder = 3
+      WordWrap = False
     end
     object rgAlbumMatch: TRadioGroup
       Left = 199
@@ -254,12 +258,13 @@ object fQuery: TfQuery
     end
     object edSongs: TMemo
       Left = 8
-      Top = 44
+      Top = 48
       Width = 185
       Height = 125
       Anchors = [akLeft, akTop, akRight]
       ScrollBars = ssBoth
       TabOrder = 0
+      WordWrap = False
     end
     object edTrackNum: TEdit
       Left = 280
@@ -286,6 +291,7 @@ object fQuery: TfQuery
       Anchors = [akTop, akRight]
       ScrollBars = ssBoth
       TabOrder = 3
+      WordWrap = False
     end
     object rgSongMatch: TRadioGroup
       Left = 199
