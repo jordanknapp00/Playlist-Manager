@@ -110,6 +110,7 @@ object fManageSong: TfManageSong
     Lines.Strings = (
       'Memo1')
     TabOrder = 4
+    WordWrap = False
     OnChange = DetermineNeedSave
   end
   object btnSave: TButton
@@ -121,7 +122,6 @@ object fManageSong: TfManageSong
     Caption = 'Save'
     TabOrder = 5
     OnClick = btnSaveClick
-    ExplicitTop = 405
   end
   object btnDelete: TButton
     Left = 23
@@ -132,7 +132,6 @@ object fManageSong: TfManageSong
     Caption = 'Delete Selected Song'
     TabOrder = 6
     OnClick = btnDeleteClick
-    ExplicitTop = 436
   end
   object edTrackNo: TEdit
     Left = 126

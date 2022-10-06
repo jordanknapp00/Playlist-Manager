@@ -1,8 +1,15 @@
-# Playlist Manager (v1.0)
+# Playlist Manager (v1.0.1)
 
 Playlist Manager is a program designed to organize all the songs on your playlist. Playlist Manager makes creating a playlist easier and quicker than doing so through a streaming site's interface. Bands, albums, and songs can be added, categorized with metadata including tags, and queried to make managing your playlist easy no matter how many songs it has. Data can be exported in a variety of formats, including ```.xlsx``` and ```.csv``` for creating spreadsheets and ```.txt``` files that can be imported into sites such as [TuneMyMusic](https://www.tunemymusic.com) or [Soundiiz](https://www.soundiiz.com). These sites will then allow you to import your playlist into a wide variety of streaming sites.
 
 Playlist Manager makes it easier than ever to create a playlist with thousands of songs, without having to deal with streaming sites' clunky and slow interfaces.
+
+### New in v1.0.1:
+
+Bug fixes and QOL improvements:
+
+- Removed word wrap from all text boxes, so band/album/song/tag names can be as long as desired.
+- Fixed issues with save and open dialogs
 
 ## How to Use
 
@@ -44,7 +51,7 @@ Files can also be exported to ```.txt``` files, which can be used on a handful o
 
 ## Coming in Later Versions
 
-v1.0 sees the program in a completely functional state. However, there are a few features planned for future versions. Planned features include, but are not limited to:
+v1.0.1 sees the program in a completely functional state. However, there are a few features planned for future versions. Planned features include, but are not limited to:
 
 - Overhauling the underlying data structures to use Delphi's ```TClientDataSet``` rather than nested dictionaries
 - Improved user interface, hopefully including a table with sortable columns
@@ -52,3 +59,4 @@ v1.0 sees the program in a completely functional state. However, there are a few
 - Ability to export only the currently queried set
 - Copy text from the table (and export only the selected set)
 - Allow specifying order of bands, albums, or songs in the export (as right now, the order is fairly arbitrary due to unordered nature of dictionaries)
+- Eliminate memory leaks
