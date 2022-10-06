@@ -1,3 +1,0 @@
-- ~~No word wrap for album and song names (add scroll bars?)~~
-- Hitting "Save" without a current file does not pull up Save As menu, just creates a file called Untitled
-- Migrate to TClientDataSet and hopefully allow a better table than the TStringGrid
