@@ -462,17 +462,22 @@ begin
       needSave := false;
   end;
 
-  if openDialog.Execute then
+  with openDialog do
   begin
-    fileName := openDialog.Files[0];
+    if Execute then
+      self.fileName := FileName
+    else
+      Exit;
 
-    loadList := TStringList.Create;
-    loadList.LoadFromFile(fileName);
-    loadText := loadList.Text;
-    dm.ReadJSON(loadText);
-
-    loadList.Free;
+    FileName := ''; //prevent selected file from showing up in dialog again
   end;
+
+  loadList := TStringList.Create;
+  loadList.LoadFromFile(fileName);
+  loadText := loadList.Text;
+  dm.ReadJSON(loadText);
+
+  loadList.Free;
 
   Caption := ExtractFileName(fileName) + ' - Playlist Manager';
 end;
@@ -487,11 +492,17 @@ end;
 
 procedure TfMain.menuItemSaveAsClick(Sender: TObject);
 begin
-  if saveDialog.Execute then
+  with saveDialog do
   begin
-    fileName := saveDialog.Files[0];
-    HandleSave;
+    if Execute then
+      self.fileName := FileName
+    else
+      Exit;
+
+    FileName := '';
   end;
+
+  HandleSave;
 end;
 
 procedure TfMain.menuItemExitClick(Sender: TObject);
@@ -552,16 +563,19 @@ var
   bandName, albumName, songName: String;
   fileData: TStringList;
 begin
-  saveExportDialog := TSaveDialog.Create(self);
-  saveExportDialog.InitialDir := GetCurrentDir;
-  saveExportDialog.Filter := 'Text file (*.txt) | *.txt';
-  saveExportDialog.DefaultExt := 'txt';
-  saveExportDialog.FilterIndex := 1;
+  with saveExportDialog do
+  begin
+    Filter := 'Text file (*.txt) | *.txt';
+    DefaultExt := 'txt';
+    FilterIndex := 1;
 
-  if saveExportDialog.Execute then
-    txtFileName := saveExportDialog.Files[0]
-  else
-    Exit;
+    if Execute then
+      txtFileName := FileName
+    else
+      Exit;
+
+    FileName := '';
+  end;
 
   fileData := TStringList.Create;
 
@@ -598,16 +612,19 @@ var
   fileData: TStringList;
   rowCount, row: Integer;
 begin
-  saveExportDialog := TSaveDialog.Create(self);
-  saveExportDialog.InitialDir := GetCurrentDir;
-  saveExportDialog.Filter := 'Comma-Separated Values File (*.csv) | *.csv';
-  saveExportDialog.DefaultExt := 'csv';
-  saveExportDialog.FilterIndex := 1;
+  with saveExportDialog do
+  begin
+    Filter := 'Comma-Separated Values File (*.csv) | *.csv';
+    DefaultExt := 'csv';
+    FilterIndex := 1;
 
-  if saveExportDialog.Execute then
-    csvFileName := saveExportDialog.Files[0]
-  else
-    Exit;
+    if Execute then
+      csvFileName := FileName
+    else
+      Exit;
+
+    FileName := '';
+  end;
 
   fileData := TStringList.Create;
   rowCount := grid.RowCount;
@@ -628,16 +645,19 @@ var
   arrData: Variant;
   rowCount, colCount, row, col: Integer;
 begin
-  saveExportDialog := TSaveDialog.Create(self);
-  saveExportDialog.InitialDir := GetCurrentDir;
-  saveExportDialog.Filter := 'Excel Workbooks (*.xlsx) | *.xlsx';
-  saveExportDialog.DefaultExt := 'xlsx';
-  saveExportDialog.FilterIndex := 1;
+  with saveExportDialog do
+  begin
+    Filter := 'Excel Workbooks (*.xlsx) | *.xlsx';
+    DefaultExt := 'xlsx';
+    FilterIndex := 1;
 
-  if saveExportDialog.Execute then
-    excelFileName := saveExportDialog.Files[0]
-  else
-    Exit;
+    if Execute then
+      excelFileName := FileName
+    else
+      Exit;
+
+    FileName := '';
+  end;
 
   rowCount := grid.RowCount;
   colCount := grid.ColCount;
@@ -673,7 +693,7 @@ end;
 
 procedure TfMain.menuItemAboutClick(Sender: TObject);
 begin
-  MessageDlg('Playlist Manager v1.0' + #13#10 + 'by Jordan Knapp',
+  MessageDlg('Playlist Manager v1.0.1' + #13#10 + 'by Jordan Knapp',
     mtInformation, [mbOk], 0, mbOk);
 end;
 

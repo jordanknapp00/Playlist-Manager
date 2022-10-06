@@ -185,7 +185,7 @@ object fMain: TfMain
   object openDialog: TOpenDialog
     DefaultExt = 'json'
     Filter = 'JSON files (*.json)|*.json'
-    Options = [ofOverwritePrompt, ofHideReadOnly, ofFileMustExist, ofEnableSizing]
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
     Title = 'Open'
     Left = 584
     Top = 296

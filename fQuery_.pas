@@ -391,6 +391,8 @@ begin
   begin
     if Execute then
       toSave.SaveToFile(FileName);
+
+    FileName := '';
   end;
 
   toSave.Free;
@@ -407,19 +409,16 @@ var
   loadList: TStringList;
   loadText: String;
 begin
-  with fMain.OpenDialog do
-  begin
-    if Execute then
-    begin
-      fileName := Files[0];
+  if fMain.OpenDialog.Execute then
+    fileName := fMain.OpenDialog.FileName
+  else
+    Exit;
 
-      loadList := TStringList.Create;
-      loadList.LoadFromFile(fileName);
-      loadText := loadList.Text;
-    end
-    else
-      Exit;
-  end;
+  fMain.OpenDialog.FileName := '';
+
+  loadList := TStringList.Create;
+  loadList.LoadFromFile(fileName);
+  loadText := loadList.Text;
 
   //clear out the ui
   edBands.Clear;

@@ -52,3 +52,4 @@ v1.0 sees the program in a completely functional state. However, there are a few
 - Ability to export only the currently queried set
 - Copy text from the table (and export only the selected set)
 - Allow specifying order of bands, albums, or songs in the export (as right now, the order is fairly arbitrary due to unordered nature of dictionaries)
+- Eliminate memory leaks
