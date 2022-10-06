@@ -174,4 +174,26 @@ object fMain: TfMain
       end
     end
   end
+  object saveDialog: TSaveDialog
+    DefaultExt = 'json'
+    Filter = 'JSON files (*.json)|*.json'
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofEnableSizing]
+    Title = 'Save As'
+    Left = 552
+    Top = 216
+  end
+  object openDialog: TOpenDialog
+    DefaultExt = 'json'
+    Filter = 'JSON files (*.json)|*.json'
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofFileMustExist, ofEnableSizing]
+    Title = 'Open'
+    Left = 584
+    Top = 296
+  end
+  object saveExportDialog: TSaveDialog
+    Options = [ofOverwritePrompt, ofHideReadOnly, ofEnableSizing]
+    Title = 'Save As'
+    Left = 504
+    Top = 312
+  end
 end

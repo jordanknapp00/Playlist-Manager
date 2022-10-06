@@ -298,7 +298,6 @@ var
   at: String;
 
   toSave: TStringList;
-  saveDialog: TSaveDialog;
 begin
   writer := TJSONObjectWriter.Create;
 
@@ -388,19 +387,12 @@ begin
   toSave.Add(writer.JSON.toString);
 
   //have user select a file to save
-  saveDialog := TSaveDialog.Create(self);
+  with fMain.saveDialog do
+  begin
+    if Execute then
+      toSave.SaveToFile(FileName);
+  end;
 
-  saveDialog.Title := 'Select a location to save to';
-  saveDialog.InitialDir := GetCurrentDir;
-  saveDialog.Filter := 'JSON files (*.json)|*.json';
-  saveDialog.DefaultExt := 'json';
-  saveDialog.FilterIndex := 1;
-
-  if saveDialog.Execute then
-    toSave.SaveToFile(saveDialog.FileName);
-
-  // Free up the dialog
-  saveDialog.Free;
   toSave.Free;
   writer.Free;
 end;
@@ -411,30 +403,22 @@ var
   currList: TJSONArray;
   at: TJSONValue;
 
-  openDialog: TOpenDialog;
   fileName: String;
   loadList: TStringList;
   loadText: String;
 begin
-  openDialog := TOpenDialog.Create(self);
-
-  openDialog.InitialDir := GetCurrentDir;
-  openDialog.Filter := 'JSON Files (*.json)|*.json';
-  openDialog.DefaultExt := 'json';
-  openDialog.FilterIndex := 1;
-
-  if openDialog.Execute then
+  with fMain.OpenDialog do
   begin
-    fileName := openDialog.Files[0];
+    if Execute then
+    begin
+      fileName := Files[0];
 
-    loadList := TStringList.Create;
-    loadList.LoadFromFile(fileName);
-    loadText := loadList.Text;
-  end
-  else
-  begin
-    openDialog.Free;
-    Exit;
+      loadList := TStringList.Create;
+      loadList.LoadFromFile(fileName);
+      loadText := loadList.Text;
+    end
+    else
+      Exit;
   end;
 
   //clear out the ui

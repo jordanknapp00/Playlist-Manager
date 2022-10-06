@@ -36,6 +36,9 @@ type
     menuItemStats: TMenuItem;
     grid: TStringGrid;
     btnClear: TButton;
+    saveDialog: TSaveDialog;
+    openDialog: TOpenDialog;
+    saveExportDialog: TSaveDialog;
     procedure btnAddBandClick(Sender: TObject);
     procedure btnAddAlbumClick(Sender: TObject);
     procedure btnAddSongsClick(Sender: TObject);
@@ -442,7 +445,6 @@ end;
 
 procedure TfMain.menuItemLoadClick(Sender: TObject);
 var
-  dialog: TOpenDialog;
   loadList: TStringList;
   loadText: String;
 
@@ -460,15 +462,9 @@ begin
       needSave := false;
   end;
 
-  dialog := TOpenDialog.Create(self);
-  dialog.InitialDir := GetCurrentDir;
-  dialog.Filter := 'JSON Files (*.json)|*.json';
-  dialog.DefaultExt := 'json';
-  dialog.FilterIndex := 1;
-
-  if dialog.Execute then
+  if openDialog.Execute then
   begin
-    fileName := dialog.Files[0];
+    fileName := openDialog.Files[0];
 
     loadList := TStringList.Create;
     loadList.LoadFromFile(fileName);
@@ -479,35 +475,23 @@ begin
   end;
 
   Caption := ExtractFileName(fileName) + ' - Playlist Manager';
-
-  dialog.Free;
 end;
 
 procedure TfMain.menuItemSaveClick(Sender: TObject);
 begin
-  if fileName = '' then
+  if (fileName = 'Untitled') or (fileName = '') then
     menuItemSaveAsClick(nil)
   else
     HandleSave;
 end;
 
 procedure TfMain.menuItemSaveAsClick(Sender: TObject);
-var
-  dialog: TSaveDialog;
 begin
-  dialog := TSaveDialog.Create(self);
-  dialog.InitialDir := GetCurrentDir;
-  dialog.Filter := 'JSON Files (*.json)|*.json';
-  dialog.DefaultExt := 'json';
-  dialog.FilterIndex := 1;
-
-  if dialog.Execute then
+  if saveDialog.Execute then
   begin
-    fileName := dialog.Files[0];
+    fileName := saveDialog.Files[0];
     HandleSave;
   end;
-
-  dialog.Free;
 end;
 
 procedure TfMain.menuItemExitClick(Sender: TObject);
@@ -559,7 +543,6 @@ end;
 
 procedure TfMain.menuItemExportTXTClick(Sender: TObject);
 var
-  dialog: TSaveDialog;
   txtFileName: String;
 
   bandAt: TBand;
@@ -569,19 +552,16 @@ var
   bandName, albumName, songName: String;
   fileData: TStringList;
 begin
-  dialog := TSaveDialog.Create(self);
-  dialog.InitialDir := GetCurrentDir;
-  dialog.Filter := 'Text file (*.txt) | *.txt';
-  dialog.DefaultExt := 'txt';
-  dialog.FilterIndex := 1;
+  saveExportDialog := TSaveDialog.Create(self);
+  saveExportDialog.InitialDir := GetCurrentDir;
+  saveExportDialog.Filter := 'Text file (*.txt) | *.txt';
+  saveExportDialog.DefaultExt := 'txt';
+  saveExportDialog.FilterIndex := 1;
 
-  if dialog.Execute then
-    txtFileName := dialog.Files[0]
+  if saveExportDialog.Execute then
+    txtFileName := saveExportDialog.Files[0]
   else
-  begin
-    dialog.Free;
     Exit;
-  end;
 
   fileData := TStringList.Create;
 
@@ -609,30 +589,25 @@ begin
   fileData.SaveToFile(txtFileName);
 
   fileData.Free;
-  dialog.Free;
 end;
 
 procedure TfMain.menuItemExportCSVClick(Sender: TObject);
 var
-  dialog: TSaveDialog;
   csvFileName: String;
 
   fileData: TStringList;
   rowCount, row: Integer;
 begin
-  dialog := TSaveDialog.Create(self);
-  dialog.InitialDir := GetCurrentDir;
-  dialog.Filter := 'Comma-Separated Values File (*.csv) | *.csv';
-  dialog.DefaultExt := 'csv';
-  dialog.FilterIndex := 1;
+  saveExportDialog := TSaveDialog.Create(self);
+  saveExportDialog.InitialDir := GetCurrentDir;
+  saveExportDialog.Filter := 'Comma-Separated Values File (*.csv) | *.csv';
+  saveExportDialog.DefaultExt := 'csv';
+  saveExportDialog.FilterIndex := 1;
 
-  if dialog.Execute then
-    csvFileName := dialog.Files[0]
+  if saveExportDialog.Execute then
+    csvFileName := saveExportDialog.Files[0]
   else
-  begin
-    dialog.Free;
     Exit;
-  end;
 
   fileData := TStringList.Create;
   rowCount := grid.RowCount;
@@ -642,32 +617,27 @@ begin
 
   fileData.SaveToFile(csvFileName);
 
-  dialog.Free;
   fileData.Free;
 end;
 
 procedure TfMain.menuItemExportXLSXClick(Sender: TObject);
 var
-  dialog: TSaveDialog;
   excelFileName: String;
 
   Excel, workBook, range: OLEVariant;
   arrData: Variant;
   rowCount, colCount, row, col: Integer;
 begin
-  dialog := TSaveDialog.Create(self);
-  dialog.InitialDir := GetCurrentDir;
-  dialog.Filter := 'Excel Workbooks (*.xlsx) | *.xlsx';
-  dialog.DefaultExt := 'xlsx';
-  dialog.FilterIndex := 1;
+  saveExportDialog := TSaveDialog.Create(self);
+  saveExportDialog.InitialDir := GetCurrentDir;
+  saveExportDialog.Filter := 'Excel Workbooks (*.xlsx) | *.xlsx';
+  saveExportDialog.DefaultExt := 'xlsx';
+  saveExportDialog.FilterIndex := 1;
 
-  if dialog.Execute then
-    excelFileName := dialog.Files[0]
+  if saveExportDialog.Execute then
+    excelFileName := saveExportDialog.Files[0]
   else
-  begin
-    dialog.Free;
     Exit;
-  end;
 
   rowCount := grid.RowCount;
   colCount := grid.ColCount;
@@ -690,8 +660,6 @@ begin
 
   Excel.Workbooks[1].SaveAs(excelFileName);
   Excel.Application.Quit;
-
-  dialog.Free;
 end;
 
 //=====  HELP MENU  =====
