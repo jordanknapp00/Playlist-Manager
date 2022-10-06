@@ -62,6 +62,7 @@ object fAddAlbum: TfAddAlbum
       'textBoxAlbums')
     ScrollBars = ssVertical
     TabOrder = 1
+    WordWrap = False
   end
   object btnAddAlbum: TButton
     Left = 8
@@ -83,5 +84,6 @@ object fAddAlbum: TfAddAlbum
       'textBoxYears')
     ScrollBars = ssVertical
     TabOrder = 3
+    WordWrap = False
   end
 end

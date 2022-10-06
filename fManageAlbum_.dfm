@@ -92,6 +92,7 @@ object fManageAlbum: TfManageAlbum
     Lines.Strings = (
       'Memo1')
     TabOrder = 3
+    WordWrap = False
     OnChange = DetermineNeedSave
   end
   object btnSave: TButton
@@ -103,7 +104,6 @@ object fManageAlbum: TfManageAlbum
     Caption = 'Save'
     TabOrder = 4
     OnClick = btnSaveClick
-    ExplicitTop = 315
   end
   object btnDelete: TButton
     Left = 23
@@ -114,7 +114,6 @@ object fManageAlbum: TfManageAlbum
     Caption = 'Delete Selected Album'
     TabOrder = 5
     OnClick = btnDeleteClick
-    ExplicitTop = 346
   end
   object edYear: TEdit
     Left = 55
