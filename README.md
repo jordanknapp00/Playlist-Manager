@@ -60,3 +60,10 @@ v1.0.1 sees the program in a completely functional state. However, there are a f
 - Copy text from the table (and export only the selected set)
 - Allow specifying order of bands, albums, or songs in the export (as right now, the order is fairly arbitrary due to unordered nature of dictionaries)
 - Eliminate memory leaks
+
+### Known Bugs
+
+The following bugs are known and will be addressed in later versions:
+
+- The "Clear queried results" button does not move correctly with the rest of the UI when scaling the window
+- Querying doesn't work unless every band has at least one album, and every album has at least one song (fix by moving to ```TClientDataSet```, probably)
