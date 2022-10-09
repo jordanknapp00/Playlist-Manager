@@ -2,10 +2,10 @@ object fManageBand: TfManageBand
   Left = 0
   Top = 0
   Caption = 'Manage Bands'
-  ClientHeight = 344
+  ClientHeight = 408
   ClientWidth = 247
   Color = clBtnFace
-  Constraints.MinHeight = 383
+  Constraints.MinHeight = 447
   Constraints.MinWidth = 263
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object fManageBand: TfManageBand
   OnCreate = FormCreate
   DesignSize = (
     247
-    344)
+    408)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -37,6 +37,14 @@ object fManageBand: TfManageBand
     Height = 13
     Anchors = [akTop]
     Caption = 'Enter Tags (put each one on its own line):'
+  end
+  object Label3: TLabel
+    Left = 23
+    Top = 272
+    Width = 125
+    Height = 13
+    Anchors = [akLeft, akRight, akBottom]
+    Caption = 'Select Color for this Band:'
   end
   object luBands: TComboBox
     Left = 23
@@ -71,17 +79,18 @@ object fManageBand: TfManageBand
   end
   object btnSave: TButton
     Left = 23
-    Top = 280
+    Top = 336
     Width = 201
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Save'
     TabOrder = 3
     OnClick = btnSaveClick
+    ExplicitTop = 335
   end
   object btnDelete: TButton
     Left = 23
-    Top = 311
+    Top = 367
     Width = 201
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
@@ -108,5 +117,15 @@ object fManageBand: TfManageBand
     Caption = 'Apply Tags to All This Band'#39's Songs'
     TabOrder = 6
     OnClick = btnApplySongsClick
+  end
+  object luColor: TColorBox
+    Left = 23
+    Top = 291
+    Width = 201
+    Height = 22
+    DefaultColorColor = clWhite
+    Anchors = [akLeft, akRight, akBottom]
+    TabOrder = 7
+    OnChange = DetermineNeedSave
   end
 end
