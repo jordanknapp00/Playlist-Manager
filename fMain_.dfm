@@ -113,9 +113,10 @@ object fMain: TfMain
   end
   object btnClear: TButton
     Left = 279
-    Top = 428
+    Top = 430
     Width = 54
     Height = 87
+    Anchors = [akRight, akBottom]
     Caption = 'Clear Queried Results / Refresh Table'
     TabOrder = 8
     WordWrap = True
