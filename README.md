@@ -1,4 +1,4 @@
-# Playlist Manager (v1.0.1)
+# Playlist Manager (v1.0.2)
 
 Playlist Manager is a program designed to organize all the songs on your playlist. Playlist Manager makes creating a playlist easier and quicker than doing so through a streaming site's interface. Bands, albums, and songs can be added, categorized with metadata including tags, and queried to make managing your playlist easy no matter how many songs it has. Data can be exported in a variety of formats, including ```.xlsx``` and ```.csv``` for creating spreadsheets and ```.txt``` files that can be imported into sites such as [TuneMyMusic](www.tunemymusic.com) or [Soundiiz](www.soundiiz.com). These sites will then allow you to import your playlist into a wide variety of streaming sites.
 
@@ -6,10 +6,7 @@ Playlist Manager makes it easier than ever to create a playlist with thousands o
 
 ### New in v1.0.1:
 
-Bug fixes and QOL improvements:
-
-- Removed word wrap from all text boxes, so band/album/song/tag names can be as long as desired.
-- Fixed issues with save and open dialogs
+- Fixed bug in which "Clear Queried Results" button didn't resize properly with the rest of the UI.
 
 ## How to Use
 
@@ -65,5 +62,4 @@ v1.0.1 sees the program in a completely functional state. However, there are a f
 
 The following bugs are known and will be addressed in later versions:
 
-- The "Clear queried results" button does not move correctly with the rest of the UI when scaling the window
 - Querying doesn't work unless every band has at least one album, and every album has at least one song (fix by moving to ```TClientDataSet```, probably)
