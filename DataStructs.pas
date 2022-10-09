@@ -3,7 +3,8 @@ unit DataStructs;
 interface
 
 uses
-  System.Generics.Collections, System.Generics.Defaults, System.Classes;
+  System.Generics.Collections, System.Generics.Defaults, System.Classes,
+  Vcl.Graphics;
 
 type
   {
@@ -26,6 +27,7 @@ type
   public
     isFavorite: Boolean;
     tags: TStringList;
+    color: TColor;
 
     property name: String read songName;
     property trackNo: Integer read track;
@@ -58,6 +60,7 @@ type
   public
     isFavorite: Boolean;
     tags: TStringList;
+    color: TColor;
 
     songs: TDictionary<String, TSong>;
 
@@ -87,6 +90,7 @@ type
   public
     isFavorite: Boolean;
     tags: TStringList;
+    color: TColor;
 
     albums: TDictionary<String, TAlbum>;
 
@@ -104,7 +108,7 @@ implementation
 //                                TSong Methods
 //==============================================================================
 
-//constructor without id
+//constructor without fav
 constructor TSong.Create(const songName, bandName, albumName: String; const trackNo: Integer);
 begin
   self.songName := songName;
@@ -115,9 +119,10 @@ begin
 
   isFavorite := false;
   tags := TStringList.Create;
+  color := clWhite;
 end;
 
-//constructor with id and fav
+//constructor with fav
 constructor TSong.Create(const songName, bandName, albumName: string; const trackNo: Integer; const fav: Boolean);
 begin
   self.songName := songName;
@@ -128,6 +133,7 @@ begin
 
   isFavorite := fav;
   tags := TStringList.Create;
+  color := clWhite;
 end;
 
 procedure TSong.AddTags(toAdd: TStrings);
@@ -154,6 +160,7 @@ begin
 
   isFavorite := false;
   tags := TStringList.Create;
+  color := clWhite;
 
   songs := TDictionary<String, TSong>.Create;
 end;
@@ -168,6 +175,7 @@ begin
 
   isFavorite := fav;
   tags := TStringList.Create;
+  color := clWhite;
 
   songs := TDictionary<String, TSong>.Create;
 end;
@@ -193,6 +201,7 @@ begin
 
   isFavorite := false;
   tags := TStringList.Create;
+  color := clWhite;
 
   albums := TDictionary<String, TAlbum>.Create;
 end;
@@ -203,6 +212,7 @@ begin
 
   isFavorite := fav;
   tags := TStringList.Create;
+  color := clWhite;
 
   albums := TDictionary<String, TAlbum>.Create;
 end;

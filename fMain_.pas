@@ -145,15 +145,61 @@ end;
 
 procedure TfMain.gridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
   State: TGridDrawState);
+var
+  bandAt, albumAt, songAt: String;
 begin
-//  if ARow = 0 then
-//  begin
-//    grid.Font.Style := grid.Font.Style + [fsBold];
-//  end
-//  else
-//  begin
-//    grid.Font.Style := grid.Font.Style - [fsBold];
-//  end;
+  if (ARow = 1) and (ACol = 0) then
+  begin
+    with (Sender as TStringGrid) do
+    begin
+      //paint the background Green
+      Canvas.Brush.Color := clGreen;
+      Canvas.FillRect(Rect);
+      Canvas.TextOut(Rect.Left+6,Rect.Top+6,Cells[ACol, ARow]);
+    end;
+  end;
+
+  //always ignore the first row entirely
+  if ARow = 0 then
+    Exit;
+
+  with (Sender as TStringGrid) do
+  begin
+    if ACol = 0 then
+    begin
+      bandAt := Cells[ACol, ARow];
+
+      if dm.bands.COntainsKey(bandAt) then
+        Canvas.Brush.Color := dm.bands[bandAt].Color;
+
+      Canvas.FillRect(Rect);
+      Canvas.TextOut(Rect.Left + 6, Rect.Top + 6, bandAt);
+    end
+    else if ACol = 2 then
+    begin
+      bandAt := Cells[0, ARow];
+      albumAt := Cells[ACol, ARow];
+
+      if dm.bands.ContainsKey(bandAt) and dm.bands[bandAt].albums.ContainsKey(albumAt) then
+        Canvas.Brush.Color := dm.bands[bandAt].albums[albumAt].color;
+
+      Canvas.FillRect(Rect);
+      Canvas.TextOut(Rect.Left + 6, Rect.Top + 6, albumAt);
+    end
+    else if ACol = 5 then
+    begin
+      bandAt := Cells[0, ARow];
+      albumAt := Cells[2, ARow];
+      songAt := Cells[ACol, ARow];
+
+      if dm.bands.ContainsKey(bandAt) and dm.bands[bandAt].albums.ContainsKey(albumAt) and
+          dm.bands[bandAt].albums[albumAt].songs.ContainsKey(songAt) then
+        Canvas.Brush.Color := dm.bands[bandAt].albums[albumAt].songs[songAt].color;
+
+      Canvas.FillRect(Rect);
+      Canvas.TextOut(Rect.Left + 6, Rect.Top + 6, songAt);
+    end;
+  end;
 end;
 
 procedure TfMain.RefreshGrid(bands: TDictionary<String, TBand>);
