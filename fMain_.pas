@@ -146,25 +146,15 @@ end;
 procedure TfMain.gridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
   State: TGridDrawState);
 var
-  bandAt, albumAt, songAt: String;
+  bandAt, albumAt, songAt, at: String;
 begin
-  if (ARow = 1) and (ACol = 0) then
-  begin
-    with (Sender as TStringGrid) do
-    begin
-      //paint the background Green
-      Canvas.Brush.Color := clGreen;
-      Canvas.FillRect(Rect);
-      Canvas.TextOut(Rect.Left+6,Rect.Top+6,Cells[ACol, ARow]);
-    end;
-  end;
-
-  //always ignore the first row entirely
+  //ignore first row entirely
   if ARow = 0 then
     Exit;
 
   with (Sender as TStringGrid) do
   begin
+    //col 0 is bands
     if ACol = 0 then
     begin
       bandAt := Cells[ACol, ARow];
@@ -172,9 +162,9 @@ begin
       if dm.bands.COntainsKey(bandAt) then
         Canvas.Brush.Color := dm.bands[bandAt].Color;
 
-      Canvas.FillRect(Rect);
-      Canvas.TextOut(Rect.Left + 6, Rect.Top + 6, bandAt);
+      at := bandAt;
     end
+    //col 2 is albums
     else if ACol = 2 then
     begin
       bandAt := Cells[0, ARow];
@@ -183,9 +173,9 @@ begin
       if dm.bands.ContainsKey(bandAt) and dm.bands[bandAt].albums.ContainsKey(albumAt) then
         Canvas.Brush.Color := dm.bands[bandAt].albums[albumAt].color;
 
-      Canvas.FillRect(Rect);
-      Canvas.TextOut(Rect.Left + 6, Rect.Top + 6, albumAt);
+      at := albumAt;
     end
+    //col 5 is songs
     else if ACol = 5 then
     begin
       bandAt := Cells[0, ARow];
@@ -196,9 +186,21 @@ begin
           dm.bands[bandAt].albums[albumAt].songs.ContainsKey(songAt) then
         Canvas.Brush.Color := dm.bands[bandAt].albums[albumAt].songs[songAt].color;
 
-      Canvas.FillRect(Rect);
-      Canvas.TextOut(Rect.Left + 6, Rect.Top + 6, songAt);
+      at := songAt;
     end;
+
+    //set invert text color depending on background color
+    case Canvas.Brush.Color of
+      clBlack, clNavy, clBlue, clBackground, clBtnText, clCaptionText, clGray, clGrayText,
+      clHighlightText, clHotLight, clInactiveCaptionText, clInfoText, clMenuText,
+      cl3DDkShadow, clWindowFrame, clWindowText:
+        Canvas.Font.Color := clWhite;
+      else
+        Canvas.Font.Color := clBlack;
+    end;
+
+    Canvas.FillRect(Rect);
+    Canvas.TextOut(Rect.Left + 6, Rect.Top + 6, at);
   end;
 end;
 
