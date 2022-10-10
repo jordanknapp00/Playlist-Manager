@@ -62,4 +62,5 @@ v1.0.1 sees the program in a completely functional state. However, there are a f
 
 The following bugs are known and will be addressed in later versions:
 
+- Loading a file when one is already loaded doesn't work
 - Querying doesn't work unless every band has at least one album, and every album has at least one song (fix by moving to ```TClientDataSet```, probably)

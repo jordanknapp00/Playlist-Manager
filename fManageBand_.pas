@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.UITypes,
 
-  fMain_, DataStructs, DataModule;
+  fMain_, DataStructs, DataModule, Vcl.ExtCtrls;
 
 type
   TfManageBand = class(TForm)
@@ -19,6 +19,8 @@ type
     btnDelete: TButton;
     btnApplyAlbums: TButton;
     btnApplySongs: TButton;
+    luColor: TColorBox;
+    Label3: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure luBandsChange(Sender: TObject);
     procedure btnSaveClick(Sender: TObject);
@@ -110,6 +112,8 @@ begin
   textBox.Clear;
   textBox.Lines := dm.bands[oldSelection].tags;
 
+  luColor.Selected := dm.bands[oldSelection].color;
+
   needSave := false;
 end;
 
@@ -122,6 +126,7 @@ begin
   end;
   
   dm.bands[oldSelection].isFavorite := cbFavorite.Checked;
+  dm.bands[oldSelection].color := luColor.Selected;
   dm.bands[oldSelection].tags.Clear;
   dm.bands[oldSelection].tags.Assign(textBox.Lines);
 
@@ -235,6 +240,9 @@ begin
     Inc(total);
 
   if textBox.Lines <> band.tags then
+    Inc(total);
+
+  if luColor.Selected <> band.color then
     Inc(total);
 
   //if any value has changed, need save. otherwise, don't need save
