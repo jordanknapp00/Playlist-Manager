@@ -2,10 +2,10 @@ object fManageAlbum: TfManageAlbum
   Left = 0
   Top = 0
   Caption = 'Manage Albums'
-  ClientHeight = 401
+  ClientHeight = 457
   ClientWidth = 257
   Color = clBtnFace
-  Constraints.MinHeight = 440
+  Constraints.MinHeight = 496
   Constraints.MinWidth = 273
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object fManageAlbum: TfManageAlbum
   OnCreate = FormCreate
   DesignSize = (
     257
-    401)
+    457)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -54,6 +54,14 @@ object fManageAlbum: TfManageAlbum
     Height = 13
     Anchors = [akLeft, akTop, akRight]
     Caption = 'Year:'
+  end
+  object Label5: TLabel
+    Left = 23
+    Top = 331
+    Width = 130
+    Height = 13
+    Anchors = [akLeft, akRight, akBottom]
+    Caption = 'Select Color for this Album:'
   end
   object luBands: TComboBox
     Left = 23
@@ -97,23 +105,25 @@ object fManageAlbum: TfManageAlbum
   end
   object btnSave: TButton
     Left = 23
-    Top = 335
+    Top = 391
     Width = 210
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Save'
     TabOrder = 4
     OnClick = btnSaveClick
+    ExplicitTop = 335
   end
   object btnDelete: TButton
     Left = 23
-    Top = 366
+    Top = 422
     Width = 210
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Delete Selected Album'
     TabOrder = 5
     OnClick = btnDeleteClick
+    ExplicitTop = 366
   end
   object edYear: TEdit
     Left = 55
@@ -129,7 +139,7 @@ object fManageAlbum: TfManageAlbum
     Top = 263
     Width = 210
     Height = 25
-    Anchors = [akLeft, akTop, akBottom]
+    Anchors = [akLeft, akRight, akBottom]
     Caption = 'Apply Tags to This Album'#39's Band'
     TabOrder = 7
     OnClick = btnApplyBandClick
@@ -139,9 +149,19 @@ object fManageAlbum: TfManageAlbum
     Top = 294
     Width = 210
     Height = 25
-    Anchors = [akLeft, akTop, akBottom]
+    Anchors = [akLeft, akRight, akBottom]
     Caption = 'Apply Tags to All This Album'#39's Songs'
     TabOrder = 8
     OnClick = btnApplySongClick
+  end
+  object luColor: TColorBox
+    Left = 23
+    Top = 350
+    Width = 201
+    Height = 22
+    DefaultColorColor = clWhite
+    Anchors = [akLeft, akRight, akBottom]
+    TabOrder = 9
+    OnChange = DetermineNeedSave
   end
 end

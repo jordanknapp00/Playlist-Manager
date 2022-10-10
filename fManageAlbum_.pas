@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.UITypes,
 
-  fMain_, DataStructs, DataModule;
+  fMain_, DataStructs, DataModule, Vcl.ExtCtrls;
 
 type
   TfManageAlbum = class(TForm)
@@ -23,6 +23,8 @@ type
     edYear: TEdit;
     btnApplyBand: TButton;
     btnApplySong: TButton;
+    Label5: TLabel;
+    luColor: TColorBox;
     procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -154,6 +156,8 @@ begin
 
   cbFavorite.Checked := dm.bands[oldBandSelection].albums[oldAlbumSelection].isFavorite;
 
+  luColor.Selected := dm.bands[oldBandSelection].albums[oldAlbumSelection].color;
+
   textBox.Clear;
   textBox.Lines := dm.bands[oldBandSelection].albums[oldAlbumSelection].tags;
 
@@ -218,6 +222,7 @@ begin
   end;
 
   dm.bands[oldBandSelection].albums[oldAlbumSelection].isFavorite := cbFavorite.Checked;
+  dm.bands[oldBandSelection].albums[oldAlbumSelection].color := luColor.Selected;
   dm.bands[oldBandSelection].albums[oldAlbumSelection].tags.Clear;
   dm.bands[oldBandSelection].albums[oldAlbumSelection].tags.Assign(textBox.Lines);
 
@@ -245,6 +250,9 @@ begin
     Inc(total);
 
   if textBox.Lines <> album.tags then
+    Inc(total);
+
+  if luColor.Selected <> album.color then
     Inc(total);
 
   //if any value has changed, need save. otherwise, don't need save
