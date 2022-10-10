@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.UITypes,
 
-  fMain_, DataStructs, DataModule;
+  fMain_, DataStructs, DataModule, Vcl.ExtCtrls;
 
 type
   TfManageSong = class(TForm)
@@ -25,6 +25,8 @@ type
     edTrackNo: TEdit;
     btnApplyAlbum: TButton;
     btnApplyBand: TButton;
+    Label6: TLabel;
+    luColor: TColorBox;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -203,6 +205,8 @@ begin
 
   cbFavorite.Checked := dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].isFavorite;
 
+  luColor.Selected := dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].color;
+
   textBox.Clear;
   textBox.Lines := dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].tags;
 
@@ -230,6 +234,9 @@ begin
     Inc(total);
 
   if (edTrackNo.Text <> '') and (StrToInt(edTrackNo.Text) <> song.trackNo) then
+    Inc(total);
+
+  if luColor.Selected <> song.color then
     Inc(total);
 
   //if any value has changed, need save. otherwise, don't need save
@@ -317,6 +324,7 @@ begin
   end;
 
   dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].isFavorite := cbFavorite.Checked;
+  dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].color := luColor.Selected;
   dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].tags.Clear;
   dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].tags.Assign(textBox.Lines);
   //dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].trackNo := StrToInt(edTrackNo.Text);
