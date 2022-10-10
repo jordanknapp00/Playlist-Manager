@@ -1,0 +1,216 @@
+{
+    "bands": [
+        {
+            "name": "Metallica",
+            "isFavorite": true,
+            "color": 0,
+            "tags": [
+                "Metal"
+            ],
+            "albums": [
+                {
+                    "name": "...And Justice for All",
+                    "year": 1988,
+                    "isFavorite": true,
+                    "color": 16777215,
+                    "tags": [
+                        "Metal",
+                        "Thrash Metal"
+                    ],
+                    "songs": [
+                        {
+                            "name": "Harvester of Sorrow",
+                            "trackNo": 6,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Metal"
+                            ]
+                        },
+                        {
+                            "name": "To Live Is to Die",
+                            "trackNo": 8,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Metal"
+                            ]
+                        },
+                        {
+                            "name": "...And Justice for All",
+                            "trackNo": 2,
+                            "isFavorite": true,
+                            "color": 16777215,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Dyers Eve",
+                            "trackNo": 9,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Blackened",
+                            "trackNo": 1,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "One",
+                            "trackNo": 4,
+                            "isFavorite": true,
+                            "color": 16777215,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "The Shortest Straw",
+                            "trackNo": 5,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "The Frayed Ends of Sanity",
+                            "trackNo": 7,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Eye of the Beholder",
+                            "trackNo": 3,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Iron Maiden",
+            "isFavorite": true,
+            "color": 15793151,
+            "tags": [
+                "NWOBHM"
+            ],
+            "albums": [
+                {
+                    "name": "Seventh Son of a Seventh Son",
+                    "year": 1988,
+                    "isFavorite": true,
+                    "color": 15780518,
+                    "tags": [
+                        "NWOBHM",
+                        "Synthesizers"
+                    ],
+                    "songs": [
+                        {
+                            "name": "Seventh Son of a Seventh Son",
+                            "trackNo": 5,
+                            "isFavorite": true,
+                            "color": 16777215,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        },
+                        {
+                            "name": "Can I Play With Madness?",
+                            "trackNo": 3,
+                            "isFavorite": true,
+                            "color": 16777215,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        },
+                        {
+                            "name": "The Prophecy",
+                            "trackNo": 6,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        },
+                        {
+                            "name": "The Evil That Men Do",
+                            "trackNo": 4,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        },
+                        {
+                            "name": "Only the Good Die Young",
+                            "trackNo": 8,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        },
+                        {
+                            "name": "Moonchild",
+                            "trackNo": 1,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        },
+                        {
+                            "name": "The Clairvoyant",
+                            "trackNo": 7,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        },
+                        {
+                            "name": "Infinite Dreams",
+                            "trackNo": 2,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
