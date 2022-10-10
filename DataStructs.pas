@@ -37,7 +37,7 @@ type
     property album: String read albumName;
 
     constructor Create(const songName, bandName, albumName: String; const trackNo: Integer); overload;
-    constructor Create(const songName, bandName, albumName: String; const trackNo: Integer; const fav: Boolean); overload;
+    constructor Create(const songName, bandName, albumName: String; const trackNo: Integer; const fav: Boolean; const color: TColor); overload;
 
     procedure AddTags(toAdd: TStrings);
   end;
@@ -71,7 +71,7 @@ type
     property band: String read bandName;
 
     constructor Create(const albumName, bandName: String; const albumYear: Integer); overload;
-    constructor Create(const albumName, bandName: String; const albumYear: Integer; const fav: Boolean); overload;
+    constructor Create(const albumName, bandName: String; const albumYear: Integer; const fav: Boolean; const color: TColor); overload;
 
     procedure AddTags(toAdd: TStrings);
   end;
@@ -97,7 +97,7 @@ type
     property name: String read bandName;
 
     constructor Create(const bandName: String); overload;
-    constructor Create(const bandName: String; const fav: Boolean); overload;
+    constructor Create(const bandName: String; const fav: Boolean; const color: TColor); overload;
 
     procedure AddTags(toAdd: TStrings);
   end;
@@ -123,7 +123,7 @@ begin
 end;
 
 //constructor with fav
-constructor TSong.Create(const songName, bandName, albumName: string; const trackNo: Integer; const fav: Boolean);
+constructor TSong.Create(const songName, bandName, albumName: string; const trackNo: Integer; const fav: Boolean; const color: TColor);
 begin
   self.songName := songName;
   self.track := trackNo;
@@ -133,7 +133,7 @@ begin
 
   isFavorite := fav;
   tags := TStringList.Create;
-  color := clWhite;
+  self.color := color;
 end;
 
 procedure TSong.AddTags(toAdd: TStrings);
@@ -166,7 +166,7 @@ begin
 end;
 
 //constructor with id and fav
-constructor TAlbum.Create(const albumName, bandName: String; const albumYear: Integer; const fav: Boolean);
+constructor TAlbum.Create(const albumName, bandName: String; const albumYear: Integer; const fav: Boolean; const color: TColor);
 begin
   self.albumName := albumName;
   self.albumYear := albumYear;
@@ -175,7 +175,7 @@ begin
 
   isFavorite := fav;
   tags := TStringList.Create;
-  color := clWhite;
+  self.color := color;
 
   songs := TDictionary<String, TSong>.Create;
 end;
@@ -206,13 +206,13 @@ begin
   albums := TDictionary<String, TAlbum>.Create;
 end;
 
-constructor TBand.Create(const bandName: String; const fav: Boolean);
+constructor TBand.Create(const bandName: String; const fav: Boolean; const color: TColor);
 begin
   self.bandName := bandName;
 
   isFavorite := fav;
   tags := TStringList.Create;
-  color := clWhite;
+  self.color := color;
 
   albums := TDictionary<String, TAlbum>.Create;
 end;

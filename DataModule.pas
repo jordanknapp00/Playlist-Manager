@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Classes, System.Generics.Collections,
   System.Generics.Defaults, System.JSON, System.JSON.Writers,
 
-  Vcl.Dialogs,
+  Vcl.Dialogs, Vcl.Graphics,
 
   DataStructs, fMain_;
 
@@ -251,6 +251,8 @@ begin
     writer.WriteValue(bandAt.name);
     writer.WritePropertyName('isFavorite');
     writer.WriteValue(bandAt.isFavorite);
+    writer.WritePropertyName('color');
+    writer.WriteValue(bandAt.color);
 
     writer.WritePropertyName('tags');
     writer.WriteStartArray;
@@ -274,6 +276,8 @@ begin
       writer.WriteValue(albumAt.year);
       writer.WritePropertyName('isFavorite');
       writer.WriteValue(albumAt.isFavorite);
+      writer.WritePropertyName('color');
+      writer.WriteValue(albumAt.color);
 
       writer.WritePropertyName('tags');
       writer.WriteStartArray;
@@ -297,6 +301,8 @@ begin
         writer.WriteValue(songAt.trackNo);
         writer.WritePropertyName('isFavorite');
         writer.WriteValue(songAt.isFavorite);
+        writer.WritePropertyName('color');
+        writer.WriteValue(songAt.color);
 
         writer.WritePropertyName('tags');
         writer.WriteStartArray;
@@ -339,18 +345,21 @@ var
   bandName: String;
   bandFav: Boolean;
   bandID: Integer;
+  bandColor: TColor;
 
   //vals for current album
   albumName: String;
   albumYear: Integer;
   albumFav: Boolean;
   albumID: Integer;
+  albumColor: TColor;
 
   //vals for current song
   songName: String;
   songTrack: Integer;
   songFav: Boolean;
   songID: Integer;
+  songColor: TColor;
 begin
   newTags := TStringList.Create;
 
@@ -363,6 +372,7 @@ begin
     begin
       bandName := bandAt.GetValue<String>('name');
       bandFav := bandAt.GetValue<Boolean>('isFavorite');
+      bandColor := bandAt.GetValue<TColor>('color');
 
       //get the list of tags and iterate through it
       tagList := (bandAt as TJSONObject).Get('tags').JSONValue as TJSONArray;
@@ -372,7 +382,7 @@ begin
         newTags.Add(tagAt.GetValue<String>);
 
       //create a new band using the values retrieved from json
-      newBand := TBand.Create(bandName, bandFav);
+      newBand := TBand.Create(bandName, bandFav, bandColor);
       newBand.AddTags(newTags);
 
       //get the list of albums and iterate through it, creating objects for each
@@ -385,6 +395,7 @@ begin
         albumName := albumAt.GetValue<String>('name');
         albumYear := albumAt.GetValue<Integer>('year');
         albumFav := albumAt.GetValue<Boolean>('isFavorite');
+        albumColor := albumAt.GetValue<TColor>('color');
 
         tagList := (albumAt as TJSONObject).Get('tags').JSONValue as TJSONArray;
 
@@ -393,7 +404,7 @@ begin
           newTags.Add(tagAt.GetValue<String>);
 
         //create the object
-        newAlbum := TAlbum.Create(albumName, bandName, albumYear, albumFav);
+        newAlbum := TAlbum.Create(albumName, bandName, albumYear, albumFav, albumColor);
         newAlbum.AddTags(newTags);
 
         //then handle the inner list before adding object to the system
@@ -405,6 +416,7 @@ begin
           songName := songAt.GetValue<String>('name');
           songTrack := songAt.GetValue<Integer>('trackNo');
           songFav := songAt.GetValue<Boolean>('isFavorite');
+          songColor := songAt.GetValue<TColor>('color');
 
           tagList := (songAt as TJSONObject).Get('tags').JSONValue as TJSONArray;
 
@@ -413,7 +425,7 @@ begin
             newTags.Add(tagAt.GetValue<String>);
 
           //create object
-          newSong := TSong.Create(songName, bandName, albumName, songTrack, songFav);
+          newSong := TSong.Create(songName, bandName, albumName, songTrack, songFav, songColor);
           newSong.AddTags(newTags);
 
           //no further data beyond the song, so go ahead and add this song to
