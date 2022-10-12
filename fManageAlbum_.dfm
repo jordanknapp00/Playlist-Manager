@@ -112,7 +112,6 @@ object fManageAlbum: TfManageAlbum
     Caption = 'Save'
     TabOrder = 4
     OnClick = btnSaveClick
-    ExplicitTop = 335
   end
   object btnDelete: TButton
     Left = 23
@@ -123,7 +122,6 @@ object fManageAlbum: TfManageAlbum
     Caption = 'Delete Selected Album'
     TabOrder = 5
     OnClick = btnDeleteClick
-    ExplicitTop = 366
   end
   object edYear: TEdit
     Left = 55
@@ -131,8 +129,9 @@ object fManageAlbum: TfManageAlbum
     Width = 59
     Height = 21
     Anchors = [akLeft, akTop, akRight]
-    ReadOnly = True
+    NumbersOnly = True
     TabOrder = 6
+    OnChange = DetermineNeedSave
   end
   object btnApplyBand: TButton
     Left = 23

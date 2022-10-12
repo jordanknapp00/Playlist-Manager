@@ -22,15 +22,15 @@ type
   TSong = class
   private
     songName, bandName, albumName: String;
-    track: Integer;
 
   public
     isFavorite: Boolean;
     tags: TStringList;
     color: TColor;
+    track: Integer;
 
     property name: String read songName;
-    property trackNo: Integer read track;
+    property trackNo: Integer read track write track;
 
     //relational properties
     property band: String read bandName;
@@ -55,17 +55,17 @@ type
   TAlbum = class
   private
     albumName, bandName: String;
-    albumYear: Integer;
 
   public
     isFavorite: Boolean;
     tags: TStringList;
     color: TColor;
+    albumYear: Integer;
 
     songs: TDictionary<String, TSong>;
 
     property name: String read albumName;
-    property year: Integer read albumYear;
+    property year: Integer read albumYear write albumYear;
 
     //relational property
     property band: String read bandName;

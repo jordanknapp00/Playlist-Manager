@@ -233,7 +233,7 @@ begin
   if textBox.Lines <> song.tags then
     Inc(total);
 
-  if (edTrackNo.Text <> '') and (StrToInt(edTrackNo.Text) <> song.trackNo) then
+  if IntToStr(song.TrackNo) <> edTrackNo.Text then
     Inc(total);
 
   if luColor.Selected <> song.color then
@@ -304,6 +304,8 @@ begin
 end;
 
 procedure TfManageSong.btnSaveClick(Sender: TObject);
+var
+  song: TSong;
 begin
   if not dm.bands.ContainsKey(oldBandSelection) then
   begin
@@ -323,11 +325,13 @@ begin
     Exit;
   end;
 
-  dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].isFavorite := cbFavorite.Checked;
-  dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].color := luColor.Selected;
-  dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].tags.Clear;
-  dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].tags.Assign(textBox.Lines);
-  //dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].trackNo := StrToInt(edTrackNo.Text);
+  song := dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection];
+
+  song.isFavorite := cbFavorite.Checked;
+  song.color := luColor.Selected;
+  song.trackNo := StrToInt(edTrackNo.Text);
+  song.tags.Clear;
+  song.tags.Assign(textbox.lines);
 
   if needSave then
     fMain.manageNeedSave := true;

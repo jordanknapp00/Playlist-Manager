@@ -187,6 +187,15 @@ begin
         Canvas.Brush.Color := dm.bands[bandAt].albums[albumAt].songs[songAt].color;
 
       at := songAt;
+    end
+    //all other columns need to be explicitly set to black i guess
+    else
+    begin
+      Canvas.Font.Color := clBlack;
+      Canvas.FillRect(Rect);
+      Canvas.TextOut(Rect.Left + 6, Rect.Top + 6, Cells[ACol, ARow]);
+
+      Exit;
     end;
 
     //set invert text color depending on background color
