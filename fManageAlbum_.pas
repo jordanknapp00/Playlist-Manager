@@ -208,6 +208,8 @@ begin
 end;
 
 procedure TfManageAlbum.btnSaveClick(Sender: TObject);
+var
+  album: TAlbum;
 begin
   if not dm.bands.ContainsKey(oldBandSelection) then
   begin
@@ -221,10 +223,13 @@ begin
     Exit;
   end;
 
-  dm.bands[oldBandSelection].albums[oldAlbumSelection].isFavorite := cbFavorite.Checked;
-  dm.bands[oldBandSelection].albums[oldAlbumSelection].color := luColor.Selected;
-  dm.bands[oldBandSelection].albums[oldAlbumSelection].tags.Clear;
-  dm.bands[oldBandSelection].albums[oldAlbumSelection].tags.Assign(textBox.Lines);
+  album := dm.bands[oldBandSelection].albums[oldAlbumSelection];
+
+  album.isFavorite := cbFavorite.Checked;
+  album.color := luColor.Selected;
+  album.year := StrToInt(edYear.Text); //set to number only
+  album.tags.Clear;
+  album.tags.Assign(textBox.Lines);
 
   if needSave then
     fMain.manageNeedSave := true;
@@ -253,6 +258,9 @@ begin
     Inc(total);
 
   if luColor.Selected <> album.color then
+    Inc(total);
+
+  if IntToStr(album.year) <> edYear.Text then
     Inc(total);
 
   //if any value has changed, need save. otherwise, don't need save

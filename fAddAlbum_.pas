@@ -100,8 +100,7 @@ var
 begin
   if textBoxAlbums.Lines.Count < textBoxYears.Lines.Count then
   begin
-    MessageDlg('You''ve entered more years than albums.', mtError, [mbOk], 0, mbOk);
-
+    MessageDlg('You''ve entered more years than albums.', mtWarning, [mbOk], 0, mbOk);
     Exit;
   end;
 

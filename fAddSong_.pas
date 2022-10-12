@@ -146,7 +146,7 @@ var
 begin
   if textBoxSongs.Lines.Count < textBoxTrackNums.Lines.Count then
   begin
-    MessageDlg('You''ve entered more track numbers than songs.', mtError, [mbOk],
+    MessageDlg('You''ve entered more track numbers than songs.', mtWarning, [mbOk],
         0, mbOk);
 
     Exit;
