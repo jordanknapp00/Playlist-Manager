@@ -57,6 +57,8 @@ v1.0.2 sees the program in a completely functional state. However, there are a f
 - Copy text from the table (and export only the selected set)
 - Allow specifying order of bands, albums, or songs in the export (as right now, the order is fairly arbitrary due to unordered nature of dictionaries)
 - Eliminate memory leaks
+- More querying options (such as querying for non-favorites only and the ability to include multiple years and track numbers)
+- Improve responsiveness of UI (better resizing than just using anchors)
 
 ### Known Bugs
 
