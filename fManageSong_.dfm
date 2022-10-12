@@ -130,7 +130,6 @@ object fManageSong: TfManageSong
     Caption = 'Save'
     TabOrder = 5
     OnClick = btnSaveClick
-    ExplicitTop = 403
   end
   object btnDelete: TButton
     Left = 23
@@ -141,7 +140,6 @@ object fManageSong: TfManageSong
     Caption = 'Delete Selected Song'
     TabOrder = 6
     OnClick = btnDeleteClick
-    ExplicitTop = 434
   end
   object edTrackNo: TEdit
     Left = 126
@@ -149,6 +147,7 @@ object fManageSong: TfManageSong
     Width = 35
     Height = 21
     Anchors = [akLeft, akTop, akRight]
+    NumbersOnly = True
     TabOrder = 7
     OnChange = DetermineNeedSave
   end

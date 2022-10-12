@@ -4,7 +4,7 @@ Playlist Manager is a program designed to organize all the songs on your playlis
 
 Playlist Manager makes it easier than ever to create a playlist with thousands of songs, without having to deal with streaming sites' clunky and slow interfaces.
 
-### New in v1.0.1:
+### New in v1.0.2:
 
 - Fixed bug in which "Clear Queried Results" button didn't resize properly with the rest of the UI.
 
@@ -48,7 +48,7 @@ Files can also be exported to ```.txt``` files, which can be used on a handful o
 
 ## Coming in Later Versions
 
-v1.0.1 sees the program in a completely functional state. However, there are a few features planned for future versions. Planned features include, but are not limited to:
+v1.0.2 sees the program in a completely functional state. However, there are a few features planned for future versions. Planned features include, but are not limited to:
 
 - Overhauling the underlying data structures to use Delphi's ```TClientDataSet``` rather than nested dictionaries
 - Improved user interface, hopefully including a table with sortable columns
@@ -63,4 +63,5 @@ v1.0.1 sees the program in a completely functional state. However, there are a f
 The following bugs are known and will be addressed in later versions:
 
 - Loading a file when one is already loaded doesn't work
+- Using songs under the "N/A" album will add "N/A" two times in the add and modify song dialogs
 - Querying doesn't work unless every band has at least one album, and every album has at least one song (fix by moving to ```TClientDataSet```, probably)
