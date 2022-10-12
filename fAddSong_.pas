@@ -20,6 +20,7 @@ type
     Label4: TLabel;
     cbBands: TComboBox;
     lblUseNA: TLabel;
+    cbSequentialNum: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure cbBandsChange(Sender: TObject);
     procedure btnAddSongsClick(Sender: TObject);
@@ -143,12 +144,24 @@ var
   indexAt, count: Integer;
   songAt, trackNumAt: String;
 begin
-  if textBoxSongs.Lines.Count <> textBoxTrackNums.Lines.Count then
+  if textBoxSongs.Lines.Count < textBoxTrackNums.Lines.Count then
   begin
-    showMessage('The number of songs entered does not match the number of ' +
-      'numbers entered.');
+    MessageDlg('You''ve entered more track numbers than songs.', mtError, [mbOk],
+        0, mbOk);
+
     Exit;
   end;
+
+  if cbSequentialNum.Checked and (textBoxTrackNums.Lines.Count > 0) then
+  begin
+    if MessageDlg('You entered track numbers but selected to assign them ' +
+        'sequentially. Use sequential numbering?', mtConfirmation, [mbYes, mbNo],
+        0, mbYes) = mrYes then
+      textBoxTrackNums.Lines.Clear
+    else
+      cbSequentialNum.Checked := false;
+  end;
+
 
   if cbBands.ItemIndex < 0 then
   begin
@@ -168,11 +181,19 @@ begin
 
   for songAt in textBoxSongs.Lines do
   begin
-    trackNumAt := textBoxTrackNums.Lines[indexAt];
+    if cbSequentialNum.Checked then
+      trackNumAt := IntToStr(indexAt + 1)
+    else
+    begin
+      if (indexAt < textBoxTracknums.lines.Count) and (textBoxTrackNums.Lines[indexAt] <> '') then
+        trackNumAt := textBoxTrackNums.Lines[indexAt]
+      else
+        trackNumAt := '0';
+    end;
 
     if not dm.AddSong(songAt, cbBands.Items[cbBands.ItemIndex],
       cbAlbums.Items[cbAlbums.ItemIndex], StrToInt(trackNumAt)) then
-      showMessage('Song ' + songAt + ' rejected. Sorry, we don''t allow duplicate ' +
+      showMessage('Song ' + songAt + ' rejected. Sorry, there cannot be duplicate ' +
         'songs within the same album.')
     else
       Inc(count);

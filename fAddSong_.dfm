@@ -109,4 +109,12 @@ object fAddSong: TfAddSong
     TabOrder = 4
     OnChange = cbBandsChange
   end
+  object cbSequentialNum: TCheckBox
+    Left = 8
+    Top = 54
+    Width = 172
+    Height = 17
+    Caption = 'Add Track Numbers Sequentially'
+    TabOrder = 5
+  end
 end

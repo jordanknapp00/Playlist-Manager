@@ -95,15 +95,15 @@ end;
 
 procedure TfAddAlbum.btnAddAlbumClick(Sender: TObject);
 var
-  indexAt, count, year: Integer;
+  indexAt, count: Integer;
   albumAt, yearAt: String;
 begin
-//  if textBoxAlbums.Lines.Count <> textBoxYears.Lines.Count then
-//  begin
-//    showMessage('The number of albums entered does not match the number of ' +
-//      ' years entered.');
-//    Exit;
-//  end;
+  if textBoxAlbums.Lines.Count < textBoxYears.Lines.Count then
+  begin
+    MessageDlg('You''ve entered more years than albums.', mtError, [mbOk], 0, mbOk);
+
+    Exit;
+  end;
 
   if cbBands.ItemIndex < 0 then
   begin
@@ -116,15 +116,12 @@ begin
 
   for albumAt in textBoxAlbums.Lines do
   begin
-    if indexAt < textBoxYears.Lines.Count then
+    if (indexAt < textBoxYears.Lines.Count) and (textBoxYears.Lines[indexAt] <> '') then
       yearAt := textBoxYears.Lines[indexAt]
     else
-      yearAt := '';
+      yearAt := '0';
 
-    if not TryStrToInt(yearAt, year) then
-      year := 0;
-
-    if not dm.AddAlbum(albumAt, cbBands.Items[cbBands.ItemIndex], year) then
+    if not dm.AddAlbum(albumAt, cbBands.Items[cbBands.ItemIndex], StrToInt(yearAt)) then
       showMessage('Album ' + albumAt + ' rejected, because it is a duplicate. ' +
         'Sorry, but there can not be duplicate album names under the same band.')
     else
