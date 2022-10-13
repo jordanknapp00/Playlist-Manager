@@ -109,7 +109,9 @@ begin
   albumList := dm.GetSortedAlbumsOfBand(oldBandSelection);
   for albumAt in albumList do
   begin
-    cbAlbums.Items.Add(albumAt);
+    //don't add the N/A album, because we already added it
+    if albumAt <> 'N/A' then
+      cbAlbums.Items.Add(albumAt);
   end;
 end;
 

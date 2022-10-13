@@ -133,7 +133,9 @@ begin
   albumList := dm.GetSortedAlbumsOfBand(oldBandSelection);
   for albumAt in albumList do
   begin
-    luAlbums.Items.Add(albumAt);
+    //don't add the N/A album, we already added it above
+    if albumAt <> 'N/A' then
+      luAlbums.Items.Add(albumAt);
   end;
 
   //clear out the songs lookup while we're at it
