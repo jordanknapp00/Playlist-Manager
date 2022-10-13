@@ -487,15 +487,12 @@ begin
       needSave := false;
   end;
 
-  dm.bands.Clear;
-//  dm.bandNames.Clear;
-//  dm.albums.Clear;
-//  dm.albumNames.Clear;
-//  dm.songs.Clear;
-//  dm.songNames.Clear;
+  dm.Clear;
 
   fileName := 'Untitled';
   needSave := false;
+
+  Caption := fileName + ' - Playlist Manager';
 
   RefreshGrid;
 end;
@@ -529,14 +526,24 @@ begin
     FileName := ''; //prevent selected file from showing up in dialog again
   end;
 
+  //clear out everything that's currently loaded
+  dm.Clear;
+
   loadList := TStringList.Create;
   loadList.LoadFromFile(fileName);
   loadText := loadList.Text;
-  dm.ReadJSON(loadText);
+
+  if not dm.ReadJSON(loadText) then
+  begin
+    dm.Clear;
+    fileName := 'Untitled';
+  end;
 
   loadList.Free;
 
   Caption := ExtractFileName(fileName) + ' - Playlist Manager';
+
+  RefreshGrid;
 end;
 
 procedure TfMain.menuItemSaveClick(Sender: TObject);
