@@ -62,6 +62,7 @@ type
     procedure menuItemExportXLSXClick(Sender: TObject);
     procedure menuItemExportCSVClick(Sender: TObject);
     procedure menuItemExportTXTClick(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     fileName: String;
@@ -137,6 +138,13 @@ begin
     else if askToSaveResult = mrNo then
       needSave := false;
   end;
+end;
+
+procedure TfMain.FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  //detect ctrl-s to save
+  if (Key = 83) and (Shift = [ssCtrl]) then
+    menuItemSaveClick(nil);
 end;
 
 //==============================================================================
