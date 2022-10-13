@@ -1,12 +1,14 @@
-# Playlist Manager (v1.0.2)
+# Playlist Manager (v1.1)
 
 Playlist Manager is a program designed to organize all the songs on your playlist. Playlist Manager makes creating a playlist easier and quicker than doing so through a streaming site's interface. Bands, albums, and songs can be added, categorized with metadata including tags, and queried to make managing your playlist easy no matter how many songs it has. Data can be exported in a variety of formats, including ```.xlsx``` and ```.csv``` for creating spreadsheets and ```.txt``` files that can be imported into sites such as [TuneMyMusic](https://www.tunemymusic.com) or [Soundiiz](https://www.soundiiz.com). These sites will then allow you to import your playlist into a wide variety of streaming sites.
 
 Playlist Manager makes it easier than ever to create a playlist with thousands of songs, without having to deal with streaming sites' clunky and slow interfaces.
 
-### New in v1.0.2:
+### New in v1.1:
 
-- Fixed bug in which "Clear Queried Results" button didn't resize properly with the rest of the UI.
+- Each band, album, and song can be given a color
+- Metadata (years for albums and track numbers for songs) are no longer required
+- Bug fixes
 
 ## How to Use
 
@@ -18,17 +20,17 @@ The first step to creating a playlist is listing all the bands you intend to inc
 
 ### Adding Albums
 
-As mentioned above, this step is not technically necessary. Clicking the "Add Album(s) From a Band" button will pull up that dialog. It consists of a dropdown and two text boxes. The dropdown will contain all the bands in the current playlist. Select the band you wish to add albums to. In the left text box, enter the names of all the albums you want to add from this band, with each album going on its own line. In the right text box, enter the corresponding year that each album was released. At this time, it is necessary to enter a year for every album. In the future, this stipulation may be removed. Once all the data has been entered, click the "Add" button.
+As mentioned above, this step is not technically necessary. Clicking the "Add Album(s) From a Band" button will pull up that dialog. It consists of a dropdown and two text boxes. The dropdown will contain all the bands in the current playlist. Select the band you wish to add albums to. In the left text box, enter the names of all the albums you want to add from this band, with each album going on its own line. In the right text box, you can enter the corresponding year that each album was released, though this is not necessary.
 
 ### Adding Songs
 
-The Add Songs dialog consists of two dropdowns and two text boxes. The left dropdown will contain all the bands that are part of the current playlist. Once a band is selected, the right dropdown will contain all of that band's albums that have been added to the playlist. Note the "N/A" album is part of every band, but it will only show up in the table if songs have been added to it. Once an album is selected, enter each song you wish to add on its own line in the left text box. Then enter the corresponding track numbers on the album for each song. Again, this is currently a necessary step, but the requirement may be removed in the future. Another possible addition in the future is automatic sequential numbering, in which each song is numbered from 1 to *n*, with *n* being the number of songs you've entered. But for now, entering numbers manually is required.
+The Add Songs dialog consists of two dropdowns and two text boxes. The left dropdown will contain all the bands that are part of the current playlist. Once a band is selected, the right dropdown will contain all of that band's albums that have been added to the playlist. Note the "N/A" album is part of every band, but it will only show up in the table if songs have been added to it. Once an album is selected, enter each song you wish to add on its own line in the left text box. Corresponding track numbers can be entered in the right text box, or you can check the "Add Track Numbers Sequentially" checkbox to number each song from 1 to *n*, with *n* being the number of songs you've entered. Or you can leave the box blank and not deal with track numbers at all.
 
 ### Modifying Data
 
-Bands, albums, and songs all have their own distinct modifiying dialogs, accessed with the buttons to the right of the "Add" buttons on the main menu. The modifying dialogs allow adding tags to a band, album, or song, as well as marking bands, albums, or songs as favorites. Tags can be applied to all units above or below the current one. For example, tags you enter for a band can also be applied to all its albums. Tags applied to an album can be added to all its songs, as well as the band that it belongs to, and so on.
+Bands, albums, and songs all have their own distinct modifiying dialogs, accessed with the buttons to the right of the "Add" buttons on the main menu. The modifying dialogs allow adding tags to a band, album, or song, as well as marking bands, albums, or songs as favorites. Tags can be applied to all units above or below the current one. For example, tags you enter for a band can also be applied to all its albums. Tags applied to an album can be added to all its songs, as well as the band that it belongs to, and so on. Years for albums and track numbers for songs can be changed here as well.
 
-It is also in these menus that bands, albums, and songs can be deleted from a playlist. Deleting a band will remove all of its albums, and deleting an album will remove all of its songs.
+Finally, it is in these menus that bands, albums, and songs can be deleted from a playlist. Deleting a band will remove all of its albums, and deleting an album will remove all of its songs.
 
 ### Querying Data
 
@@ -38,7 +40,7 @@ Queries can be saved and loaded in ```.json``` files, the same format used to st
 
 ### Saving Playlists
 
-Playlists can be saved in ```.json``` format. This allows them to be edited by hand if so desired. Attempting to load ```.json``` files not created by Playlist Manager could result in undefined behavior. It is more than likely that the program will not allow loading an invalid ```.json``` file, but if the formatting is just right, you may be able to load junk data. The same applies to query files.
+Playlists can be saved in ```.json``` format. This allows them to be edited by hand if so desired. However, if the format is not what Playlist Manager is expecting, the file will not be loaded.
 
 ### Exporting Playlists
 
@@ -48,22 +50,20 @@ Files can also be exported to ```.txt``` files, which can be used on a handful o
 
 ## Coming in Later Versions
 
-v1.0.2 sees the program in a completely functional state. However, there are a few features planned for future versions. Planned features include, but are not limited to:
+The following features are planned for future versions. Planned features include, but are not limited to:
 
 - Overhauling the underlying data structures to use Delphi's ```TClientDataSet``` rather than nested dictionaries
 - Improved user interface, hopefully including a table with sortable columns
-- Make album year and song track number non-mandatory
 - Ability to export only the currently queried set
 - Copy text from the table (and export only the selected set)
 - Allow specifying order of bands, albums, or songs in the export (as right now, the order is fairly arbitrary due to unordered nature of dictionaries)
 - Eliminate memory leaks
 - More querying options (such as querying for non-favorites only and the ability to include multiple years and track numbers)
 - Improve responsiveness of UI (better resizing than just using anchors)
+- More metadata (length for albums and songs)
 
 ### Known Bugs
 
 The following bugs are known and will be addressed in later versions:
 
-- Loading a file when one is already loaded doesn't work
-- Using songs under the "N/A" album will add "N/A" two times in the add and modify song dialogs
 - Querying doesn't work unless every band has at least one album, and every album has at least one song (fix by moving to ```TClientDataSet```, probably)
