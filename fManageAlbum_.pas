@@ -128,7 +128,9 @@ begin
   albumList := dm.GetSortedAlbumsOfBand(oldBandSelection);
   for albumAt in albumList do
   begin
-    luAlbums.Items.Add(albumAt);
+    //don't add the N/A album, because we already added it above
+    if albumAt <> 'N/A' then
+      luAlbums.Items.Add(albumAt);
   end;
 
   //also clear out all the controls

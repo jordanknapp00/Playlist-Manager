@@ -62,6 +62,7 @@ type
     procedure menuItemExportXLSXClick(Sender: TObject);
     procedure menuItemExportCSVClick(Sender: TObject);
     procedure menuItemExportTXTClick(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     fileName: String;
@@ -137,6 +138,13 @@ begin
     else if askToSaveResult = mrNo then
       needSave := false;
   end;
+end;
+
+procedure TfMain.FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  //detect ctrl-s to save
+  if (Key = 83) and (Shift = [ssCtrl]) then
+    menuItemSaveClick(nil);
 end;
 
 //==============================================================================
@@ -487,15 +495,12 @@ begin
       needSave := false;
   end;
 
-  dm.bands.Clear;
-//  dm.bandNames.Clear;
-//  dm.albums.Clear;
-//  dm.albumNames.Clear;
-//  dm.songs.Clear;
-//  dm.songNames.Clear;
+  dm.Clear;
 
   fileName := 'Untitled';
   needSave := false;
+
+  Caption := fileName + ' - Playlist Manager';
 
   RefreshGrid;
 end;
@@ -529,14 +534,24 @@ begin
     FileName := ''; //prevent selected file from showing up in dialog again
   end;
 
+  //clear out everything that's currently loaded
+  dm.Clear;
+
   loadList := TStringList.Create;
   loadList.LoadFromFile(fileName);
   loadText := loadList.Text;
-  dm.ReadJSON(loadText);
+
+  if not dm.ReadJSON(loadText) then
+  begin
+    dm.Clear;
+    fileName := 'Untitled';
+  end;
 
   loadList.Free;
 
   Caption := ExtractFileName(fileName) + ' - Playlist Manager';
+
+  RefreshGrid;
 end;
 
 procedure TfMain.menuItemSaveClick(Sender: TObject);

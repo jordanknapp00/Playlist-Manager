@@ -26,6 +26,7 @@ type
     property songCount: Integer read numSongs;
 
     procedure Init;
+    procedure Clear;
 
     function AddBand(const bandName: String): Boolean;
     function AddAlbum(const albumName, bandName: String; const albumYear: Integer): Boolean;
@@ -41,7 +42,7 @@ type
     function GetSortedQueriedSongsOfAlbum(bands: TDictionary<String, TBand>; bandName, albumName: String): TStringList;
 
     function WriteJSON: String;
-    procedure ReadJSON(toRead: String);
+    function ReadJSON(toRead: String): Boolean;
   end;
 
 var
@@ -58,6 +59,15 @@ begin
   bands := TDictionary<String, TBand>.Create;
 
   fMain.RefreshGrid;
+end;
+
+procedure Tdm.Clear;
+begin
+  bands.Clear;
+
+  numBands := 0;
+  numAlbums := 0;
+  numSongs := 0;
 end;
 
 function Tdm.AddBand(const bandName: string): Boolean;
@@ -329,7 +339,7 @@ begin
   Result := writer.JSON.ToString;
 end;
 
-procedure Tdm.ReadJSON(toRead: string);
+function Tdm.ReadJSON(toRead: string): Boolean;
 var
   val: TJSONValue;
   bandList, albumList, songList, tagList: TJSONArray;
@@ -362,6 +372,7 @@ var
   songColor: TColor;
 begin
   newTags := TStringList.Create;
+  Result := true;
 
   try
     val := TJSONObject.ParseJSONValue(toRead);
@@ -445,6 +456,7 @@ begin
   except
     on E: Exception do
     begin
+      Result := false;
       showMessage('Error when processing file:' + #13#10 + E.ToString);
     end;
   end;
