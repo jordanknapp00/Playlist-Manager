@@ -98,10 +98,9 @@ var
   indexAt, count: Integer;
   albumAt, yearAt: String;
 begin
-  if textBoxAlbums.Lines.Count <> textBoxYears.Lines.Count then
+  if textBoxAlbums.Lines.Count < textBoxYears.Lines.Count then
   begin
-    showMessage('The number of albums entered does not match the number of ' +
-      ' years entered.');
+    MessageDlg('You''ve entered more years than albums.', mtWarning, [mbOk], 0, mbOk);
     Exit;
   end;
 
@@ -116,11 +115,14 @@ begin
 
   for albumAt in textBoxAlbums.Lines do
   begin
-    yearAt := textBoxYears.Lines[indexAt];
+    if (indexAt < textBoxYears.Lines.Count) and (textBoxYears.Lines[indexAt] <> '') then
+      yearAt := textBoxYears.Lines[indexAt]
+    else
+      yearAt := '0';
 
     if not dm.AddAlbum(albumAt, cbBands.Items[cbBands.ItemIndex], StrToInt(yearAt)) then
       showMessage('Album ' + albumAt + ' rejected, because it is a duplicate. ' +
-        'Sorry, but we do not accept duplicate album names under the same band.')
+        'Sorry, but there can not be duplicate album names under the same band.')
     else
       Inc(count);
 

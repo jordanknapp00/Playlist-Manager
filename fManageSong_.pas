@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.UITypes,
 
-  fMain_, DataStructs, DataModule;
+  fMain_, DataStructs, DataModule, Vcl.ExtCtrls;
 
 type
   TfManageSong = class(TForm)
@@ -25,6 +25,8 @@ type
     edTrackNo: TEdit;
     btnApplyAlbum: TButton;
     btnApplyBand: TButton;
+    Label6: TLabel;
+    luColor: TColorBox;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -131,7 +133,9 @@ begin
   albumList := dm.GetSortedAlbumsOfBand(oldBandSelection);
   for albumAt in albumList do
   begin
-    luAlbums.Items.Add(albumAt);
+    //don't add the N/A album, we already added it above
+    if albumAt <> 'N/A' then
+      luAlbums.Items.Add(albumAt);
   end;
 
   //clear out the songs lookup while we're at it
@@ -203,6 +207,8 @@ begin
 
   cbFavorite.Checked := dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].isFavorite;
 
+  luColor.Selected := dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].color;
+
   textBox.Clear;
   textBox.Lines := dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].tags;
 
@@ -229,7 +235,10 @@ begin
   if textBox.Lines <> song.tags then
     Inc(total);
 
-  if (edTrackNo.Text <> '') and (StrToInt(edTrackNo.Text) <> song.trackNo) then
+  if IntToStr(song.TrackNo) <> edTrackNo.Text then
+    Inc(total);
+
+  if luColor.Selected <> song.color then
     Inc(total);
 
   //if any value has changed, need save. otherwise, don't need save
@@ -297,6 +306,8 @@ begin
 end;
 
 procedure TfManageSong.btnSaveClick(Sender: TObject);
+var
+  song: TSong;
 begin
   if not dm.bands.ContainsKey(oldBandSelection) then
   begin
@@ -316,10 +327,13 @@ begin
     Exit;
   end;
 
-  dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].isFavorite := cbFavorite.Checked;
-  dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].tags.Clear;
-  dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].tags.Assign(textBox.Lines);
-  //dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection].trackNo := StrToInt(edTrackNo.Text);
+  song := dm.bands[oldBandSelection].albums[oldAlbumSelection].songs[oldSongSelection];
+
+  song.isFavorite := cbFavorite.Checked;
+  song.color := luColor.Selected;
+  song.trackNo := StrToInt(edTrackNo.Text);
+  song.tags.Clear;
+  song.tags.Assign(textbox.lines);
 
   if needSave then
     fMain.manageNeedSave := true;

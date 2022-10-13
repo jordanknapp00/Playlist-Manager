@@ -1,0 +1,763 @@
+{
+    "bands": [
+        {
+            "name": "Black Sabbath",
+            "isFavorite": true,
+            "color": 0,
+            "tags": [
+                "Metal",
+                "Heavy Metal",
+                "Doom Metal"
+            ],
+            "albums": [
+                {
+                    "name": "Vol. 4",
+                    "year": 1972,
+                    "isFavorite": true,
+                    "color": 65535,
+                    "tags": [
+                        "Metal",
+                        "Heavy Metal"
+                    ],
+                    "songs": [
+                        {
+                            "name": "Snowblind",
+                            "trackNo": 6,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Supernaut",
+                            "trackNo": 5,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Wheels of Confusion",
+                            "trackNo": 1,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Tomorrow's Dream",
+                            "trackNo": 2,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Laguna Sunrise",
+                            "trackNo": 8,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Under the Sun",
+                            "trackNo": 10,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Cornucopia",
+                            "trackNo": 7,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Metal",
+                                "Heavy Metal"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Sabbath Bloody Sabbath",
+                    "year": 1973,
+                    "isFavorite": true,
+                    "color": 255,
+                    "tags": [
+                        "Metal",
+                        "Heavy Metal"
+                    ],
+                    "songs": [
+                        {
+                            "name": "Sabbra Cadabra",
+                            "trackNo": 4,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "A National Acrobat",
+                            "trackNo": 2,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Sabbath Bloody Sabbath",
+                            "trackNo": 1,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Looking for Today",
+                            "trackNo": 7,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Killing Yourself to Live",
+                            "trackNo": 5,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Metal",
+                                "Heavy Metal"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Metallica",
+            "isFavorite": true,
+            "color": 0,
+            "tags": [
+                "Metal"
+            ],
+            "albums": [
+                {
+                    "name": "...And Justice for All",
+                    "year": 1988,
+                    "isFavorite": true,
+                    "color": 16777215,
+                    "tags": [
+                        "Metal",
+                        "Heavy Metal",
+                        "Thrash Metal"
+                    ],
+                    "songs": [
+                        {
+                            "name": "Harvester of Sorrow",
+                            "trackNo": 6,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Eye of the Beholder",
+                            "trackNo": 3,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "...And Justice for All",
+                            "trackNo": 2,
+                            "isFavorite": true,
+                            "color": 16777215,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Dyers Eve",
+                            "trackNo": 9,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Blackened",
+                            "trackNo": 1,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "One",
+                            "trackNo": 4,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "The Shortest Straw",
+                            "trackNo": 5,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "The Frayed Ends of Sanity",
+                            "trackNo": 7,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal",
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "To Live Is to Die",
+                            "trackNo": 8,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Metal",
+                                "Thrash Metal",
+                                "Heavy Metal"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Master of Puppets",
+                    "year": 1986,
+                    "isFavorite": true,
+                    "color": 255,
+                    "tags": [
+                        "Heavy Metal",
+                        "Thrash Metal"
+                    ],
+                    "songs": [
+                        {
+                            "name": "Battery",
+                            "trackNo": 1,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Leper Messiah",
+                            "trackNo": 6,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Orion",
+                            "trackNo": 7,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "The Thing That Should Not Be",
+                            "trackNo": 3,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Damage, Inc.",
+                            "trackNo": 8,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Welcome Home (Sanitarium)",
+                            "trackNo": 4,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Master of Puppets",
+                            "trackNo": 2,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Disposable Heroes",
+                            "trackNo": 5,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Iron Maiden",
+            "isFavorite": true,
+            "color": 16777215,
+            "tags": [
+                "NWOBHM"
+            ],
+            "albums": [
+                {
+                    "name": "Somewhere in Time",
+                    "year": 1986,
+                    "isFavorite": true,
+                    "color": 32896,
+                    "tags": [
+                        "Metal",
+                        "NWOBHM"
+                    ],
+                    "songs": [
+                        {
+                            "name": "Heaven Can Wait",
+                            "trackNo": 4,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Metal",
+                                "NWOBHM"
+                            ]
+                        },
+                        {
+                            "name": "The Loneliness of the Long Distance Runner",
+                            "trackNo": 5,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Metal",
+                                "NWOBHM"
+                            ]
+                        },
+                        {
+                            "name": "Wasted Years",
+                            "trackNo": 2,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Metal",
+                                "NWOBHM"
+                            ]
+                        },
+                        {
+                            "name": "Deja Vu",
+                            "trackNo": 7,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Metal",
+                                "NWOBHM"
+                            ]
+                        },
+                        {
+                            "name": "Sea of Madness",
+                            "trackNo": 3,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Metal",
+                                "NWOBHM"
+                            ]
+                        },
+                        {
+                            "name": "Caught Somewhere in Time",
+                            "trackNo": 1,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Metal",
+                                "NWOBHM"
+                            ]
+                        },
+                        {
+                            "name": "Stranger in a Strange Land",
+                            "trackNo": 6,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Metal",
+                                "NWOBHM"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Seventh Son of a Seventh Son",
+                    "year": 1988,
+                    "isFavorite": true,
+                    "color": 15780518,
+                    "tags": [
+                        "NWOBHM",
+                        "Synthesizers"
+                    ],
+                    "songs": [
+                        {
+                            "name": "Seventh Son of a Seventh Son",
+                            "trackNo": 5,
+                            "isFavorite": true,
+                            "color": 16777215,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        },
+                        {
+                            "name": "Can I Play With Madness?",
+                            "trackNo": 3,
+                            "isFavorite": true,
+                            "color": 16777215,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        },
+                        {
+                            "name": "The Prophecy",
+                            "trackNo": 6,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        },
+                        {
+                            "name": "The Evil That Men Do",
+                            "trackNo": 4,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        },
+                        {
+                            "name": "Only the Good Die Young",
+                            "trackNo": 8,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        },
+                        {
+                            "name": "Moonchild",
+                            "trackNo": 1,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        },
+                        {
+                            "name": "The Clairvoyant",
+                            "trackNo": 7,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        },
+                        {
+                            "name": "Infinite Dreams",
+                            "trackNo": 2,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "NWOBHM",
+                                "Synthesizers"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Megadeth",
+            "isFavorite": true,
+            "color": 255,
+            "tags": [
+                "Metal",
+                "Heavy Metal",
+                "Thrash Metal"
+            ],
+            "albums": [
+                {
+                    "name": "Countdown to Extinction",
+                    "year": 1992,
+                    "isFavorite": true,
+                    "color": 8388736,
+                    "tags": [
+                        "Heavy Metal"
+                    ],
+                    "songs": [
+                        {
+                            "name": "Symphony of Destruction",
+                            "trackNo": 2,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Architecture of Aggression",
+                            "trackNo": 3,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Sweating Bullets",
+                            "trackNo": 5,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "High Speed Dirt",
+                            "trackNo": 8,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Ashes in Your Mouth",
+                            "trackNo": 11,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Skin o' My Teeth",
+                            "trackNo": 1,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Countdown to Extinction",
+                            "trackNo": 7,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Foreclosure of a Dream",
+                            "trackNo": 4,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "Psychotron",
+                            "trackNo": 9,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Heavy Metal"
+                            ]
+                        },
+                        {
+                            "name": "This Was My Life",
+                            "trackNo": 6,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Heavy Metal"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Rust in Peace",
+                    "year": 1990,
+                    "isFavorite": true,
+                    "color": 16711680,
+                    "tags": [
+                        "Heavy Metal",
+                        "Thrash Metal"
+                    ],
+                    "songs": [
+                        {
+                            "name": "Five Magics",
+                            "trackNo": 4,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Rust in Peace... Polaris",
+                            "trackNo": 9,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Take No Prisoners",
+                            "trackNo": 3,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Tornado of Souls",
+                            "trackNo": 7,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Lucretia",
+                            "trackNo": 6,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Hangar 18",
+                            "trackNo": 2,
+                            "isFavorite": false,
+                            "color": 16777215,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Holy Wars... the Punishment Due",
+                            "trackNo": 1,
+                            "isFavorite": true,
+                            "color": 32768,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        },
+                        {
+                            "name": "Poison Was the Cure",
+                            "trackNo": 5,
+                            "isFavorite": true,
+                            "color": 65280,
+                            "tags": [
+                                "Heavy Metal",
+                                "Thrash Metal"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

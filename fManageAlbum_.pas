@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.UITypes,
 
-  fMain_, DataStructs, DataModule;
+  fMain_, DataStructs, DataModule, Vcl.ExtCtrls;
 
 type
   TfManageAlbum = class(TForm)
@@ -23,6 +23,8 @@ type
     edYear: TEdit;
     btnApplyBand: TButton;
     btnApplySong: TButton;
+    Label5: TLabel;
+    luColor: TColorBox;
     procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -126,7 +128,9 @@ begin
   albumList := dm.GetSortedAlbumsOfBand(oldBandSelection);
   for albumAt in albumList do
   begin
-    luAlbums.Items.Add(albumAt);
+    //don't add the N/A album, because we already added it above
+    if albumAt <> 'N/A' then
+      luAlbums.Items.Add(albumAt);
   end;
 
   //also clear out all the controls
@@ -153,6 +157,8 @@ begin
   oldAlbumSelection := luAlbums.Items[luAlbums.ItemIndex];
 
   cbFavorite.Checked := dm.bands[oldBandSelection].albums[oldAlbumSelection].isFavorite;
+
+  luColor.Selected := dm.bands[oldBandSelection].albums[oldAlbumSelection].color;
 
   textBox.Clear;
   textBox.Lines := dm.bands[oldBandSelection].albums[oldAlbumSelection].tags;
@@ -204,6 +210,8 @@ begin
 end;
 
 procedure TfManageAlbum.btnSaveClick(Sender: TObject);
+var
+  album: TAlbum;
 begin
   if not dm.bands.ContainsKey(oldBandSelection) then
   begin
@@ -217,9 +225,13 @@ begin
     Exit;
   end;
 
-  dm.bands[oldBandSelection].albums[oldAlbumSelection].isFavorite := cbFavorite.Checked;
-  dm.bands[oldBandSelection].albums[oldAlbumSelection].tags.Clear;
-  dm.bands[oldBandSelection].albums[oldAlbumSelection].tags.Assign(textBox.Lines);
+  album := dm.bands[oldBandSelection].albums[oldAlbumSelection];
+
+  album.isFavorite := cbFavorite.Checked;
+  album.color := luColor.Selected;
+  album.year := StrToInt(edYear.Text); //set to number only
+  album.tags.Clear;
+  album.tags.Assign(textBox.Lines);
 
   if needSave then
     fMain.manageNeedSave := true;
@@ -245,6 +257,12 @@ begin
     Inc(total);
 
   if textBox.Lines <> album.tags then
+    Inc(total);
+
+  if luColor.Selected <> album.color then
+    Inc(total);
+
+  if IntToStr(album.year) <> edYear.Text then
     Inc(total);
 
   //if any value has changed, need save. otherwise, don't need save

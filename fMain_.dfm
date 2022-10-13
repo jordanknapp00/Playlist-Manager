@@ -12,10 +12,12 @@ object fMain: TfMain
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   Menu = menuBar
   OldCreateOrder = False
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
+  OnKeyUp = FormKeyUp
   OnShow = FormShow
   DesignSize = (
     700

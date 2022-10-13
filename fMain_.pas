@@ -62,6 +62,7 @@ type
     procedure menuItemExportXLSXClick(Sender: TObject);
     procedure menuItemExportCSVClick(Sender: TObject);
     procedure menuItemExportTXTClick(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     fileName: String;
@@ -139,21 +140,85 @@ begin
   end;
 end;
 
+procedure TfMain.FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  //detect ctrl-s to save
+  if (Key = 83) and (Shift = [ssCtrl]) then
+    menuItemSaveClick(nil);
+end;
+
 //==============================================================================
 //                                GRID METHODS
 //==============================================================================
 
 procedure TfMain.gridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
   State: TGridDrawState);
+var
+  bandAt, albumAt, songAt, at: String;
 begin
-//  if ARow = 0 then
-//  begin
-//    grid.Font.Style := grid.Font.Style + [fsBold];
-//  end
-//  else
-//  begin
-//    grid.Font.Style := grid.Font.Style - [fsBold];
-//  end;
+  //ignore first row entirely
+  if ARow = 0 then
+    Exit;
+
+  with (Sender as TStringGrid) do
+  begin
+    //col 0 is bands
+    if ACol = 0 then
+    begin
+      bandAt := Cells[ACol, ARow];
+
+      if dm.bands.COntainsKey(bandAt) then
+        Canvas.Brush.Color := dm.bands[bandAt].Color;
+
+      at := bandAt;
+    end
+    //col 2 is albums
+    else if ACol = 2 then
+    begin
+      bandAt := Cells[0, ARow];
+      albumAt := Cells[ACol, ARow];
+
+      if dm.bands.ContainsKey(bandAt) and dm.bands[bandAt].albums.ContainsKey(albumAt) then
+        Canvas.Brush.Color := dm.bands[bandAt].albums[albumAt].color;
+
+      at := albumAt;
+    end
+    //col 5 is songs
+    else if ACol = 5 then
+    begin
+      bandAt := Cells[0, ARow];
+      albumAt := Cells[2, ARow];
+      songAt := Cells[ACol, ARow];
+
+      if dm.bands.ContainsKey(bandAt) and dm.bands[bandAt].albums.ContainsKey(albumAt) and
+          dm.bands[bandAt].albums[albumAt].songs.ContainsKey(songAt) then
+        Canvas.Brush.Color := dm.bands[bandAt].albums[albumAt].songs[songAt].color;
+
+      at := songAt;
+    end
+    //all other columns need to be explicitly set to black i guess
+    else
+    begin
+      Canvas.Font.Color := clBlack;
+      Canvas.FillRect(Rect);
+      Canvas.TextOut(Rect.Left + 6, Rect.Top + 6, Cells[ACol, ARow]);
+
+      Exit;
+    end;
+
+    //set invert text color depending on background color
+    case Canvas.Brush.Color of
+      clBlack, clNavy, clBlue, clBackground, clBtnText, clCaptionText, clGray, clGrayText,
+      clHighlightText, clHotLight, clInactiveCaptionText, clInfoText, clMenuText,
+      cl3DDkShadow, clWindowFrame, clWindowText:
+        Canvas.Font.Color := clWhite;
+      else
+        Canvas.Font.Color := clBlack;
+    end;
+
+    Canvas.FillRect(Rect);
+    Canvas.TextOut(Rect.Left + 6, Rect.Top + 6, at);
+  end;
 end;
 
 procedure TfMain.RefreshGrid(bands: TDictionary<String, TBand>);
@@ -430,15 +495,12 @@ begin
       needSave := false;
   end;
 
-  dm.bands.Clear;
-//  dm.bandNames.Clear;
-//  dm.albums.Clear;
-//  dm.albumNames.Clear;
-//  dm.songs.Clear;
-//  dm.songNames.Clear;
+  dm.Clear;
 
   fileName := 'Untitled';
   needSave := false;
+
+  Caption := fileName + ' - Playlist Manager';
 
   RefreshGrid;
 end;
@@ -472,14 +534,24 @@ begin
     FileName := ''; //prevent selected file from showing up in dialog again
   end;
 
+  //clear out everything that's currently loaded
+  dm.Clear;
+
   loadList := TStringList.Create;
   loadList.LoadFromFile(fileName);
   loadText := loadList.Text;
-  dm.ReadJSON(loadText);
+
+  if not dm.ReadJSON(loadText) then
+  begin
+    dm.Clear;
+    fileName := 'Untitled';
+  end;
 
   loadList.Free;
 
   Caption := ExtractFileName(fileName) + ' - Playlist Manager';
+
+  RefreshGrid;
 end;
 
 procedure TfMain.menuItemSaveClick(Sender: TObject);

@@ -153,15 +153,15 @@ begin
   //dm.bands dictionary. all the subdictionaries are contained within.
   for bandAt in dm.bands.Values do
   begin
-    newBand := TBand.Create(bandAt.name, bandAt.isFavorite);
+    newBand := TBand.Create(bandAt.name, bandAt.isFavorite, bandAt.color);
 
     for albumAt in bandAt.albums.Values do
     begin
-      newAlbum := TAlbum.Create(albumAt.name, newBand.name, albumAt.year, albumAt.isFavorite);
+      newAlbum := TAlbum.Create(albumAt.name, newBand.name, albumAt.year, albumAt.isFavorite, albumAt.color);
 
       for songAt in albumAt.songs.Values do
       begin
-        newSong := TSong.Create(songAt.name, newAlbum.name, newBand.name, songAt.trackNo, songAt.isFavorite);
+        newSong := TSong.Create(songAt.name, newAlbum.name, newBand.name, songAt.trackNo, songAt.isFavorite, songAt.color);
 
         newAlbum.songs.Add(newSong.name, newSong);
       end;
