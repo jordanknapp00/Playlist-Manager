@@ -49,6 +49,9 @@ type
     cds_track_num: TSmallintField;
     table: TDBGrid;
     ds: TDataSource;
+    cds_band_color: TStringField;
+    cds_album_color: TStringField;
+    cds_song_color: TStringField;
     procedure btnAddBandClick(Sender: TObject);
     procedure btnAddAlbumClick(Sender: TObject);
     procedure btnAddSongsClick(Sender: TObject);
@@ -73,6 +76,8 @@ type
     procedure menuItemExportCSVClick(Sender: TObject);
     procedure menuItemExportTXTClick(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure tableDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
   private
     { Private declarations }
     fileName: String;
@@ -192,14 +197,17 @@ begin
 
         cds_band.AsString := bandAt.name;
         cds_band_fav.AsBoolean := bandAt.isFavorite;
+        cds_band_color.AsString := ColorToString(bandAt.color);
 
         cds_album.AsString := albumAt.name;
         cds_album_fav.AsBoolean := albumAt.isFavorite;
         cds_year.AsInteger := albumAt.year;
+        cds_album_color.AsString := ColorToString(albumAt.Color);
 
         cds_song.AsString := songAt.name;
         cds_song_fav.AsBoolean := songAt.isFavorite;
         cds_track_num.AsInteger := songAt.trackNo;
+        cds_song_color.AsString := ColorToString(songAt.Color);
 
         cds_.Post;
       end;
@@ -209,6 +217,36 @@ begin
   cds_.First;
 
   Screen.Cursor := crDefault;
+end;
+procedure TfMain.tableDrawColumnCell(Sender: TObject; const Rect: TRect;
+  DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  if cds_.RecordCount = 0 then
+    Exit;
+
+  with table do
+  begin
+    with Canvas.Brush do
+    begin
+      if DataCol = 0 then
+      Canvas.Brush.Color := StringToColor(cds_band_color.AsString)
+      else if DataCol = 2 then
+        Canvas.Brush.Color := StringToColor(cds_album_color.AsString)
+      else if DataCol = 5 then
+        Canvas.Brush.Color := StringToColor(cds_song_color.AsString);
+
+      case Color of
+        clBlack, clNavy, clBlue, clBackground, clBtnText, clCaptionText, clGray,
+        clGrayText, clHighlightText, clHotLight, clInactiveCaptionText, clInfoText,
+        clMenuText, cl3DDkShadow, clWindowFrame, clWindowText:
+          Canvas.Font.Color := clWhite;
+        else
+          Canvas.Font.Color := clBlack;
+      end;
+    end;
+
+    DefaultDrawColumnCell(Rect, DataCol, Column, State);
+  end;
 end;
 
 //procedure TfMain.gridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
