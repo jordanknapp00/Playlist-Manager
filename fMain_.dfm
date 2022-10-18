@@ -33,7 +33,6 @@ object fMain: TfMain
     Caption = 'Query'
     TabOrder = 0
     OnClick = btnQueryClick
-    ExplicitWidth = 265
   end
   object btnAddBand: TButton
     Left = 585
@@ -44,7 +43,6 @@ object fMain: TfMain
     Caption = 'Add Band(s)'
     TabOrder = 1
     OnClick = btnAddBandClick
-    ExplicitLeft = 340
   end
   object btnAddAlbum: TButton
     Left = 585
@@ -55,7 +53,6 @@ object fMain: TfMain
     Caption = 'Add Album(s) from a Band'
     TabOrder = 2
     OnClick = btnAddAlbumClick
-    ExplicitLeft = 340
   end
   object btnAddSongs: TButton
     Left = 585
@@ -66,7 +63,6 @@ object fMain: TfMain
     Caption = 'Add Song(s) from an Album'
     TabOrder = 3
     OnClick = btnAddSongsClick
-    ExplicitLeft = 340
   end
   object btnManageBand: TButton
     Left = 817
@@ -77,7 +73,6 @@ object fMain: TfMain
     Caption = 'Manage Bands'
     TabOrder = 4
     OnClick = btnManageBandClick
-    ExplicitLeft = 572
   end
   object btnManageAlbum: TButton
     Left = 817
@@ -88,7 +83,6 @@ object fMain: TfMain
     Caption = 'Manage Albums'
     TabOrder = 5
     OnClick = btnManageAlbumClick
-    ExplicitLeft = 572
   end
   object btnManageSongs: TButton
     Left = 817
@@ -99,7 +93,6 @@ object fMain: TfMain
     Caption = 'Manage Songs'
     TabOrder = 6
     OnClick = btnManageSongsClick
-    ExplicitLeft = 572
   end
   object btnClear: TButton
     Left = 524
@@ -111,17 +104,15 @@ object fMain: TfMain
     TabOrder = 7
     WordWrap = True
     OnClick = btnClearClick
-    ExplicitLeft = 279
   end
-  object table: TDBGrid
+  object table: TJvDBGrid
     Left = 8
-    Top = 10
+    Top = 8
     Width = 929
     Height = 414
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = ds
-    Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
-    ReadOnly = True
+    Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgMultiSelect, dgTitleClick, dgTitleHotTrack]
     TabOrder = 8
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -129,18 +120,24 @@ object fMain: TfMain
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
     OnDrawColumnCell = tableDrawColumnCell
+    AutoSort = False
+    MultiSelect = True
+    SelectColumn = scGrid
+    AutoSizeColumns = True
+    SelectColumnsDialogStrings.Caption = 'Select columns'
+    SelectColumnsDialogStrings.OK = '&OK'
+    SelectColumnsDialogStrings.NoSelectionWarning = 'At least one column must be visible!'
+    CanDelete = False
+    EditControls = <>
+    RowsHeight = 17
+    TitleRowHeight = 17
     Columns = <
       item
         Expanded = False
         FieldName = 'band'
         Title.Alignment = taCenter
         Title.Caption = 'Band'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'Tahoma'
-        Title.Font.Style = [fsBold, fsUnderline]
-        Width = 225
+        Width = 233
         Visible = True
       end
       item
@@ -148,11 +145,7 @@ object fMain: TfMain
         FieldName = 'band_fav'
         Title.Alignment = taCenter
         Title.Caption = 'Fav?'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'Tahoma'
-        Title.Font.Style = [fsBold, fsUnderline]
+        Width = 39
         Visible = True
       end
       item
@@ -160,12 +153,7 @@ object fMain: TfMain
         FieldName = 'album'
         Title.Alignment = taCenter
         Title.Caption = 'Album'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'Tahoma'
-        Title.Font.Style = [fsBold, fsUnderline]
-        Width = 225
+        Width = 233
         Visible = True
       end
       item
@@ -173,11 +161,7 @@ object fMain: TfMain
         FieldName = 'album_fav'
         Title.Alignment = taCenter
         Title.Caption = 'Fav?'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'Tahoma'
-        Title.Font.Style = [fsBold, fsUnderline]
+        Width = 42
         Visible = True
       end
       item
@@ -185,11 +169,7 @@ object fMain: TfMain
         FieldName = 'year'
         Title.Alignment = taCenter
         Title.Caption = 'Year'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'Tahoma'
-        Title.Font.Style = [fsBold, fsUnderline]
+        Width = 49
         Visible = True
       end
       item
@@ -197,12 +177,7 @@ object fMain: TfMain
         FieldName = 'song'
         Title.Alignment = taCenter
         Title.Caption = 'Song'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'Tahoma'
-        Title.Font.Style = [fsBold, fsUnderline]
-        Width = 225
+        Width = 233
         Visible = True
       end
       item
@@ -210,23 +185,15 @@ object fMain: TfMain
         FieldName = 'song_fav'
         Title.Alignment = taCenter
         Title.Caption = 'Fav?'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'Tahoma'
-        Title.Font.Style = [fsBold, fsUnderline]
+        Width = 39
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'track_num'
         Title.Alignment = taCenter
-        Title.Caption = 'Track No.'
-        Title.Font.Charset = DEFAULT_CHARSET
-        Title.Font.Color = clWindowText
-        Title.Font.Height = -11
-        Title.Font.Name = 'Tahoma'
-        Title.Font.Style = [fsBold, fsUnderline]
+        Title.Caption = 'Track'
+        Width = 49
         Visible = True
       end>
   end

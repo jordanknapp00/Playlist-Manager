@@ -9,7 +9,7 @@ uses
 
   System.Generics.Collections, System.Win.ComObj,
 
-  DataStructs, Data.DB, Vcl.DBGrids, Datasnap.DBClient;
+  DataStructs, Data.DB, Vcl.DBGrids, Datasnap.DBClient, JvExDBGrids, JvDBGrid;
 
 type
   TfMain = class(TForm)
@@ -47,11 +47,11 @@ type
     cds_song: TStringField;
     cds_song_fav: TBooleanField;
     cds_track_num: TSmallintField;
-    table: TDBGrid;
     ds: TDataSource;
     cds_band_color: TStringField;
     cds_album_color: TStringField;
     cds_song_color: TStringField;
+    table: TJvDBGrid;
     procedure btnAddBandClick(Sender: TObject);
     procedure btnAddAlbumClick(Sender: TObject);
     procedure btnAddSongsClick(Sender: TObject);
