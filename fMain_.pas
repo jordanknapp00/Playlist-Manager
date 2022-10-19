@@ -53,6 +53,7 @@ type
     cds_album_color: TStringField;
     cds_song_color: TStringField;
     table: TJvDBGrid;
+    csvExporter: TJvDBGridCSVExport;
     procedure btnAddBandClick(Sender: TObject);
     procedure btnAddAlbumClick(Sender: TObject);
     procedure btnAddSongsClick(Sender: TObject);
@@ -587,13 +588,7 @@ end;
 procedure TfMain.menuItemExportCSVClick(Sender: TObject);
 var
   csvFileName: String;
-
-  fileData: TStringList;
-  rowCount, row: Integer;
 begin
-  showmessage('i''m broken, fix me');
-  Exit;
-
   with saveExportDialog do
   begin
     Filter := 'Comma-Separated Values File (*.csv) | *.csv';
@@ -608,16 +603,11 @@ begin
     FileName := '';
   end;
 
-  fileData := TStringList.Create;
-  //rowCount := grid.RowCount;
-  rowCount := cds_.RecordCount;
-
-//  for row := 0 to rowCount do
-//    fileData.Add(grid.Rows[row].CommaText);
-
-  fileData.SaveToFile(csvFileName);
-
-  fileData.Free;
+  with csvExporter do
+  begin
+    FileName := csvFileName;
+    ExportGrid;
+  end;
 end;
 
 procedure TfMain.menuItemExportXLSXClick(Sender: TObject);

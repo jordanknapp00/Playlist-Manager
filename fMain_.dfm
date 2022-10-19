@@ -360,4 +360,11 @@ object fMain: TfMain
     Left = 184
     Top = 280
   end
+  object csvExporter: TJvDBGridCSVExport
+    Caption = 'Exporting to CSV/Text...'
+    Grid = table
+    ExportSeparator = esComma
+    Left = 656
+    Top = 160
+  end
 end
