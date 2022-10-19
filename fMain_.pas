@@ -78,6 +78,7 @@ type
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure tableDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure tableCellClick(Column: TColumn);
   private
     { Private declarations }
     fileName: String;
@@ -218,6 +219,44 @@ begin
 
   Screen.Cursor := crDefault;
 end;
+procedure TfMain.tableCellClick(Column: TColumn);
+var
+  bandAt: TBand;
+  albumAt: TAlbum;
+  songAt: TSong;
+
+  bandName, albumName, songName: String;
+begin
+  if Column.Index = 1 then
+  begin
+    bandAt := dm.bands[cds_band.AsString];
+    bandAt.isFavorite := not bandAt.isFavorite;
+  end
+  else if Column.Index = 3 then
+  begin
+    albumAt := dm.bands[cds_band.AsString].albums[cds_album.AsString];
+    albumAt.isFavorite := not albumAt.isFavorite;
+  end
+  else if Column.Index = 6 then
+  begin
+    songAt := dm.bands[cds_band.AsString].albums[cds_album.AsString].songs[cds_song.AsString];
+    songAt.isFavorite := not songAt.isFavorite;
+  end
+  else
+    Exit;
+
+  //use this so we can return to the same record we were at before
+  bandName := cds_band.AsString;
+  albumName := cds_album.AsString;
+  songName := cds_song.AsString;
+
+  RefreshGrid;
+  cds_.Locate('band;album;song', VarArrayOf([bandName, albumName, songName]), []);
+
+  needSave := true;
+  Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
+end;
+
 procedure TfMain.tableDrawColumnCell(Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
 begin
