@@ -9,7 +9,8 @@ uses
 
   System.Generics.Collections, System.Win.ComObj,
 
-  DataStructs, Data.DB, Vcl.DBGrids, Datasnap.DBClient, JvExDBGrids, JvDBGrid;
+  DataStructs, Data.DB, Vcl.DBGrids, Datasnap.DBClient, JvExDBGrids, JvDBGrid,
+  JvComponentBase, JvDBGridExport;
 
 type
   TfMain = class(TForm)
@@ -52,6 +53,7 @@ type
     cds_album_color: TStringField;
     cds_song_color: TStringField;
     table: TJvDBGrid;
+    csvExporter: TJvDBGridCSVExport;
     procedure btnAddBandClick(Sender: TObject);
     procedure btnAddAlbumClick(Sender: TObject);
     procedure btnAddSongsClick(Sender: TObject);
@@ -78,6 +80,7 @@ type
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure tableDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure tableCellClick(Column: TColumn);
   private
     { Private declarations }
     fileName: String;
@@ -113,16 +116,6 @@ begin
   manageNeedSave := false;
 
   Caption := fileName + ' - Playlist Manager';
-
-  //set up the grid
-//  grid.Cells[0, 0] := 'Band';
-//  grid.Cells[1, 0] := 'Fav?';
-//  grid.Cells[2, 0] := 'Album';
-//  grid.Cells[3, 0] := 'Year';
-//  grid.Cells[4, 0] := 'Fav?';
-//  grid.Cells[5, 0] := 'Song';
-//  grid.Cells[6, 0] := 'Track No.';
-//  grid.Cells[7, 0] := 'Fav?';
 
   cds_.CreateDataSet;
   cds_.Open;
@@ -218,6 +211,44 @@ begin
 
   Screen.Cursor := crDefault;
 end;
+procedure TfMain.tableCellClick(Column: TColumn);
+var
+  bandAt: TBand;
+  albumAt: TAlbum;
+  songAt: TSong;
+
+  bandName, albumName, songName: String;
+begin
+  if Column.Index = 1 then
+  begin
+    bandAt := dm.bands[cds_band.AsString];
+    bandAt.isFavorite := not bandAt.isFavorite;
+  end
+  else if Column.Index = 3 then
+  begin
+    albumAt := dm.bands[cds_band.AsString].albums[cds_album.AsString];
+    albumAt.isFavorite := not albumAt.isFavorite;
+  end
+  else if Column.Index = 6 then
+  begin
+    songAt := dm.bands[cds_band.AsString].albums[cds_album.AsString].songs[cds_song.AsString];
+    songAt.isFavorite := not songAt.isFavorite;
+  end
+  else
+    Exit;
+
+  //use this so we can return to the same record we were at before
+  bandName := cds_band.AsString;
+  albumName := cds_album.AsString;
+  songName := cds_song.AsString;
+
+  RefreshGrid;
+  cds_.Locate('band;album;song', VarArrayOf([bandName, albumName, songName]), []);
+
+  needSave := true;
+  Caption := '* ' + ExtractFileName(fileName) + ' - Playlist Manager';
+end;
+
 procedure TfMain.tableDrawColumnCell(Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
 begin
@@ -238,7 +269,8 @@ begin
       case Color of
         clBlack, clNavy, clBlue, clBackground, clBtnText, clCaptionText, clGray,
         clGrayText, clHighlightText, clHotLight, clInactiveCaptionText, clInfoText,
-        clMenuText, cl3DDkShadow, clWindowFrame, clWindowText:
+        clMenuText, cl3DDkShadow, clWindowFrame, clWindowText, clGreen, clOlive,
+        clPurple:
           Canvas.Font.Color := clWhite;
         else
           Canvas.Font.Color := clBlack;
@@ -248,227 +280,6 @@ begin
     DefaultDrawColumnCell(Rect, DataCol, Column, State);
   end;
 end;
-
-//procedure TfMain.gridDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect;
-//  State: TGridDrawState);
-//var
-//  bandAt, albumAt, songAt, at: String;
-//begin
-//  //ignore first row entirely
-//  if ARow = 0 then
-//    Exit;
-//
-//  with (Sender as TStringGrid) do
-//  begin
-//    //col 0 is bands
-//    if ACol = 0 then
-//    begin
-//      bandAt := Cells[ACol, ARow];
-//
-//      if dm.bands.COntainsKey(bandAt) then
-//        Canvas.Brush.Color := dm.bands[bandAt].Color;
-//
-//      at := bandAt;
-//    end
-//    //col 2 is albums
-//    else if ACol = 2 then
-//    begin
-//      bandAt := Cells[0, ARow];
-//      albumAt := Cells[ACol, ARow];
-//
-//      if dm.bands.ContainsKey(bandAt) and dm.bands[bandAt].albums.ContainsKey(albumAt) then
-//        Canvas.Brush.Color := dm.bands[bandAt].albums[albumAt].color;
-//
-//      at := albumAt;
-//    end
-//    //col 5 is songs
-//    else if ACol = 5 then
-//    begin
-//      bandAt := Cells[0, ARow];
-//      albumAt := Cells[2, ARow];
-//      songAt := Cells[ACol, ARow];
-//
-//      if dm.bands.ContainsKey(bandAt) and dm.bands[bandAt].albums.ContainsKey(albumAt) and
-//          dm.bands[bandAt].albums[albumAt].songs.ContainsKey(songAt) then
-//        Canvas.Brush.Color := dm.bands[bandAt].albums[albumAt].songs[songAt].color;
-//
-//      at := songAt;
-//    end
-//    //all other columns need to be explicitly set to black i guess
-//    else
-//    begin
-//      Canvas.Font.Color := clBlack;
-//      Canvas.FillRect(Rect);
-//      Canvas.TextOut(Rect.Left + 6, Rect.Top + 6, Cells[ACol, ARow]);
-//
-//      Exit;
-//    end;
-//
-//    //set invert text color depending on background color
-//    case Canvas.Brush.Color of
-//      clBlack, clNavy, clBlue, clBackground, clBtnText, clCaptionText, clGray, clGrayText,
-//      clHighlightText, clHotLight, clInactiveCaptionText, clInfoText, clMenuText,
-//      cl3DDkShadow, clWindowFrame, clWindowText:
-//        Canvas.Font.Color := clWhite;
-//      else
-//        Canvas.Font.Color := clBlack;
-//    end;
-//
-//    Canvas.FillRect(Rect);
-//    Canvas.TextOut(Rect.Left + 6, Rect.Top + 6, at);
-//  end;
-//end;
-//
-//procedure TfMain.RefreshGrid(bands: TDictionary<String, TBand>);
-//var
-//  row, selectedRow, selectedCol: Integer;
-//
-//  bandNameAt, albumNameAt, songNameAt: String;
-//  bandAt: TBand;
-//  albumAt: TAlbum;
-//  songAt: TSong;
-//begin
-//  //keep track of the currently selected row and column, because it will reset
-//  //it otherwise
-//  selectedRow := grid.Row;
-//  selectedCol := grid.Col;
-//
-//  for row := 1 to grid.RowCount - 1 do
-//    grid.Rows[row].Clear;
-//
-//  grid.RowCount := 1;
-//  row := 1;
-//
-//  //dont bother if there are no bands
-//  if bands.Keys.Count = 0 then
-//    Exit;
-//
-//  for bandNameAt in dm.GetSortedQueriedBands(bands) do
-//  begin
-//    bandAt := bands[bandNameAt];
-//
-//    //if there are no albums (and thus no songs, print out the band now)
-//    if bandAt.albums.Count = 0 then
-//    begin
-//      grid.Cells[0, row] := bandNameAt;
-//
-//      if bandAt.isFavorite then
-//        grid.Cells[1, row] := 'Y'
-//      else
-//        grid.Cells[1, row] := 'N';
-//
-//      grid.RowCount := grid.RowCount + 1;
-//      Inc(row);
-//    end;
-//
-//    for albumNameAt in dm.GetSortedQueriedAlbumsOfBand(bands, bandNameAt) do
-//    begin
-//      albumAt := bandAt.albums[albumNameAt];
-//
-//      //if there are no songs, print the album. if we reached this point, the
-//      //band also has not been printed
-//      if albumAt.songs.Count = 0 then
-//      begin
-//        grid.Cells[0, row] := bandNameAt;
-//
-//        if bandAt.isFavorite then
-//          grid.Cells[1, row] := 'Y'
-//        else
-//          grid.Cells[1, row] := 'N';
-//
-//        grid.Cells[2, row] := albumAt.name;
-//        grid.Cells[3, row] := albumAt.year.ToString;
-//
-//        if albumAt.isFavorite then
-//          grid.Cells[4, row] := 'Y'
-//        else
-//          grid.Cells[4, row] := 'N';
-//
-//        grid.RowCount := grid.RowCount + 1;
-//        Inc(row);
-//      end;
-//
-//      for songNameAt in dm.GetSortedQueriedSongsOfAlbum(bands, bandNameAt, albumNameAt) do
-//      begin
-//        songAt := albumAt.songs[songNameAt];
-//
-//        //print everything if we make it to the songs loop
-//        grid.Cells[0, row] := bandNameAt;
-//
-//        if bandAt.isFavorite then
-//          grid.Cells[1, row] := 'Y'
-//        else
-//          grid.Cells[1, row] := 'N';
-//
-//        grid.Cells[2, row] := albumAt.name;
-//        grid.Cells[3, row] := albumAt.year.ToString;
-//
-//        if albumAt.isFavorite then
-//          grid.Cells[4, row] := 'Y'
-//        else
-//          grid.Cells[4, row] := 'N';
-//
-//        grid.Cells[5, row] := songAt.name;
-//        grid.Cells[6, row] := songAt.trackNo.ToString;
-//
-//        if songAt.isFavorite then
-//          grid.Cells[7, row] := 'Y'
-//        else
-//          grid.Cells[7, row] := 'N';
-//
-//        grid.RowCount := grid.RowCount + 1;
-//        Inc(row);
-//      end;
-//    end;
-//  end;
-//
-//  ResizeGrid;
-//
-//  //can only have fixed rows if there is more than one row. whatever
-//  grid.FixedRows := 1;
-//
-//  //for some reason, trying this when the selected row is 0 (the fixed row)
-//  //causes problems. this works, so whatever. fixed rows are clearly annoying
-//  if (grid.Row <> selectedRow) and (selectedRow <> 0) then
-//    grid.Row := selectedRow;
-//
-//  if (grid.Col <> selectedCol) and (selectedCol <> 0) then
-//    grid.Col := selectedCol;
-//end;
-//
-//procedure TfMain.RefreshGrid;
-//begin
-//  RefreshGrid(dm.bands);
-//end;
-//
-//procedure TfMain.ResizeGrid;
-//const
-//  MIN_CELL_WIDTH_REG: Integer = 10;
-//  MIN_CELL_WIDTH_SPECIAL: Integer = 20;
-//var
-//  col, row, cellWidth, toAdd, maxFound: Integer;
-//begin
-//  for col := 0 to grid.ColCount - 1 do
-//  begin
-//    maxFound := grid.Canvas.TextWidth(grid.Cells[col, 0]);
-//
-//    //find the row with the largest width
-//    for row := 0 to grid.RowCount - 1 do
-//    begin
-//      cellWidth := grid.Canvas.TextWidth(grid.Cells[col, row]);
-//
-//      if cellWidth > maxFound then
-//        maxFound := cellWidth;
-//    end;
-//
-//    if (col = 0) or (col = 2) or (col = 5) then
-//      toAdd := MIN_CELL_WIDTH_SPECIAL
-//    else
-//      toAdd := MIN_CELL_WIDTH_REG;
-//
-//    grid.ColWidths[col] := maxFound + toAdd;
-//  end;
-//end;
 
 //==============================================================================
 //                            BUTTON CLICK METHODS
@@ -777,13 +588,7 @@ end;
 procedure TfMain.menuItemExportCSVClick(Sender: TObject);
 var
   csvFileName: String;
-
-  fileData: TStringList;
-  rowCount, row: Integer;
 begin
-  showmessage('i''m broken, fix me');
-  Exit;
-
   with saveExportDialog do
   begin
     Filter := 'Comma-Separated Values File (*.csv) | *.csv';
@@ -798,16 +603,11 @@ begin
     FileName := '';
   end;
 
-  fileData := TStringList.Create;
-  //rowCount := grid.RowCount;
-  rowCount := cds_.RecordCount;
-
-//  for row := 0 to rowCount do
-//    fileData.Add(grid.Rows[row].CommaText);
-
-  fileData.SaveToFile(csvFileName);
-
-  fileData.Free;
+  with csvExporter do
+  begin
+    FileName := csvFileName;
+    ExportGrid;
+  end;
 end;
 
 procedure TfMain.menuItemExportXLSXClick(Sender: TObject);
@@ -816,11 +616,8 @@ var
 
   Excel, workBook, range: OLEVariant;
   arrData: Variant;
-  rowCount, colCount, row, col: Integer;
+  row: Integer;
 begin
-  showmessage('i''m broken, fix me');
-  Exit;
-
   with saveExportDialog do
   begin
     Filter := 'Excel Workbooks (*.xlsx) | *.xlsx';
@@ -835,12 +632,44 @@ begin
     FileName := '';
   end;
 
-//  rowCount := grid.RowCount;
-//  colCount := grid.ColCount;
+  //recordcount + 1 because of the header row
+  arrData := VarArrayCreate([1, cds_.recordCount + 1, 1, 8], varVariant);
 
-  arrData := VarArrayCreate([1, RowCount, 1, ColCount], varVariant);
+  with cds_ do
+  begin
+    First;
 
-//  for row := 1 to rowCount do
+    //insert header data first
+    arrData[1, 1] := 'Band';
+    arrData[1, 2] := 'Fav?';
+    arrData[1, 3] := 'Album';
+    arrData[1, 4] := 'Fav?';
+    arrData[1, 5] := 'Year';
+    arrData[1, 6] := 'Song';
+    arrData[1, 7] := 'Fav?';
+    arrData[1, 8] := 'Track No';
+
+    row := 2;
+
+    while not eof do
+    begin
+      arrData[row, 1] := cds_band.AsString;
+      arrData[row, 2] := cds_band_fav.AsBoolean;
+      arrData[row, 3] := cds_album.AsString;
+      arrData[row, 4] := cds_album_fav.AsBoolean;
+      arrData[row, 5] := cds_year.AsInteger;
+      arrData[row, 6] := cds_song.AsString;
+      arrData[row, 7] := cds_song_fav.AsBoolean;
+      arrData[row, 8] := cds_track_num.AsInteger;
+
+      Next;
+      Inc(row);
+    end;
+
+    First;
+  end;
+
+//  for row := 1 to cds_.RecordCount do
 //  begin
 //    for col := 1 to colCount do
 //      arrData[row, col] := grid.Cells[col - 1, row - 1];
@@ -850,7 +679,7 @@ begin
   workBook := Excel.Workbooks.Add;
 
   range := workBook.Worksheets[1].Range[workBook.WorkSheets[1].Cells[1, 1],
-                              workBook.WorkSheets[1].Cells[RowCount, ColCount]];
+                              workBook.WorkSheets[1].Cells[cds_.RecordCount, 8]];
 
   range.Value := arrData;
 
@@ -869,7 +698,7 @@ end;
 
 procedure TfMain.menuItemAboutClick(Sender: TObject);
 begin
-  MessageDlg('Playlist Manager v1.0.1' + #13#10 + 'by Jordan Knapp',
+  MessageDlg('Playlist Manager v1.2' + #13#10 + 'by Jordan Knapp',
     mtInformation, [mbOk], 0, mbOk);
 end;
 

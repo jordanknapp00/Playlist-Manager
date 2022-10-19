@@ -3,7 +3,7 @@ object fMain: TfMain
   Top = 0
   Caption = 'Playlist Manager'
   ClientHeight = 525
-  ClientWidth = 945
+  ClientWidth = 700
   Color = clBtnFace
   Constraints.MinHeight = 250
   Constraints.MinWidth = 550
@@ -20,22 +20,23 @@ object fMain: TfMain
   OnKeyUp = FormKeyUp
   OnShow = FormShow
   DesignSize = (
-    945
+    700
     525)
   PixelsPerInch = 96
   TextHeight = 13
   object btnQuery: TButton
     Left = 8
     Top = 430
-    Width = 510
+    Width = 265
     Height = 87
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Query'
     TabOrder = 0
     OnClick = btnQueryClick
+    ExplicitWidth = 510
   end
   object btnAddBand: TButton
-    Left = 585
+    Left = 340
     Top = 428
     Width = 216
     Height = 25
@@ -43,9 +44,10 @@ object fMain: TfMain
     Caption = 'Add Band(s)'
     TabOrder = 1
     OnClick = btnAddBandClick
+    ExplicitLeft = 585
   end
   object btnAddAlbum: TButton
-    Left = 585
+    Left = 340
     Top = 459
     Width = 216
     Height = 25
@@ -53,9 +55,10 @@ object fMain: TfMain
     Caption = 'Add Album(s) from a Band'
     TabOrder = 2
     OnClick = btnAddAlbumClick
+    ExplicitLeft = 585
   end
   object btnAddSongs: TButton
-    Left = 585
+    Left = 340
     Top = 490
     Width = 216
     Height = 25
@@ -63,9 +66,10 @@ object fMain: TfMain
     Caption = 'Add Song(s) from an Album'
     TabOrder = 3
     OnClick = btnAddSongsClick
+    ExplicitLeft = 585
   end
   object btnManageBand: TButton
-    Left = 817
+    Left = 572
     Top = 428
     Width = 120
     Height = 25
@@ -73,9 +77,10 @@ object fMain: TfMain
     Caption = 'Manage Bands'
     TabOrder = 4
     OnClick = btnManageBandClick
+    ExplicitLeft = 817
   end
   object btnManageAlbum: TButton
-    Left = 817
+    Left = 572
     Top = 459
     Width = 120
     Height = 25
@@ -83,9 +88,10 @@ object fMain: TfMain
     Caption = 'Manage Albums'
     TabOrder = 5
     OnClick = btnManageAlbumClick
+    ExplicitLeft = 817
   end
   object btnManageSongs: TButton
-    Left = 817
+    Left = 572
     Top = 490
     Width = 120
     Height = 25
@@ -93,9 +99,10 @@ object fMain: TfMain
     Caption = 'Manage Songs'
     TabOrder = 6
     OnClick = btnManageSongsClick
+    ExplicitLeft = 817
   end
   object btnClear: TButton
-    Left = 524
+    Left = 279
     Top = 430
     Width = 54
     Height = 87
@@ -104,24 +111,25 @@ object fMain: TfMain
     TabOrder = 7
     WordWrap = True
     OnClick = btnClearClick
+    ExplicitLeft = 524
   end
   object table: TJvDBGrid
     Left = 8
-    Top = 8
-    Width = 929
+    Top = 10
+    Width = 684
     Height = 414
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = ds
-    Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgMultiSelect, dgTitleClick, dgTitleHotTrack]
+    Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
     TabOrder = 8
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
+    OnCellClick = tableCellClick
     OnDrawColumnCell = tableDrawColumnCell
     AutoSort = False
-    MultiSelect = True
     SelectColumn = scGrid
     AutoSizeColumns = True
     SelectColumnsDialogStrings.Caption = 'Select columns'
@@ -137,7 +145,12 @@ object fMain: TfMain
         FieldName = 'band'
         Title.Alignment = taCenter
         Title.Caption = 'Band'
-        Width = 233
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
+        Width = 147
         Visible = True
       end
       item
@@ -145,7 +158,12 @@ object fMain: TfMain
         FieldName = 'band_fav'
         Title.Alignment = taCenter
         Title.Caption = 'Fav?'
-        Width = 39
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
+        Width = 42
         Visible = True
       end
       item
@@ -153,7 +171,12 @@ object fMain: TfMain
         FieldName = 'album'
         Title.Alignment = taCenter
         Title.Caption = 'Album'
-        Width = 233
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
+        Width = 147
         Visible = True
       end
       item
@@ -161,7 +184,12 @@ object fMain: TfMain
         FieldName = 'album_fav'
         Title.Alignment = taCenter
         Title.Caption = 'Fav?'
-        Width = 42
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
+        Width = 43
         Visible = True
       end
       item
@@ -169,7 +197,12 @@ object fMain: TfMain
         FieldName = 'year'
         Title.Alignment = taCenter
         Title.Caption = 'Year'
-        Width = 49
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
+        Width = 51
         Visible = True
       end
       item
@@ -177,7 +210,12 @@ object fMain: TfMain
         FieldName = 'song'
         Title.Alignment = taCenter
         Title.Caption = 'Song'
-        Width = 233
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
+        Width = 147
         Visible = True
       end
       item
@@ -185,7 +223,12 @@ object fMain: TfMain
         FieldName = 'song_fav'
         Title.Alignment = taCenter
         Title.Caption = 'Fav?'
-        Width = 39
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
+        Width = 42
         Visible = True
       end
       item
@@ -193,7 +236,12 @@ object fMain: TfMain
         FieldName = 'track_num'
         Title.Alignment = taCenter
         Title.Caption = 'Track'
-        Width = 49
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
+        Width = 53
         Visible = True
       end>
   end
@@ -319,5 +367,12 @@ object fMain: TfMain
     DataSet = cds_
     Left = 184
     Top = 280
+  end
+  object csvExporter: TJvDBGridCSVExport
+    Caption = 'Exporting to CSV/Text...'
+    Grid = table
+    ExportSeparator = esComma
+    Left = 616
+    Top = 152
   end
 end
