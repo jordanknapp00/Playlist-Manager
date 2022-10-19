@@ -3,7 +3,7 @@ object fMain: TfMain
   Top = 0
   Caption = 'Playlist Manager'
   ClientHeight = 525
-  ClientWidth = 945
+  ClientWidth = 700
   Color = clBtnFace
   Constraints.MinHeight = 250
   Constraints.MinWidth = 550
@@ -20,22 +20,23 @@ object fMain: TfMain
   OnKeyUp = FormKeyUp
   OnShow = FormShow
   DesignSize = (
-    945
+    700
     525)
   PixelsPerInch = 96
   TextHeight = 13
   object btnQuery: TButton
     Left = 8
     Top = 430
-    Width = 510
+    Width = 265
     Height = 87
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Query'
     TabOrder = 0
     OnClick = btnQueryClick
+    ExplicitWidth = 510
   end
   object btnAddBand: TButton
-    Left = 585
+    Left = 340
     Top = 428
     Width = 216
     Height = 25
@@ -43,9 +44,10 @@ object fMain: TfMain
     Caption = 'Add Band(s)'
     TabOrder = 1
     OnClick = btnAddBandClick
+    ExplicitLeft = 585
   end
   object btnAddAlbum: TButton
-    Left = 585
+    Left = 340
     Top = 459
     Width = 216
     Height = 25
@@ -53,9 +55,10 @@ object fMain: TfMain
     Caption = 'Add Album(s) from a Band'
     TabOrder = 2
     OnClick = btnAddAlbumClick
+    ExplicitLeft = 585
   end
   object btnAddSongs: TButton
-    Left = 585
+    Left = 340
     Top = 490
     Width = 216
     Height = 25
@@ -63,9 +66,10 @@ object fMain: TfMain
     Caption = 'Add Song(s) from an Album'
     TabOrder = 3
     OnClick = btnAddSongsClick
+    ExplicitLeft = 585
   end
   object btnManageBand: TButton
-    Left = 817
+    Left = 572
     Top = 428
     Width = 120
     Height = 25
@@ -73,9 +77,10 @@ object fMain: TfMain
     Caption = 'Manage Bands'
     TabOrder = 4
     OnClick = btnManageBandClick
+    ExplicitLeft = 817
   end
   object btnManageAlbum: TButton
-    Left = 817
+    Left = 572
     Top = 459
     Width = 120
     Height = 25
@@ -83,9 +88,10 @@ object fMain: TfMain
     Caption = 'Manage Albums'
     TabOrder = 5
     OnClick = btnManageAlbumClick
+    ExplicitLeft = 817
   end
   object btnManageSongs: TButton
-    Left = 817
+    Left = 572
     Top = 490
     Width = 120
     Height = 25
@@ -93,9 +99,10 @@ object fMain: TfMain
     Caption = 'Manage Songs'
     TabOrder = 6
     OnClick = btnManageSongsClick
+    ExplicitLeft = 817
   end
   object btnClear: TButton
-    Left = 524
+    Left = 279
     Top = 430
     Width = 54
     Height = 87
@@ -104,11 +111,12 @@ object fMain: TfMain
     TabOrder = 7
     WordWrap = True
     OnClick = btnClearClick
+    ExplicitLeft = 524
   end
   object table: TJvDBGrid
     Left = 8
     Top = 10
-    Width = 929
+    Width = 684
     Height = 414
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = ds
@@ -142,7 +150,7 @@ object fMain: TfMain
         Title.Font.Height = -11
         Title.Font.Name = 'Tahoma'
         Title.Font.Style = [fsBold, fsUnderline]
-        Width = 233
+        Width = 147
         Visible = True
       end
       item
@@ -155,7 +163,7 @@ object fMain: TfMain
         Title.Font.Height = -11
         Title.Font.Name = 'Tahoma'
         Title.Font.Style = [fsBold, fsUnderline]
-        Width = 39
+        Width = 42
         Visible = True
       end
       item
@@ -168,7 +176,7 @@ object fMain: TfMain
         Title.Font.Height = -11
         Title.Font.Name = 'Tahoma'
         Title.Font.Style = [fsBold, fsUnderline]
-        Width = 233
+        Width = 147
         Visible = True
       end
       item
@@ -181,7 +189,7 @@ object fMain: TfMain
         Title.Font.Height = -11
         Title.Font.Name = 'Tahoma'
         Title.Font.Style = [fsBold, fsUnderline]
-        Width = 42
+        Width = 43
         Visible = True
       end
       item
@@ -194,7 +202,7 @@ object fMain: TfMain
         Title.Font.Height = -11
         Title.Font.Name = 'Tahoma'
         Title.Font.Style = [fsBold, fsUnderline]
-        Width = 49
+        Width = 51
         Visible = True
       end
       item
@@ -207,7 +215,7 @@ object fMain: TfMain
         Title.Font.Height = -11
         Title.Font.Name = 'Tahoma'
         Title.Font.Style = [fsBold, fsUnderline]
-        Width = 233
+        Width = 147
         Visible = True
       end
       item
@@ -220,7 +228,7 @@ object fMain: TfMain
         Title.Font.Height = -11
         Title.Font.Name = 'Tahoma'
         Title.Font.Style = [fsBold, fsUnderline]
-        Width = 39
+        Width = 42
         Visible = True
       end
       item
@@ -233,7 +241,7 @@ object fMain: TfMain
         Title.Font.Height = -11
         Title.Font.Name = 'Tahoma'
         Title.Font.Style = [fsBold, fsUnderline]
-        Width = 49
+        Width = 53
         Visible = True
       end>
   end
@@ -364,7 +372,7 @@ object fMain: TfMain
     Caption = 'Exporting to CSV/Text...'
     Grid = table
     ExportSeparator = esComma
-    Left = 656
-    Top = 160
+    Left = 616
+    Top = 152
   end
 end
