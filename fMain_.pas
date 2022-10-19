@@ -9,7 +9,8 @@ uses
 
   System.Generics.Collections, System.Win.ComObj,
 
-  DataStructs, Data.DB, Vcl.DBGrids, Datasnap.DBClient, JvExDBGrids, JvDBGrid;
+  DataStructs, Data.DB, Vcl.DBGrids, Datasnap.DBClient, JvExDBGrids, JvDBGrid,
+  JvComponentBase, JvDBGridExport;
 
 type
   TfMain = class(TForm)
@@ -625,11 +626,8 @@ var
 
   Excel, workBook, range: OLEVariant;
   arrData: Variant;
-  rowCount, colCount, row, col: Integer;
+  row: Integer;
 begin
-  showmessage('i''m broken, fix me');
-  Exit;
-
   with saveExportDialog do
   begin
     Filter := 'Excel Workbooks (*.xlsx) | *.xlsx';
@@ -644,12 +642,44 @@ begin
     FileName := '';
   end;
 
-//  rowCount := grid.RowCount;
-//  colCount := grid.ColCount;
+  //recordcount + 1 because of the header row
+  arrData := VarArrayCreate([1, cds_.recordCount + 1, 1, 8], varVariant);
 
-  arrData := VarArrayCreate([1, RowCount, 1, ColCount], varVariant);
+  with cds_ do
+  begin
+    First;
 
-//  for row := 1 to rowCount do
+    //insert header data first
+    arrData[1, 1] := 'Band';
+    arrData[1, 2] := 'Fav?';
+    arrData[1, 3] := 'Album';
+    arrData[1, 4] := 'Fav?';
+    arrData[1, 5] := 'Year';
+    arrData[1, 6] := 'Song';
+    arrData[1, 7] := 'Fav?';
+    arrData[1, 8] := 'Track No';
+
+    row := 2;
+
+    while not eof do
+    begin
+      arrData[row, 1] := cds_band.AsString;
+      arrData[row, 2] := cds_band_fav.AsBoolean;
+      arrData[row, 3] := cds_album.AsString;
+      arrData[row, 4] := cds_album_fav.AsBoolean;
+      arrData[row, 5] := cds_year.AsInteger;
+      arrData[row, 6] := cds_song.AsString;
+      arrData[row, 7] := cds_song_fav.AsBoolean;
+      arrData[row, 8] := cds_track_num.AsInteger;
+
+      Next;
+      Inc(row);
+    end;
+
+    First;
+  end;
+
+//  for row := 1 to cds_.RecordCount do
 //  begin
 //    for col := 1 to colCount do
 //      arrData[row, col] := grid.Cells[col - 1, row - 1];
@@ -659,7 +689,7 @@ begin
   workBook := Excel.Workbooks.Add;
 
   range := workBook.Worksheets[1].Range[workBook.WorkSheets[1].Cells[1, 1],
-                              workBook.WorkSheets[1].Cells[RowCount, ColCount]];
+                              workBook.WorkSheets[1].Cells[cds_.RecordCount, 8]];
 
   range.Value := arrData;
 
@@ -678,7 +708,7 @@ end;
 
 procedure TfMain.menuItemAboutClick(Sender: TObject);
 begin
-  MessageDlg('Playlist Manager v1.0.1' + #13#10 + 'by Jordan Knapp',
+  MessageDlg('Playlist Manager v1.2' + #13#10 + 'by Jordan Knapp',
     mtInformation, [mbOk], 0, mbOk);
 end;
 
