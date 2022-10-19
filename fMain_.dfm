@@ -107,12 +107,12 @@ object fMain: TfMain
   end
   object table: TJvDBGrid
     Left = 8
-    Top = 8
+    Top = 10
     Width = 929
     Height = 414
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = ds
-    Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgMultiSelect, dgTitleClick, dgTitleHotTrack]
+    Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
     TabOrder = 8
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -121,7 +121,6 @@ object fMain: TfMain
     TitleFont.Style = []
     OnDrawColumnCell = tableDrawColumnCell
     AutoSort = False
-    MultiSelect = True
     SelectColumn = scGrid
     AutoSizeColumns = True
     SelectColumnsDialogStrings.Caption = 'Select columns'
@@ -137,6 +136,11 @@ object fMain: TfMain
         FieldName = 'band'
         Title.Alignment = taCenter
         Title.Caption = 'Band'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
         Width = 233
         Visible = True
       end
@@ -145,6 +149,11 @@ object fMain: TfMain
         FieldName = 'band_fav'
         Title.Alignment = taCenter
         Title.Caption = 'Fav?'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
         Width = 39
         Visible = True
       end
@@ -153,6 +162,11 @@ object fMain: TfMain
         FieldName = 'album'
         Title.Alignment = taCenter
         Title.Caption = 'Album'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
         Width = 233
         Visible = True
       end
@@ -161,6 +175,11 @@ object fMain: TfMain
         FieldName = 'album_fav'
         Title.Alignment = taCenter
         Title.Caption = 'Fav?'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
         Width = 42
         Visible = True
       end
@@ -169,6 +188,11 @@ object fMain: TfMain
         FieldName = 'year'
         Title.Alignment = taCenter
         Title.Caption = 'Year'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
         Width = 49
         Visible = True
       end
@@ -177,6 +201,11 @@ object fMain: TfMain
         FieldName = 'song'
         Title.Alignment = taCenter
         Title.Caption = 'Song'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
         Width = 233
         Visible = True
       end
@@ -185,6 +214,11 @@ object fMain: TfMain
         FieldName = 'song_fav'
         Title.Alignment = taCenter
         Title.Caption = 'Fav?'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
         Width = 39
         Visible = True
       end
@@ -193,6 +227,11 @@ object fMain: TfMain
         FieldName = 'track_num'
         Title.Alignment = taCenter
         Title.Caption = 'Track'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = [fsBold, fsUnderline]
         Width = 49
         Visible = True
       end>
