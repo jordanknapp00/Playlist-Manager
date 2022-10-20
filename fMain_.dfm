@@ -24,49 +24,52 @@ object fMain: TfMain
     525)
   PixelsPerInch = 96
   TextHeight = 13
+  object lblSorting: TLabel
+    Left = 275
+    Top = 430
+    Width = 95
+    Height = 13
+    Caption = 'Current Sort Order:'
+  end
   object btnQuery: TButton
     Left = 8
     Top = 430
-    Width = 265
+    Width = 201
     Height = 87
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Query'
     TabOrder = 0
     OnClick = btnQueryClick
-    ExplicitWidth = 510
   end
   object btnAddBand: TButton
-    Left = 340
+    Left = 403
     Top = 428
-    Width = 216
+    Width = 163
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = 'Add Band(s)'
     TabOrder = 1
     OnClick = btnAddBandClick
-    ExplicitLeft = 585
   end
   object btnAddAlbum: TButton
-    Left = 340
+    Left = 403
     Top = 459
-    Width = 216
+    Width = 163
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = 'Add Album(s) from a Band'
     TabOrder = 2
     OnClick = btnAddAlbumClick
-    ExplicitLeft = 585
   end
   object btnAddSongs: TButton
-    Left = 340
+    Left = 403
     Top = 490
-    Width = 216
+    Width = 163
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = 'Add Song(s) from an Album'
     TabOrder = 3
     OnClick = btnAddSongsClick
-    ExplicitLeft = 585
   end
   object btnManageBand: TButton
     Left = 572
@@ -77,7 +80,6 @@ object fMain: TfMain
     Caption = 'Manage Bands'
     TabOrder = 4
     OnClick = btnManageBandClick
-    ExplicitLeft = 817
   end
   object btnManageAlbum: TButton
     Left = 572
@@ -88,7 +90,6 @@ object fMain: TfMain
     Caption = 'Manage Albums'
     TabOrder = 5
     OnClick = btnManageAlbumClick
-    ExplicitLeft = 817
   end
   object btnManageSongs: TButton
     Left = 572
@@ -99,10 +100,9 @@ object fMain: TfMain
     Caption = 'Manage Songs'
     TabOrder = 6
     OnClick = btnManageSongsClick
-    ExplicitLeft = 817
   end
   object btnClear: TButton
-    Left = 279
+    Left = 215
     Top = 430
     Width = 54
     Height = 87
@@ -111,7 +111,6 @@ object fMain: TfMain
     TabOrder = 7
     WordWrap = True
     OnClick = btnClearClick
-    ExplicitLeft = 524
   end
   object table: TJvDBGrid
     Left = 8
@@ -129,6 +128,7 @@ object fMain: TfMain
     TitleFont.Style = []
     OnCellClick = tableCellClick
     OnDrawColumnCell = tableDrawColumnCell
+    OnTitleClick = tableTitleClick
     AutoSort = False
     SelectColumn = scGrid
     AutoSizeColumns = True
@@ -244,6 +244,32 @@ object fMain: TfMain
         Width = 53
         Visible = True
       end>
+  end
+  object edSortOrder: TMemo
+    Left = 275
+    Top = 449
+    Width = 82
+    Height = 68
+    Lines.Strings = (
+      'Band'
+      'Year'
+      'Album'
+      'Track num'
+      'Fav')
+    ReadOnly = True
+    ScrollBars = ssVertical
+    TabOrder = 9
+    OnClick = edSortOrderClick
+  end
+  object btnResetSorting: TButton
+    Left = 363
+    Top = 451
+    Width = 34
+    Height = 66
+    Caption = 'Reset Sort Order'
+    TabOrder = 10
+    WordWrap = True
+    OnClick = btnResetSortingClick
   end
   object menuBar: TMainMenu
     Left = 552

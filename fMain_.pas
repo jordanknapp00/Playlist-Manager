@@ -54,6 +54,9 @@ type
     cds_song_color: TStringField;
     table: TJvDBGrid;
     csvExporter: TJvDBGridCSVExport;
+    lblSorting: TLabel;
+    edSortOrder: TMemo;
+    btnResetSorting: TButton;
     procedure btnAddBandClick(Sender: TObject);
     procedure btnAddAlbumClick(Sender: TObject);
     procedure btnAddSongsClick(Sender: TObject);
@@ -81,6 +84,9 @@ type
     procedure tableDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure tableCellClick(Column: TColumn);
+    procedure tableTitleClick(Column: TColumn);
+    procedure btnResetSortingClick(Sender: TObject);
+    procedure edSortOrderClick(Sender: TObject);
   private
     { Private declarations }
     fileName: String;
@@ -281,6 +287,50 @@ begin
   end;
 end;
 
+procedure TfMain.tableTitleClick(Column: TColumn);
+var
+  oldIndices: TStringList;
+  newIndex, at, first, rest: String;
+begin
+  //get a list of the old indices, easy to do since they're semicolon-delimited
+  oldIndices := TStringList.Create;
+  oldIndices.Delimiter := ';';
+  oldIndices.DelimitedText := cds_.indexFieldNames;
+
+  //build the new index string, starting with the column that was clicked on
+  newIndex := Column.FieldName;
+
+  edSortOrder.Clear;
+
+  //capitalize the first letter and remove underscores so the stuff in the text
+  //box looks a bit nicer
+  first := Copy(Column.FieldName, 1, 1);
+  first := UpperCase(first);
+  rest := Copy(Column.FieldName, 2, Column.Fieldname.Length - 1);
+  rest := StringReplace(rest, '_', ' ', [rfReplaceAll]);
+
+  edSortOrder.Lines.Add(first + rest);
+
+  //do the same as above but with the remaining index fields, being sure to skip
+  //the one that was clicked on. this ensures that the order stays consistent,
+  //allowing you to specify exactly how the fields should be ordered
+  for at in oldIndices do
+  begin
+    if at <> Column.FieldName then
+    begin
+      newIndex := newIndex + ';' + at;
+
+      first := Copy(at, 1, 1);
+      first := UpperCase(first);
+      rest := Copy(at, 2, at.Length - 1);
+      rest := StringReplace(rest, '_', ' ', [rfReplaceAll]);
+      edSortOrder.Lines.Add(first + rest);
+    end;
+  end;
+
+  cds_.IndexFieldNames := newIndex;
+end;
+
 //==============================================================================
 //                            BUTTON CLICK METHODS
 //==============================================================================
@@ -379,6 +429,29 @@ end;
 procedure TfMain.btnClearClick(Sender: TObject);
 begin
   RefreshGrid;
+end;
+
+procedure TfMain.btnResetSortingClick(Sender: TObject);
+begin
+  //reset cds indices
+  cds_.IndexFieldNames := 'band;year;album;track_num;song';
+
+  //and the text box
+  edSortOrder.Clear;
+  with edSortOrder.Lines do
+  begin
+    Add('Band');
+    Add('Year');
+    Add('Album');
+    Add('Track num');
+    Add('Song');
+  end;
+end;
+
+procedure TfMain.edSortOrderClick(Sender: TObject);
+begin
+  MessageDlg('Click on the column titles to change sorting.', mtInformation,
+      [mbOk], 0, mbOk);
 end;
 
 //==============================================================================

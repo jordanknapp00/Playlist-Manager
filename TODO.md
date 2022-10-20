@@ -1,7 +1,6 @@
 For 1.2:
 
 - Update README
-- Sort columns by clicking on title
 - Show records in table even if there are no albums or songs
 - Don't reset the queried set when favorite boxes are clicked
 - Find and eliminate memory leaks (as this will be final major version before 2.0 overhaul)
