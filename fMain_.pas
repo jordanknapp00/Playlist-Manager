@@ -210,6 +210,50 @@ begin
 
         cds_.Post;
       end;
+
+      //insert blank stuff for song if this album has no songs
+      if albumAt.songs.Count = 0 then
+      begin
+        cds_.Insert;
+
+        cds_band.AsString := bandAt.name;
+        cds_band_fav.AsBoolean := bandAt.isFavorite;
+        cds_band_color.AsString := ColorToString(bandAt.color);
+
+        cds_album.AsString := albumAt.name;
+        cds_album_fav.AsBoolean := albumAt.isFavorite;
+        cds_year.AsInteger := albumAt.year;
+        cds_album_color.AsString := ColorToString(albumAt.Color);
+
+        cds_song.AsString := '';
+        cds_song_fav.AsBoolean := false;
+        cds_track_num.AsInteger := 0;
+        cds_song_color.AsString := 'clWhite';
+
+        cds_.Post;
+      end;
+    end;
+
+    //insert blank stuff for album and song if this band has no albums
+    if bandAt.albums.Count = 0 then
+    begin
+      cds_.Insert;
+
+      cds_band.AsString := bandAt.name;
+      cds_band_fav.AsBoolean := bandAt.isFavorite;
+      cds_band_color.AsString := ColorToString(bandAt.color);
+
+      cds_album.AsString := '';
+      cds_album_fav.AsBoolean := false;
+      cds_year.AsInteger := 0;
+      cds_album_color.AsString := 'clWhite';
+
+      cds_song.AsString := '';
+      cds_song_fav.AsBoolean := false;
+      cds_track_num.AsInteger := 0;
+      cds_song_color.AsString := 'clWhite';
+
+      cds_.Post;
     end;
   end;
 
