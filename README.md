@@ -1,13 +1,14 @@
-# Playlist Manager (v1.1)
+# Playlist Manager (v1.2)
 
 Playlist Manager is a program designed to organize all the songs on your playlist. Playlist Manager makes creating a playlist easier and quicker than doing so through a streaming site's interface. Bands, albums, and songs can be added, categorized with metadata including tags, and queried to make managing your playlist easy no matter how many songs it has. Data can be exported in a variety of formats, including ```.xlsx``` and ```.csv``` for creating spreadsheets and ```.txt``` files that can be imported into sites such as [TuneMyMusic](https://www.tunemymusic.com) or [Soundiiz](https://www.soundiiz.com). These sites will then allow you to import your playlist into a wide variety of streaming sites.
 
 Playlist Manager makes it easier than ever to create a playlist with thousands of songs, without having to deal with streaming sites' clunky and slow interfaces.
 
-### New in v1.1:
+### New in v1.2:
 
-- Each band, album, and song can be given a color
-- Metadata (years for albums and track numbers for songs) are no longer required
+- New table with better formatting
+- Columns of table can be sorted in any order
+- Band/Album/Song favorite status can be changed using a checkbox in the table
 - Bug fixes
 
 ## How to Use
@@ -48,22 +49,25 @@ Arguably the most important feature of the program, playlists can be exported to
 
 Files can also be exported to ```.txt``` files, which can be used on a handful of websites (such as the two listed above) that will then allow importing the playlist into various streaming sites, including Spotify, YouTube, Pandora, etc. The ```.txt``` file format simply consists of each record on its own line, with the format "Band name - Song name - Album name", with the album name being omitted for "N/A" albums. Note that if there are any bands with no albums or albums with no songs, they will be omitted from the ```.txt``` export.
 
+At this time, ```.xlsx``` and ```.csv``` formats support exporting only what has been queried, whereas ```.txt``` exports will always include *all* records.
+
 ## Coming in Later Versions
 
 The following features are planned for future versions. Planned features include, but are not limited to:
 
-- Overhauling the underlying data structures to use Delphi's ```TClientDataSet``` rather than nested dictionaries
-- Improved user interface, hopefully including a table with sortable columns
-- Ability to export only the currently queried set
+- Eliminate nested dictionaries entirely as the primary data source, instead moving to a ```TClientDataSet```
+- Ability to export only the currently queried set to ```.txt``` format
 - Copy text from the table (and export only the selected set)
 - Allow specifying order of bands, albums, or songs in the export (as right now, the order is fairly arbitrary due to unordered nature of dictionaries)
 - Eliminate memory leaks
 - More querying options (such as querying for non-favorites only and the ability to include multiple years and track numbers)
 - Improve responsiveness of UI (better resizing than just using anchors)
 - More metadata (length for albums and songs)
+- Improved statistics
 
 ### Known Bugs
 
 The following bugs are known and will be addressed in later versions:
 
 - Querying doesn't work unless every band has at least one album, and every album has at least one song (fix by moving to ```TClientDataSet```, probably)
+- Updating the table in any way (changing favorite status, adding new units, modifying units) will eliminate any queried records
