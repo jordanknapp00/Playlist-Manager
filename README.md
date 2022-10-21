@@ -53,7 +53,7 @@ At this time, ```.xlsx``` and ```.csv``` formats support exporting only what has
 
 ## Coming in Later Versions
 
-The following features are planned for future versions. Planned features include, but are not limited to:
+The following features are planned for v2.0, the next major update:
 
 - Eliminate nested dictionaries entirely as the primary data source, instead moving to a ```TClientDataSet```
 - Ability to export only the currently queried set to ```.txt``` format
@@ -71,3 +71,4 @@ The following bugs are known and will be addressed in later versions:
 
 - Querying doesn't work unless every band has at least one album, and every album has at least one song (fix by moving to ```TClientDataSet```, probably)
 - Updating the table in any way (changing favorite status, adding new units, modifying units) will eliminate any queried records
+- Minimal memory management is being done, so there are memory leaks. Only a few kilobytes with a small playlist, but that number will grow with the size of your playlist
