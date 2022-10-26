@@ -29,20 +29,20 @@ type
     procedure Clear;
 
     function AddBand(const bandName: String): Boolean;
-    function AddAlbum(const albumName, bandName: String; const albumYear: Integer): Boolean;
-    function AddSong(const songName, bandName, albumName: String; const trackNo: Integer): Boolean;
+    function AddAlbum(const albumName, bandName: String; albumYear: Integer): Boolean;
+    function AddSong(const songName, bandName, albumName: String; trackNo: Integer): Boolean;
 
     function GetSortedBands: TStringList;
     function GetSortedQueriedBands(bands: TDictionary<String, TBand>): TStringList;
 
-    function GetSortedAlbumsOfBand(bandName: String): TStringList;
-    function GetSortedQueriedAlbumsOfBand(bands: TDictionary<String, TBand>; bandName: String): TStringList;
+    function GetSortedAlbumsOfBand(const bandName: String): TStringList;
+    function GetSortedQueriedAlbumsOfBand(bands: TDictionary<String, TBand>; const bandName: String): TStringList;
 
-    function GetSortedSongsOfAlbum(bandName, albumName: String): TStringList;
-    function GetSortedQueriedSongsOfAlbum(bands: TDictionary<String, TBand>; bandName, albumName: String): TStringList;
+    function GetSortedSongsOfAlbum(const bandName, albumName: String): TStringList;
+    function GetSortedQueriedSongsOfAlbum(bands: TDictionary<String, TBand>; const bandName, albumName: String): TStringList;
 
     function WriteJSON: String;
-    function ReadJSON(toRead: String): Boolean;
+    function ReadJSON(const toRead: String): Boolean;
   end;
 
 var
@@ -91,7 +91,7 @@ begin
   fMain.RefreshGrid;
 end;
 
-function Tdm.AddAlbum(const albumName, bandName: string; const albumYear: Integer): Boolean;
+function Tdm.AddAlbum(const albumName, bandName: string; albumYear: Integer): Boolean;
 var
   newAlbum: TAlbum;
 begin
@@ -112,7 +112,7 @@ begin
   fMain.RefreshGrid;
 end;
 
-function Tdm.AddSong(const songName, bandName, albumName: string; const trackNo: Integer): Boolean;
+function Tdm.AddSong(const songName, bandName, albumName: string; trackNo: Integer): Boolean;
 var
   newSong: TSong;
   album: TAlbum;
@@ -169,12 +169,12 @@ begin
     Result.Add(bandAt.name);
 end;
 
-function Tdm.GetSortedAlbumsOfBand(bandName: String): TStringList;
+function Tdm.GetSortedAlbumsOfBand(const bandName: String): TStringList;
 begin
   Result := GetSortedQueriedAlbumsOfBand(bands, bandName);
 end;
 
-function Tdm.GetSortedQueriedAlbumsOfBand(bands: TDictionary<String, TBand>; bandName: String): TStringList;
+function Tdm.GetSortedQueriedAlbumsOfBand(bands: TDictionary<String, TBand>; const bandName: String): TStringList;
 var
   albumList: TList<TAlbum>;
   albumAt: TAlbum;
@@ -203,12 +203,12 @@ begin
     Result.Add(albumAt.name);
 end;
 
-function Tdm.GetSortedSongsOfAlbum(bandName, albumName: String): TStringList;
+function Tdm.GetSortedSongsOfAlbum(const bandName, albumName: String): TStringList;
 begin
   Result := GetSortedQueriedSongsOfAlbum(bands, bandName, albumName);
 end;
 
-function Tdm.GetSortedQueriedSongsOfAlbum(bands: TDictionary<String, TBand>; bandName, albumName: String): TStringList;
+function Tdm.GetSortedQueriedSongsOfAlbum(bands: TDictionary<String, TBand>; const bandName, albumName: String): TStringList;
 var
   songList: TList<TSong>;
   songAt: TSong;
@@ -339,7 +339,7 @@ begin
   Result := writer.JSON.ToString;
 end;
 
-function Tdm.ReadJSON(toRead: string): Boolean;
+function Tdm.ReadJSON(const toRead: string): Boolean;
 var
   val: TJSONValue;
   bandList, albumList, songList, tagList: TJSONArray;

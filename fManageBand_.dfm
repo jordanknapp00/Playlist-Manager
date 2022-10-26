@@ -86,7 +86,6 @@ object fManageBand: TfManageBand
     Caption = 'Save'
     TabOrder = 3
     OnClick = btnSaveClick
-    ExplicitTop = 335
   end
   object btnDelete: TButton
     Left = 23
@@ -124,6 +123,7 @@ object fManageBand: TfManageBand
     Width = 201
     Height = 22
     DefaultColorColor = clWhite
+    Style = [cbStandardColors, cbExtendedColors, cbPrettyNames]
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 7
     OnChange = DetermineNeedSave

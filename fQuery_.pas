@@ -48,7 +48,7 @@ type
     procedure btnLoadQueryClick(Sender: TObject);
   private
     { Private declarations }
-    function SearchText(ed: TMemo; Search: String): Boolean; overload;
+    function SearchText(ed: TMemo; const Search: String): Boolean; overload;
     function SearchText(ed: TMemo; Search: TStringList; matchAll: Boolean): Boolean; overload;
   public
     { Public declarations }
@@ -64,7 +64,7 @@ uses
 
 {$R *.dfm}
 
-function TfQuery.SearchText(ed: TMemo; Search: string): Boolean;
+function TfQuery.SearchText(ed: TMemo; const Search: string): Boolean;
 begin
   Result := PosEx(Search, ed.Text, 1) > 0;
 end;
