@@ -317,10 +317,8 @@ begin
         Canvas.Brush.Color := StringToColor(cds_song_color.AsString);
 
       case Color of
-        clBlack, clNavy, clBlue, clBackground, clBtnText, clCaptionText, clGray,
-        clGrayText, clHighlightText, clHotLight, clInactiveCaptionText, clInfoText,
-        clMenuText, cl3DDkShadow, clWindowFrame, clWindowText, clGreen, clOlive,
-        clPurple:
+        clBlack, clMaroon, clGreen, clOlive, clNavy, clPurple, clTeal, clGray,
+        clBlue, clMedGray:
           Canvas.Font.Color := clWhite;
         else
           Canvas.Font.Color := clBlack;

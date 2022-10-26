@@ -36,8 +36,8 @@ type
     property band: String read bandName;
     property album: String read albumName;
 
-    constructor Create(const songName, bandName, albumName: String; const trackNo: Integer); overload;
-    constructor Create(const songName, bandName, albumName: String; const trackNo: Integer; const fav: Boolean; const color: TColor); overload;
+    constructor Create(const songName, bandName, albumName: String; trackNo: Integer); overload;
+    constructor Create(const songName, bandName, albumName: String; trackNo: Integer; fav: Boolean; color: TColor); overload;
 
     procedure AddTags(toAdd: TStrings);
   end;
@@ -70,8 +70,8 @@ type
     //relational property
     property band: String read bandName;
 
-    constructor Create(const albumName, bandName: String; const albumYear: Integer); overload;
-    constructor Create(const albumName, bandName: String; const albumYear: Integer; const fav: Boolean; const color: TColor); overload;
+    constructor Create(const albumName, bandName: String; albumYear: Integer); overload;
+    constructor Create(const albumName, bandName: String; albumYear: Integer; fav: Boolean; color: TColor); overload;
 
     procedure AddTags(toAdd: TStrings);
   end;
@@ -97,7 +97,7 @@ type
     property name: String read bandName;
 
     constructor Create(const bandName: String); overload;
-    constructor Create(const bandName: String; const fav: Boolean; const color: TColor); overload;
+    constructor Create(const bandName: String; fav: Boolean; color: TColor); overload;
 
     procedure AddTags(toAdd: TStrings);
   end;
@@ -109,7 +109,7 @@ implementation
 //==============================================================================
 
 //constructor without fav
-constructor TSong.Create(const songName, bandName, albumName: String; const trackNo: Integer);
+constructor TSong.Create(const songName, bandName, albumName: String; trackNo: Integer);
 begin
   self.songName := songName;
   self.track := trackNo;
@@ -123,7 +123,7 @@ begin
 end;
 
 //constructor with fav
-constructor TSong.Create(const songName, bandName, albumName: string; const trackNo: Integer; const fav: Boolean; const color: TColor);
+constructor TSong.Create(const songName, bandName, albumName: string; trackNo: Integer; fav: Boolean; color: TColor);
 begin
   self.songName := songName;
   self.track := trackNo;
@@ -151,7 +151,7 @@ end;
 //                                TAlbum Methods
 //==============================================================================
 
-constructor TAlbum.Create(const albumName, bandName: String; const albumYear: Integer);
+constructor TAlbum.Create(const albumName, bandName: String; albumYear: Integer);
 begin
   self.albumName := albumName;
   self.albumYear := albumYear;
@@ -166,7 +166,7 @@ begin
 end;
 
 //constructor with id and fav
-constructor TAlbum.Create(const albumName, bandName: String; const albumYear: Integer; const fav: Boolean; const color: TColor);
+constructor TAlbum.Create(const albumName, bandName: String; albumYear: Integer; fav: Boolean; color: TColor);
 begin
   self.albumName := albumName;
   self.albumYear := albumYear;
@@ -206,7 +206,7 @@ begin
   albums := TDictionary<String, TAlbum>.Create;
 end;
 
-constructor TBand.Create(const bandName: String; const fav: Boolean; const color: TColor);
+constructor TBand.Create(const bandName: String; fav: Boolean; color: TColor);
 begin
   self.bandName := bandName;
 

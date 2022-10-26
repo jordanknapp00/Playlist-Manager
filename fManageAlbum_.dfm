@@ -159,6 +159,7 @@ object fManageAlbum: TfManageAlbum
     Width = 201
     Height = 22
     DefaultColorColor = clWhite
+    Style = [cbStandardColors, cbExtendedColors, cbPrettyNames]
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 9
     OnChange = DetermineNeedSave
