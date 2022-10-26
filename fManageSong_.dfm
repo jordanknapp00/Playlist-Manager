@@ -177,6 +177,7 @@ object fManageSong: TfManageSong
     Width = 201
     Height = 22
     DefaultColorColor = clWhite
+    Style = [cbStandardColors, cbExtendedColors, cbPrettyNames]
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 10
     OnChange = DetermineNeedSave
