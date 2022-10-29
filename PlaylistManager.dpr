@@ -1,6 +1,7 @@
 program PlaylistManager;
 
 uses
+  MidasLib,
   Vcl.Forms,
   fMain_ in 'fMain_.pas' {fMain},
   DataStructs in 'DataStructs.pas',
