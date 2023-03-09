@@ -53,7 +53,7 @@ At this time, ```.xlsx``` and ```.csv``` formats support exporting only what has
 
 ## Coming in Later Versions
 
-The following features are planned for v2.0, the next major update:
+The following features will be added in a later version if I ever get around to it:
 
 - Eliminate nested dictionaries entirely as the primary data source, instead moving to a ```TClientDataSet```
 - Ability to export only the currently queried set to ```.txt``` format
@@ -72,7 +72,3 @@ The following bugs are known and will be addressed in later versions:
 - Querying doesn't work unless every band has at least one album, and every album has at least one song (fix by moving to ```TClientDataSet```, probably)
 - Updating the table in any way (changing favorite status, adding new units, modifying units) will eliminate any queried records
 - Minimal memory management is being done, so there are memory leaks. Only a few kilobytes with a small playlist, but that number will grow with the size of your playlist
-
-# License
-
-This project uses the [FPA General Code License](https://about.fairfieldprogramming.org/licenses/code/). In short, you can do whatever you want with this code for non-commerical purposes. In order to use this code for commerical purposes, you must make substantial changes to it. Reorganizing the logic does not count as a substantial change. See [LICENSE.md](LICENSE.MD) or the link above for more details.
